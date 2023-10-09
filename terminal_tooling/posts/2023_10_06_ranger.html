@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-10-09 Mon 15:10 -->
+<!-- 2023-10-09 Mon 15:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ranger - Terminal Tooling</title>
@@ -63,7 +63,7 @@ as:
 <h3 id="org10bd57a">Overview</h3>
 <div class="outline-text-3" id="text-org10bd57a">
 
-<div id="org7c56fde" class="figure">
+<div id="org2f1f86d" class="figure">
 <p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/dir_view.png" alt="dir_view.png" width="900px" />
 </p>
 </div>
@@ -82,7 +82,7 @@ is highlighted.
 </p>
 
 
-<div id="org55eb62e" class="figure">
+<div id="org7fd4076" class="figure">
 <p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/file_view.png" alt="file_view.png" width="900px" />
 </p>
 </div>
@@ -93,7 +93,7 @@ for macOS, Finder, this design has been a staple since their <a href="https://fl
 </p>
 
 
-<div id="org067ebfe" class="figure">
+<div id="orgaa159c4" class="figure">
 <p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/finder.png" alt="finder.png" width="900px" />
 </p>
 </div>
@@ -112,7 +112,8 @@ for macOS, Finder, this design has been a staple since their <a href="https://fl
 For a tool that touts "VI key bindings", no one should be surprised at the basic file
 and directory navigation keys: <code>h</code>, <code>j</code>, <code>k</code>, and <code>l</code>. <code>j</code> moves the selection in the center column one item
 down. <code>k</code> moves one item up. <code>l</code> will either move into the directory of the selection, or open the
-file of the selection by using your configured <a href="https://bash.cyberciti.biz/guide/$EDITOR_variable">$EDITOR</a>.
+file of the selection by using your configured <a href="https://bash.cyberciti.biz/guide/$EDITOR_variable">$EDITOR</a>. <code>gg</code> moves the cursor to the first item
+in the directory, <code>G</code> moves it to the bottom.
 </p>
 
 <p>
@@ -148,7 +149,7 @@ as before only this time, all the selected files will be copied/pasted.
 </p>
 
 
-<div id="orgd3a3897" class="figure">
+<div id="org8303cee" class="figure">
 <p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/multiple_selection.png" alt="multiple_selection.png" width="900px" />
 </p>
 </div>
@@ -176,7 +177,7 @@ with the file and the cursor will be on the <code>.</code> file just before the 
 </p>
 
 
-<div id="orge50c9e5" class="figure">
+<div id="orgf6a8559" class="figure">
 <p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_lower_case_a.png" alt="rename_lower_case_a.png" width="275px" />
 </p>
 </div>
@@ -188,7 +189,7 @@ name in the prompt.
 </p>
 
 
-<div id="org7c3929b" class="figure">
+<div id="org16c3461" class="figure">
 <p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_upper_case_a.png" alt="rename_upper_case_a.png" width="275px" />
 </p>
 </div>
@@ -199,7 +200,7 @@ pre-populate with the file and the cursor at the front.
 </p>
 
 
-<div id="org7274535" class="figure">
+<div id="org03e36ab" class="figure">
 <p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_capital_i.png" alt="rename_capital_i.png" width="275px" />
 </p>
 </div>
@@ -222,7 +223,7 @@ your editor to rename the files however you want.
 </p>
 
 
-<div id="org7585863" class="figure">
+<div id="orge6fb457" class="figure">
 <p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/bulk_rename_1.png" alt="bulk_rename_1.png" width="900px" />
 </p>
 </div>
@@ -235,7 +236,7 @@ will be renamed/moved to). After saving, ranger will execute the rename.
 </p>
 
 
-<div id="orge5c051a" class="figure">
+<div id="org6acf509" class="figure">
 <p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/bulk_rename_2.png" alt="bulk_rename_2.png" width="900px" />
 </p>
 </div>
