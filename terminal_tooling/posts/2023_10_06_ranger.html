@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-10-06 Fri 17:59 -->
+<!-- 2023-10-09 Mon 15:06 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ranger - Terminal Tooling</title>
@@ -16,27 +16,26 @@
 <body>
 <div id="content" class="content">
 <h1 class="title">Ranger - Terminal Tooling</h1>
-<div id="outline-container-org1e2a938" class="outline-2">
-<h2 id="org1e2a938">Ranger&#xa0;&#xa0;&#xa0;<span class="tag"><span class="file_managers">file_managers</span></span></h2>
-<div class="outline-text-2" id="text-org1e2a938">
+
+<div id="outline-container-orgfc446b0" class="outline-2">
+<h2 id="orgfc446b0">Ranger&#xa0;&#xa0;&#xa0;<span class="tag"><span class="file_managers">file_managers</span></span></h2>
+<div class="outline-text-2" id="text-orgfc446b0">
 <p>
-<a href="https://github.com/ranger/ranger">Ranger</a> is a "console file manager with VI key bindings." Specifically
-it is a terminal file manager. You're most likely familiar with GUI
-file managers in the form of mac's finder, or the directrory viewer
-built into your editor of choice.
+<a href="https://ranger.github.io/">Ranger</a> is a "console file manager with VI key bindings." Specifically it is a terminal
+file manager. You're most likely familiar with GUI file managers in the form of mac's
+finder, or the directrory viewer built into your editor of choice.
 </p>
 
 <p>
-Terminal file managers operate in a unique space as they tend to
-focus on keyboard based workflows over click-and-drag mouse-based
-workflows. How can you get anything done as a file manager using
-just your keyboard? If you're in the terminal, why not just use
+Terminal file managers live in a unique space as they tend to focus on keyboard based
+workflows over click-and-drag mouse-based workflows. How can you get anything done as
+a file manager using just your keyboard? If you're in the terminal, why not just use
 good ol' <code>cd</code>, <code>mv</code>, <code>cp</code>, <code>rm</code> and friends?
 </p>
 
 <p>
-What you lose in intuitive (read: familiar) UI, you gain in
-expressive and configurable power.
+What you lose in intuitive (read: familiar) UI, you gain in expressive and configurable
+power.
 </p>
 
 <p>
@@ -44,25 +43,228 @@ Convinced? Not yet? Let's see some examples
 </p>
 </div>
 
-<div id="outline-container-org3ed0d1b" class="outline-3">
-<h3 id="org3ed0d1b">Overview</h3>
-<div class="outline-text-3" id="text-org3ed0d1b">
+<div id="outline-container-org84bf15d" class="outline-3">
+<h3 id="org84bf15d">Installing</h3>
+<div class="outline-text-3" id="text-org84bf15d">
+<p>
+If you want to follow along and run these examples in your own terminal, you can install
+ranger easily using the package manager on your operating system. On mac, it's as easy
+as <code>brew install ranger</code>.
+</p>
+</div>
+</div>
 
-<div id="org1870f1b" class="figure">
-<p><img src="../../images/terminal_tooling/posts/ranger/dir_view.png" alt="dir_view.png" width="900px" />
+<div id="outline-container-org10bd57a" class="outline-3">
+<h3 id="org10bd57a">Overview</h3>
+<div class="outline-text-3" id="text-org10bd57a">
+
+<div id="org77b33ef" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/dir_view.png" alt="dir_view.png" width="900px" />
+</p>
+</div>
+
+<p>
+This is the initial view using ranger. You'll notice three vertical columns (and three
+highlighted files/directories). The center of the three is the working column, and it's on
+the selected entry in this column that your actions will operate (in this example, on the
+<code>kubernetes</code> directory).
+</p>
+
+<p>
+The left column is the parent directory, and the right directory displays either the contents
+of the current directory if a directory is highlighted, or a preview of the file if a file
+is highlighted.
+</p>
+
+
+<div id="org9d1372c" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/file_view.png" alt="file_view.png" width="900px" />
+</p>
+</div>
+
+<p>
+You might recognize this three-pane design pattern. If you've used the GUI file manager
+for macOS, Finder, this design has been a staple since their <a href="https://flaming.codes/posts/miller-columns-filesystem-ui">NeXT</a> days.
+</p>
+
+
+<div id="org5fe6806" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/finder.png" alt="finder.png" width="900px" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org17f4ec0" class="outline-3">
-<h3 id="org17f4ec0">Installing</h3>
-<div class="outline-text-3" id="text-org17f4ec0">
-<div class="org-src-container">
-<pre class="src src-shell">brew install ranger
-</pre>
+
+<div id="outline-container-org80b8291" class="outline-3">
+<h3 id="org80b8291">Navigation and file manipulation</h3>
+<div class="outline-text-3" id="text-org80b8291">
+</div>
+<div id="outline-container-org1106aa7" class="outline-4">
+<h4 id="org1106aa7">Movement</h4>
+<div class="outline-text-4" id="text-org1106aa7">
+<p>
+For a tool that touts "VI key bindings", no one should be surprised at the basic file
+and directory navigation keys: <code>h</code>, <code>j</code>, <code>k</code>, and <code>l</code>. <code>j</code> moves the selection in the center column one item
+down. <code>k</code> moves one item up. <code>l</code> will either move into the directory of the selection, or open the
+file of the selection by using your configured <a href="https://bash.cyberciti.biz/guide/$EDITOR_variable">$EDITOR</a>.
+</p>
+
+<p>
+Moving around with h, j, k, and l allows you to fly around your file system, and the three-column
+view gives you a quick view of not only what's in the current directory, but also both what's in
+the parent directory and child directory.
+</p>
+
+<p>
+If this was all ranger could do, it would already be a fairly handy, albeit limited use tool
+(it also wouldn't really be a full 'file manager' in that case either). Ranger handles much
+more however.
+</p>
 </div>
 </div>
+
+<div id="outline-container-orgd479b06" class="outline-4">
+<h4 id="orgd479b06">Copying, Deleting, Moving</h4>
+<div class="outline-text-4" id="text-orgd479b06">
+<p>
+Ranger takes the "VI bindings" much further than simple movement. Want to copy a file? Hit
+<code>yy</code> (the letter y, hit twice) to copy the file into a temporary register, then in the
+destination of your choice, hit <code>pp</code> to paste the file. Deleting is much the same; just hit
+<code>dd</code> to delete your file. To move a file, you just delete <code>dd</code> but then paste it <code>pp</code> wherever
+you want.
+</p>
+
+<p>
+Change your mind about deleting a file before pasting? Hit <code>u</code> to undo the delete. Want
+to copy multiple files? Hit <code>Space</code> over all the files you want to copy (they should be marked
+with a different color and be indented slightly to show they're selected), then use <code>yy</code> and <code>pp</code>
+as before only this time, all the selected files will be copied/pasted.
+</p>
+
+
+<div id="org97971cd" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/multiple_selection.png" alt="multiple_selection.png" width="900px" />
+</p>
+</div>
+
+<p>
+In this example, <code>app.go</code>, <code>db.go</code>, <code>Dockerfile</code>, and <code>main.go</code> are selected (but <b>not</b> <code>tracing.go</code>).
+When you mark a file, the highlighted line is automatically moved to the next item (so you
+can just hit <code>Space Space Space</code> and select consecutive items), but it is not included in
+the multiple selection.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgffe91a1" class="outline-4">
+<h4 id="orgffe91a1">Renaming</h4>
+<div class="outline-text-4" id="text-orgffe91a1">
+<p>
+So far, the mechanism to move a file does not allow for renaming it (it is just copied
+and pasted without changing anything). How do you rename a file then? Like in vim, there's
+multiple ways to edit a file name (analogous to a <a href="https://learnbyexample.github.io/tips/vim-tip-22/">word</a> in vim). To completely change the
+file name, you can hit <code>cw</code> (change word, in vim language). This gives you a blank text
+input area to rename the file to whatever you want. If you only wanted to change the
+<a href="https://linux.die.net/man/1/basename">basename</a> of the file, you can hit <code>a</code>, and the rename prompt field will be pre-populated
+with the file and the cursor will be on the <code>.</code> file just before the extension.
+</p>
+
+
+<div id="org917b491" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_lower_case_a.png" alt="rename_lower_case_a.png" width="275px" />
+</p>
+</div>
+
+<p>
+If you want to change the extension (or just want to have the whole file name pre-populated
+so you can change whatever you want), hit <code>A</code> and the cursor will be at the very end of the file
+name in the prompt.
+</p>
+
+
+<div id="orgb4cf4f2" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_upper_case_a.png" alt="rename_upper_case_a.png" width="275px" />
+</p>
+</div>
+
+<p>
+And lastly if you want to prefix something in front of the file name, you can hit <code>I</code> to
+pre-populate with the file and the cursor at the front.
+</p>
+
+
+<div id="org0a341e1" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_capital_i.png" alt="rename_capital_i.png" width="275px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge5b2559" class="outline-4">
+<h4 id="orge5b2559">Bulk renaming</h4>
+<div class="outline-text-4" id="text-orge5b2559">
+<p>
+But what if you have a bunch of files to rename, and you may or may not want to rename
+them differently? What if you want to make the same change to each file name?
+</p>
+
+<p>
+After highlighting the files you're interested in, type <code>:bulkrename</code> (ranger offers tab
+completion so you can just type <code>:b&lt;TAB&gt;</code> and the rest will be filled in for you). A temporary
+file will be spun up with each of the file names you selected. You can use the full power of
+your editor to rename the files however you want.
+</p>
+
+
+<div id="orga53ce37" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/bulk_rename_1.png" alt="bulk_rename_1.png" width="900px" />
+</p>
+</div>
+
+<p>
+When you exit the file, another temp file
+will be conjured up giving you a preview of the shell commands it will run (using <code>mv</code>).
+You have one last chance to change things (like changing the destination directory the files
+will be renamed/moved to). After saving, ranger will execute the rename.
+</p>
+
+
+<div id="org73b0543" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/bulk_rename_2.png" alt="bulk_rename_2.png" width="900px" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgfc9ac19" class="outline-2">
+<h2 id="orgfc9ac19">Further reading</h2>
+<div class="outline-text-2" id="text-orgfc9ac19">
+<p>
+This only scratches the surface of ranger's functionality. Ranger supports tabs, bookmarks, macros
+custom user-defined functionality using python and more. Their <a href="https://github.com/ranger/ranger/wiki/Official-user-guide">documentation</a> is extensive
+and it can do more than I have the time to go over. The <code>:flat</code> command is particularly interesting.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge92ec1b" class="outline-2">
+<h2 id="orge92ec1b">Alternatives</h2>
+<div class="outline-text-2" id="text-orge92ec1b">
+<p>
+Beyond ranger, there are a handful of other terminal file managers with varying degrees of
+overlap in their design goals. These are just the ones that more or less conform to the
+multi-window view that ranger does.
+</p>
+
+<ul class="org-ul">
+<li><a href="https://github.com/jarun/nnn">nnn</a></li>
+<li><a href="https://github.com/kamiyaa/joshuto">joshuto</a></li>
+<li><a href="https://github.com/gokcehan/lf">lf</a></li>
+</ul>
 </div>
 </div>
 </div>
