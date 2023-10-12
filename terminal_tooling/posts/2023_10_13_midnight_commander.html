@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2023-10-12 Thu 07:09 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<!-- 2023-10-12 Thu 16:17 -->
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Midnight Commander - Terminal Tooling</title>
 <meta name="author" content="Jonathan Harder" />
@@ -15,9 +13,9 @@
 </head>
 <body>
 <div id="content" class="content">
+<header>
 <h1 class="title">Midnight Commander - Terminal Tooling</h1>
-
-
+</header>
 <div id="outline-container-org121edae" class="outline-2">
 <h2 id="org121edae">mc&#xa0;&#xa0;&#xa0;<span class="tag"><span class="file_managers">file_managers</span></span></h2>
 <div class="outline-text-2" id="text-org121edae">
@@ -26,10 +24,10 @@ Let's start with a quick screenshot of mc in action.
 </p>
 
 
-<div id="org403f23a" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/overview_unstyled.png" alt="overview_unstyled.png" width="900px" />
-</p>
-</div>
+<figure id="org2ebf0bf">
+<img src="../../images/terminal_tooling/posts/2023_10_13_mc/overview_unstyled.png" alt="overview_unstyled.png" width="900px">
+
+</figure>
 
 <p>
 Eww. How very&#x2026;MS Dos (or maybe this is nestalgic for you. To each their own). This is
@@ -44,32 +42,32 @@ I've downloaded the <a href="https://github.com/catppuccin/mc">Catppuccin</a> th
 </p>
 
 
-<div id="orgd595471" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/catppuccin_file.png" alt="catppuccin_file.png" width="900px" />
-</p>
-</div>
+<figure id="orge075490">
+<img src="../../images/terminal_tooling/posts/2023_10_13_mc/catppuccin_file.png" alt="catppuccin_file.png" width="900px">
+
+</figure>
 
 
-<div id="org6ee353f" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/config_theme_1.png" alt="config_theme_1.png" width="900px" />
-</p>
-</div>
+<figure id="orgb2373fb">
+<img src="../../images/terminal_tooling/posts/2023_10_13_mc/config_theme_1.png" alt="config_theme_1.png" width="900px">
+
+</figure>
 
 
-<div id="orgb896145" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/config_theme_2.png" alt="config_theme_2.png" width="900px" />
-</p>
-</div>
+<figure id="org4c62a5d">
+<img src="../../images/terminal_tooling/posts/2023_10_13_mc/config_theme_2.png" alt="config_theme_2.png" width="900px">
+
+</figure>
 
 <p>
 Let's take another look:
 </p>
 
 
-<div id="org137f0b4" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/overview.png" alt="overview.png" width="900px" />
-</p>
-</div>
+<figure id="org37af0fb">
+<img src="../../images/terminal_tooling/posts/2023_10_13_mc/overview.png" alt="overview.png" width="900px">
+
+</figure>
 
 <p>
 Much better.
@@ -101,10 +99,10 @@ installed using Homebrew:
 </div>
 
 
-<div id="org1cd0470" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/example_copy_1.png" alt="example_copy_1.png" width="900px" />
-</p>
-</div>
+<figure id="orgeef8041">
+<img src="../../images/terminal_tooling/posts/2023_10_13_mc/example_copy_1.png" alt="example_copy_1.png" width="900px">
+
+</figure>
 
 <p>
 In this example, you can see the left window is viewing <code>~/Code/k8s-app/backend</code>, and the
@@ -114,10 +112,10 @@ with the right window's directory.
 </p>
 
 
-<div id="org7080186" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/example_copy_2.png" alt="example_copy_2.png" width="900px" />
-</p>
-</div>
+<figure id="org786d1fe">
+<img src="../../images/terminal_tooling/posts/2023_10_13_mc/example_copy_2.png" alt="example_copy_2.png" width="900px">
+
+</figure>
 
 <p>
 From here you can hit <code>Enter</code> and just copy the file, or change the name of the copied file
@@ -146,10 +144,10 @@ access to a robust help manual:
 </p>
 
 
-<div id="org12000a2" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/help.png" alt="help.png" width="900px" />
-</p>
-</div>
+<figure id="orgfd5d607">
+<img src="../../images/terminal_tooling/posts/2023_10_13_mc/help.png" alt="help.png" width="900px">
+
+</figure>
 
 <p>
 You can swap focus between windows with <code>Tab</code>. To synchronize the directory viewed by the
@@ -160,10 +158,10 @@ jump to.
 </p>
 
 
-<div id="orgf9d98e4" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/cd.png" alt="cd.png" width="900px" />
-</p>
-</div>
+<figure id="org2372ba9">
+<img src="../../images/terminal_tooling/posts/2023_10_13_mc/cd.png" alt="cd.png" width="900px">
+
+</figure>
 </div>
 
 <div id="outline-container-org2b0a5be" class="outline-3">
@@ -190,10 +188,10 @@ will update accordingly. It even comes with some basic search and goto functiona
 </p>
 
 
-<div id="org6d21e62" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/quick_view.png" alt="quick_view.png" width="900px" />
-</p>
-</div>
+<figure id="org1a10d45">
+<img src="../../images/terminal_tooling/posts/2023_10_13_mc/quick_view.png" alt="quick_view.png" width="900px">
+
+</figure>
 </div>
 </div>
 
@@ -210,10 +208,10 @@ directory to the hotlist.
 </p>
 
 
-<div id="org1cf3c80" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/hotlist.png" alt="hotlist.png" width="900px" />
-</p>
-</div>
+<figure id="orgb8837bd">
+<img src="../../images/terminal_tooling/posts/2023_10_13_mc/hotlist.png" alt="hotlist.png" width="900px">
+
+</figure>
 
 <p>
 If you have a lot of directories in the hotlist, you can make "groups" (more like folders)
@@ -240,10 +238,10 @@ on the selected file(s) you can access any time from the <code>Command</code> me
 </p>
 
 
-<div id="org00c63ad" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/user_menu.png" alt="user_menu.png" width="900px" />
-</p>
-</div>
+<figure id="org4cdc9f0">
+<img src="../../images/terminal_tooling/posts/2023_10_13_mc/user_menu.png" alt="user_menu.png" width="900px">
+
+</figure>
 
 
 <p>
@@ -261,8 +259,44 @@ all the weird symbols mean is an exercise left to the reader.
 <h2 id="orgb8dc4b3">Conclusion</h2>
 <div class="outline-text-2" id="text-orgb8dc4b3">
 <p>
-Midnight commander may be from a different era, but much like emacs or vim, 
+The dual window setup might feel a little awkward at first if you're not used to it, but
+after getting comfortable with it you'll groan every time you have to write out a whole
+copy command by hand, or open up another finder window and click around until you've found the
+right directory to copy to.
 </p>
+
+<p>
+The heavy reliance on function keys is a bit of a bummer for me as they are far away from
+the home row and require some hand contortions on the mac keyboard to hit the <code>fn</code> key. This
+can be mitigated in part if you use a keyboard with <a href="https://qmk.fm/">configurable firmware</a> by placing the
+function keys in a more ergonomic location in a layer, but being forced to do this because
+of my file manager is a fairly large ask. You can set up some alternate key bindings for
+some of the shortcuts, but not the primary ones you see at the bottom of the screen. I
+know I am probably in the minority in my unrelenting pursuit of the perfect ergonomic
+workflow, so you mileage may vary. 
+</p>
+
+<p>
+Midnight commander may be from a different era, and so some of its design patterns may be
+old fashioned, and the terminology my be unfamiliar, but it is an extremely powerful
+workhorse of a file manager. Older software might not be new and shiny, but it has
+stood the test of time. For any question you may have on how to do something, there
+is likely an answer found online. Is there a feature you liked from some other file
+manager? Someone else has probably missed that feature and written a patch for mc enabling
+it. New apps may come and go, but mc remains. If the keybindings don't deter you, there
+could be a very long and happy future for you and midnight commander. If you're not a fan,
+stay tuned for next week's article&#x2026;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5708254" class="outline-2">
+<h2 id="org5708254">Additional Resources</h2>
+<div class="outline-text-2" id="text-org5708254">
+<ul class="org-ul">
+<li><a href="https://midnight-commander.org/wiki/doc/common/actions">key bindings</a></li>
+<li><a href="https://www.youtube.com/watch?v=fJOkuaihAek">video overview</a></li>
+</ul>
 </div>
 </div>
 <div id="footnotes">

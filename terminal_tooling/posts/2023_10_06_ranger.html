@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2023-10-12 Thu 07:09 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<!-- 2023-10-12 Thu 16:17 -->
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ranger - Terminal Tooling</title>
 <meta name="author" content="Jonathan Harder" />
@@ -15,8 +13,9 @@
 </head>
 <body>
 <div id="content" class="content">
+<header>
 <h1 class="title">Ranger - Terminal Tooling</h1>
-
+</header>
 <div id="outline-container-orgfc446b0" class="outline-2">
 <h2 id="orgfc446b0">Ranger&#xa0;&#xa0;&#xa0;<span class="tag"><span class="file_managers">file_managers</span></span></h2>
 <div class="outline-text-2" id="text-orgfc446b0">
@@ -63,10 +62,10 @@ as:
 <h3 id="org10bd57a">Overview</h3>
 <div class="outline-text-3" id="text-org10bd57a">
 
-<div id="orgb5821f9" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/dir_view.png" alt="dir_view.png" width="900px" />
-</p>
-</div>
+<figure id="orgf455aab">
+<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/dir_view.png" alt="dir_view.png" width="900px">
+
+</figure>
 
 <p>
 This is the initial view using ranger. You'll notice three vertical columns (and three
@@ -82,10 +81,10 @@ is highlighted.
 </p>
 
 
-<div id="org963f010" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/file_view.png" alt="file_view.png" width="900px" />
-</p>
-</div>
+<figure id="org64955bf">
+<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/file_view.png" alt="file_view.png" width="900px">
+
+</figure>
 
 <p>
 You might recognize this three-pane design pattern. If you've used the GUI file manager
@@ -93,10 +92,10 @@ for macOS, Finder, this design has been a staple since their <a href="https://fl
 </p>
 
 
-<div id="orgd50ec20" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/finder.png" alt="finder.png" width="900px" />
-</p>
-</div>
+<figure id="orgc2f2b95">
+<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/finder.png" alt="finder.png" width="900px">
+
+</figure>
 </div>
 </div>
 
@@ -149,10 +148,10 @@ as before only this time, all the selected files will be copied/pasted.
 </p>
 
 
-<div id="org5d03796" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/multiple_selection.png" alt="multiple_selection.png" width="900px" />
-</p>
-</div>
+<figure id="orgd5990b0">
+<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/multiple_selection.png" alt="multiple_selection.png" width="900px">
+
+</figure>
 
 <p>
 In this example, <code>app.go</code>, <code>db.go</code>, <code>Dockerfile</code>, and <code>main.go</code> are selected (but <b>not</b> <code>tracing.go</code>).
@@ -177,10 +176,10 @@ with the file and the cursor will be on the <code>.</code> file just before the 
 </p>
 
 
-<div id="org3cf7594" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_lower_case_a.png" alt="rename_lower_case_a.png" width="275px" />
-</p>
-</div>
+<figure id="orga0c9e5b">
+<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_lower_case_a.png" alt="rename_lower_case_a.png" width="275px">
+
+</figure>
 
 <p>
 If you want to change the extension (or just want to have the whole file name pre-populated
@@ -189,10 +188,10 @@ name in the prompt.
 </p>
 
 
-<div id="orgd7efddf" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_upper_case_a.png" alt="rename_upper_case_a.png" width="275px" />
-</p>
-</div>
+<figure id="orgaad4a85">
+<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_upper_case_a.png" alt="rename_upper_case_a.png" width="275px">
+
+</figure>
 
 <p>
 And lastly if you want to prefix something in front of the file name, you can hit <code>I</code> to
@@ -200,10 +199,10 @@ pre-populate with the file and the cursor at the front.
 </p>
 
 
-<div id="org2206ad0" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_capital_i.png" alt="rename_capital_i.png" width="275px" />
-</p>
-</div>
+<figure id="org3825da9">
+<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_capital_i.png" alt="rename_capital_i.png" width="275px">
+
+</figure>
 </div>
 </div>
 
@@ -223,10 +222,10 @@ your editor to rename the files however you want.
 </p>
 
 
-<div id="org02b273b" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/bulk_rename_1.png" alt="bulk_rename_1.png" width="900px" />
-</p>
-</div>
+<figure id="org40a81b7">
+<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/bulk_rename_1.png" alt="bulk_rename_1.png" width="900px">
+
+</figure>
 
 <p>
 When you exit the file, another temp file
@@ -236,10 +235,10 @@ will be renamed/moved to). After saving, ranger will execute the rename.
 </p>
 
 
-<div id="org5fb3ae2" class="figure">
-<p><img src="../../images/terminal_tooling/posts/2023_10_06_ranger/bulk_rename_2.png" alt="bulk_rename_2.png" width="900px" />
-</p>
-</div>
+<figure id="orgfe82f93">
+<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/bulk_rename_2.png" alt="bulk_rename_2.png" width="900px">
+
+</figure>
 </div>
 </div>
 </div>
