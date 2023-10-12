@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2023-10-12 Thu 07:09 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Midnight Commander - Terminal Tooling</title>
+<meta name="author" content="Jonathan Harder" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="/css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Midnight Commander - Terminal Tooling</h1>
+
+
+<div id="outline-container-org121edae" class="outline-2">
+<h2 id="org121edae">mc&#xa0;&#xa0;&#xa0;<span class="tag"><span class="file_managers">file_managers</span></span></h2>
+<div class="outline-text-2" id="text-org121edae">
+<p>
+Let's start with a quick screenshot of mc in action.
+</p>
+
+
+<div id="org403f23a" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/overview_unstyled.png" alt="overview_unstyled.png" width="900px" />
+</p>
+</div>
+
+<p>
+Eww. How very&#x2026;MS Dos (or maybe this is nestalgic for you. To each their own). This is
+intentional; as it started life as a clone of the popular <a href="https://en.wikipedia.org/wiki/Norton_Commander">Norton Commander</a>. It was
+first released in 1994 (8 years after its predecessor) and replicated the dual window
+text user interface almost exactly.
+</p>
+
+<p>
+Fortunately for us, mc allows you to change its appearance through the options menu.
+I've downloaded the <a href="https://github.com/catppuccin/mc">Catppuccin</a> theme and installed it.
+</p>
+
+
+<div id="orgd595471" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/catppuccin_file.png" alt="catppuccin_file.png" width="900px" />
+</p>
+</div>
+
+
+<div id="org6ee353f" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/config_theme_1.png" alt="config_theme_1.png" width="900px" />
+</p>
+</div>
+
+
+<div id="orgb896145" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/config_theme_2.png" alt="config_theme_2.png" width="900px" />
+</p>
+</div>
+
+<p>
+Let's take another look:
+</p>
+
+
+<div id="org137f0b4" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/overview.png" alt="overview.png" width="900px" />
+</p>
+</div>
+
+<p>
+Much better.
+</p>
+</div>
+
+<div id="outline-container-orgbd4e0f6" class="outline-3">
+<h3 id="orgbd4e0f6">Overview</h3>
+<div class="outline-text-3" id="text-orgbd4e0f6">
+<p>
+This is midnight commander (or <code>mc</code> for short). If you read the previous post
+about <a href="2023_10_06_ranger.html">ranger</a>, you'll notice there are two windows not three. Less obvious
+is the fact that these two windows are disconnected from each other. Where
+ranger's colums represented the parent and child directories of the current
+path, these windows are two separate file explorers. Each can be moved about
+the file system independently of each other.
+</p>
+
+<p>
+Why have two disconnected file viewers? For one extremely helpful reason.
+Any file or directory action that requires a destination will default to
+the path of the other window. Let's see an example. As usual, mc can be
+installed using Homebrew:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">brew install mc
+</pre>
+</div>
+
+
+<div id="org1cd0470" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/example_copy_1.png" alt="example_copy_1.png" width="900px" />
+</p>
+</div>
+
+<p>
+In this example, you can see the left window is viewing <code>~/Code/k8s-app/backend</code>, and the
+right window is viewing <code>~/tmp/mc_demo</code>. When I hit <code>f5</code> for <code>Copy</code> (shortcut hints are displayed
+on the last row of the window), the popup modal for Copying <code>Dockerfile</code> is pre-filled
+with the right window's directory.
+</p>
+
+
+<div id="org7080186" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/example_copy_2.png" alt="example_copy_2.png" width="900px" />
+</p>
+</div>
+
+<p>
+From here you can hit <code>Enter</code> and just copy the file, or change the name of the copied file
+before proceeding with the copy.
+</p>
+
+<p>
+Like ranger, you can select multiple files to execute any of the actions on. Hit <code>+</code> to
+open up a prompt for selection. You can leave the value as is, <code>*</code> for selecting all entries
+in the current window, or any regex you want to select only the matching items.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb405a5e" class="outline-2">
+<h2 id="orgb405a5e">Interacting with mc</h2>
+<div class="outline-text-2" id="text-orgb405a5e">
+<p>
+Midnight commander does not attempt to emulate vim bindings, but rather seeks to replicate
+a graphical application with menu bar and all. You can even click on almost any element
+on the screen and interact with it primarily with your mouse. The most common commands
+of a file manager: Viewing, Editing, Copying, Moving, Deleting, Mkdir&#x2026;ing, are all
+one shortcut away using the function keys. Hints are provided at the bottom, including
+access to a robust help manual:
+</p>
+
+
+<div id="org12000a2" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/help.png" alt="help.png" width="900px" />
+</p>
+</div>
+
+<p>
+You can swap focus between windows with <code>Tab</code>. To synchronize the directory viewed by the
+unfocused tab, hit <code>Option-i</code>. To enter the currently selected directory in the other
+window, hit <code>Option-o</code>. To quickly jump to a file path without having to navigate up
+or down the directory tree, simply hit <code>Option-c</code> and a <code>cd</code> prompt you for the path to
+jump to.
+</p>
+
+
+<div id="orgf9d98e4" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/cd.png" alt="cd.png" width="900px" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2b0a5be" class="outline-3">
+<h3 id="org2b0a5be">Viewing files</h3>
+<div class="outline-text-3" id="text-org2b0a5be">
+<p>
+There are a few different ways you can view files, depending on your needs.
+You can use the <code>View</code> quick command (bound to <code>f3</code>). This will either open the built
+in file viewer, a fairly bare bones pager, or you can use some external file
+viewer (done by toggling the <code>Options-&gt;Configuration-&gt;'Use internal view'</code> option).
+</p>
+
+<p>
+The same is true for editing files (bound to <code>f4</code>. Mc comes with a file editor, equally bare bones,
+but that can be changed by toggling the <code>Options-&gt;Configuration-&gt;'Use internal edit'</code>
+option.
+</p>
+
+<p>
+For a quicker way to peruse files, you can turn on "Quick View" mode (bound to <code>Control-x q</code>).
+In this mode, any regular file that is selected in the active window will have its
+contents shown in the inactive window. When you navigate around, the preview window
+will update accordingly. It even comes with some basic search and goto functionality.
+</p>
+
+
+<div id="org6d21e62" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/quick_view.png" alt="quick_view.png" width="900px" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgb3795f1" class="outline-3">
+<h3 id="orgb3795f1">Hotlist</h3>
+<div class="outline-text-3" id="text-orgb3795f1">
+<p>
+The "hotlist" is mc's name for what would commonly be called bookmarks today. Using the
+hotlist (bound to <code>Control-\</code>), you can save a list of directories that you often visit
+and quickly navigate back to them. You can add new directories by first going through
+this menu, or from the main screen by hitting <code>Control-x h</code> to quick add the current
+directory to the hotlist.
+</p>
+
+
+<div id="org1cf3c80" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/hotlist.png" alt="hotlist.png" width="900px" />
+</p>
+</div>
+
+<p>
+If you have a lot of directories in the hotlist, you can make "groups" (more like folders)
+to store logically similar directories together. Just use the <code>New group</code> option and you're
+good to go. You can save new directories into them, or move existing entries into or out
+of them.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7be66fa" class="outline-2">
+<h2 id="org7be66fa">Customization</h2>
+<div class="outline-text-2" id="text-org7be66fa">
+<p>
+Midnight commander is very, very customizable. All its configuration is stored in
+<code>~/.config/mc/ini</code><sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>. You could edit this file by hand, but for most settings,
+you can go through the <code>Options</code> menu to visually edit them<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>.
+</p>
+
+<p>
+You can also customize the <code>User menu</code>. This is a quick list of actions to perform
+on the selected file(s) you can access any time from the <code>Command</code> menu or with <code>f2</code>.
+</p>
+
+
+<div id="org00c63ad" class="figure">
+<p><img src="../../images/terminal_tooling/posts/2023_10_13_mc/user_menu.png" alt="user_menu.png" width="900px" />
+</p>
+</div>
+
+
+<p>
+In today's day and age, I find a couple of these actions helpful, like <code>tar.gz</code>-ing the
+current directory or viewing a man page, but others like <i>Strip headers from current newsarticle</i>&#x2026;quaint.
+However even this menu is customizable! You can add, remove, or edit any command in this menu
+that you like. If there's commands that you often run only in the context of a particular
+directory, you can create a local user menu file. How this file actually works and what
+all the weird symbols mean is an exercise left to the reader.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb8dc4b3" class="outline-2">
+<h2 id="orgb8dc4b3">Conclusion</h2>
+<div class="outline-text-2" id="text-orgb8dc4b3">
+<p>
+Midnight commander may be from a different era, but much like emacs or vim, 
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+There are other files in the <code>~/.config/mc</code> directory that are updated when changing
+certain settings, but <code>ini</code> is the primary one.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Just be sure to save your changes (the last option in the <code>Options menu</code>).
+</p></div></div>
+
+
+</div>
+</div></div>
+</body>
+</html>
