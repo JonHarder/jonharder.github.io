@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-10-12 Thu 16:17 -->
+<!-- 2023-10-13 Fri 12:56 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Midnight Commander - Terminal Tooling</title>
@@ -24,13 +24,13 @@ Let's start with a quick screenshot of mc in action.
 </p>
 
 
-<figure id="org2ebf0bf">
+<figure id="org247a568">
 <img src="../../images/terminal_tooling/posts/2023_10_13_mc/overview_unstyled.png" alt="overview_unstyled.png" width="900px">
 
 </figure>
 
 <p>
-Eww. How very&#x2026;MS Dos (or maybe this is nestalgic for you. To each their own). This is
+Eww. How very&#x2026;MS Dos (or maybe this is nostalgic for you. To each their own). This is
 intentional; as it started life as a clone of the popular <a href="https://en.wikipedia.org/wiki/Norton_Commander">Norton Commander</a>. It was
 first released in 1994 (8 years after its predecessor) and replicated the dual window
 text user interface almost exactly.
@@ -42,19 +42,19 @@ I've downloaded the <a href="https://github.com/catppuccin/mc">Catppuccin</a> th
 </p>
 
 
-<figure id="orge075490">
+<figure id="org3aa16ab">
 <img src="../../images/terminal_tooling/posts/2023_10_13_mc/catppuccin_file.png" alt="catppuccin_file.png" width="900px">
 
 </figure>
 
 
-<figure id="orgb2373fb">
+<figure id="orgbd2552c">
 <img src="../../images/terminal_tooling/posts/2023_10_13_mc/config_theme_1.png" alt="config_theme_1.png" width="900px">
 
 </figure>
 
 
-<figure id="org4c62a5d">
+<figure id="org001b5e1">
 <img src="../../images/terminal_tooling/posts/2023_10_13_mc/config_theme_2.png" alt="config_theme_2.png" width="900px">
 
 </figure>
@@ -64,7 +64,7 @@ Let's take another look:
 </p>
 
 
-<figure id="org37af0fb">
+<figure id="org2f4eeed">
 <img src="../../images/terminal_tooling/posts/2023_10_13_mc/overview.png" alt="overview.png" width="900px">
 
 </figure>
@@ -81,7 +81,7 @@ Much better.
 This is midnight commander (or <code>mc</code> for short). If you read the previous post
 about <a href="2023_10_06_ranger.html">ranger</a>, you'll notice there are two windows not three. Less obvious
 is the fact that these two windows are disconnected from each other. Where
-ranger's colums represented the parent and child directories of the current
+ranger's columns represented the parent and child directories of the current
 path, these windows are two separate file explorers. Each can be moved about
 the file system independently of each other.
 </p>
@@ -99,37 +99,22 @@ installed using Homebrew:
 </div>
 
 
-<figure id="orgeef8041">
+<figure id="orgf7ba814">
 <img src="../../images/terminal_tooling/posts/2023_10_13_mc/example_copy_1.png" alt="example_copy_1.png" width="900px">
 
 </figure>
 
 <p>
 In this example, you can see the left window is viewing <code>~/Code/k8s-app/backend</code>, and the
-right window is viewing <code>~/tmp/mc_demo</code>. When I hit <code>f5</code> for <code>Copy</code> (shortcut hints are displayed
-on the last row of the window), the popup modal for Copying <code>Dockerfile</code> is pre-filled
-with the right window's directory.
-</p>
-
-
-<figure id="org786d1fe">
-<img src="../../images/terminal_tooling/posts/2023_10_13_mc/example_copy_2.png" alt="example_copy_2.png" width="900px">
-
-</figure>
-
-<p>
-From here you can hit <code>Enter</code> and just copy the file, or change the name of the copied file
-before proceeding with the copy.
-</p>
-
-<p>
-Like ranger, you can select multiple files to execute any of the actions on. Hit <code>+</code> to
-open up a prompt for selection. You can leave the value as is, <code>*</code> for selecting all entries
-in the current window, or any regex you want to select only the matching items.
+right window is viewing <code>~/tmp/mc_demo</code>. On the bottom you'll see the numbers 1-10 and
+an action next to each. These are the basic commands you'll likely use most when using
+mc. Each number indicates which function key triggers the command (<code>f1</code> through <code>f10</code>).
 </p>
 </div>
 </div>
 </div>
+
+
 
 <div id="outline-container-orgb405a5e" class="outline-2">
 <h2 id="orgb405a5e">Interacting with mc</h2>
@@ -144,29 +129,88 @@ access to a robust help manual:
 </p>
 
 
-<figure id="orgfd5d607">
+<figure id="orgb20e282">
 <img src="../../images/terminal_tooling/posts/2023_10_13_mc/help.png" alt="help.png" width="900px">
 
 </figure>
+</div>
 
+<div id="outline-container-org25f409d" class="outline-3">
+<h3 id="org25f409d">Basic Copy, Rename, Delete</h3>
+<div class="outline-text-3" id="text-org25f409d">
+<p>
+As the bottom row suggests, you can copy the highlighted file with <code>f5</code>. It will be copied
+to the other window (by default, you can edit the destination if you want to copy to a
+different destination).
+</p>
+
+
+<figure id="org62bc1d1">
+<img src="../../images/terminal_tooling/posts/2023_10_13_mc/example_copy_2.png" alt="example_copy_2.png" width="900px">
+
+</figure>
+
+<p>
+The same is true for <code>RenMov</code>, short for <code>Rename/Move</code>. Hitting
+<code>f6</code> will open the <code>Move</code> prompt. The destination defaults to the other window and if you
+just hit enter, it will be moved there.
+</p>
+
+<p>
+To rename, open the <code>RenMov</code> dialog again. To simply rename the file, start typing the new
+name and the <code>To:</code> field will be replaced with your new name. Hitting enter will rename
+the file but keep it in the same directory. To move and rename the file, open the <code>RenMov</code>
+prompt, but before you start to type the new name, hit <code>&lt;right&gt;</code> first, this will cause
+whatever you type to be appended to the <code>To:</code> prompt rather than overwrite it (you should see the
+color of the populated field change color to indicate it changing from overwrite to append mode).
+Hitting enter will move the file to the other window and rename it to whatever you typed.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org51cadcb" class="outline-3">
+<h3 id="org51cadcb">Advanced Copy, Rename, Delete</h3>
+<div class="outline-text-3" id="text-org51cadcb">
+<p>
+Like ranger, you can select multiple files to execute any of the actions on. Hit <code>+</code> to
+open up a prompt for selection. You can leave the value as is, <code>*</code> for selecting all entries
+in the current window, or any regex you want to select only the matching items. If you want
+to unselect all files or files matching some regex, hit <code>-</code>.
+</p>
+
+<p>
+To select individual files, just hit <code>Control-t</code>.
+</p>
+
+<p>
+From here, any <code>Copy</code>, <code>RenMov</code>, or <code>Delete</code> command will apply to all selected files.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2fb1f5e" class="outline-3">
+<h3 id="org2fb1f5e">Interacting With the Windows</h3>
+<div class="outline-text-3" id="text-org2fb1f5e">
 <p>
 You can swap focus between windows with <code>Tab</code>. To synchronize the directory viewed by the
 unfocused tab, hit <code>Option-i</code>. To enter the currently selected directory in the other
 window, hit <code>Option-o</code>. To quickly jump to a file path without having to navigate up
 or down the directory tree, simply hit <code>Option-c</code> and a <code>cd</code> prompt you for the path to
-jump to.
+jump to. If you want to swap the positions of the two windows with each other,
+hit <code>Control-u</code>.
 </p>
 
 
-<figure id="org2372ba9">
+<figure id="orgc6dbacf">
 <img src="../../images/terminal_tooling/posts/2023_10_13_mc/cd.png" alt="cd.png" width="900px">
 
 </figure>
 </div>
+</div>
 
-<div id="outline-container-org2b0a5be" class="outline-3">
-<h3 id="org2b0a5be">Viewing files</h3>
-<div class="outline-text-3" id="text-org2b0a5be">
+<div id="outline-container-orgd3270e1" class="outline-3">
+<h3 id="orgd3270e1">Viewing and Editing Files</h3>
+<div class="outline-text-3" id="text-orgd3270e1">
 <p>
 There are a few different ways you can view files, depending on your needs.
 You can use the <code>View</code> quick command (bound to <code>f3</code>). This will either open the built
@@ -184,11 +228,11 @@ option.
 For a quicker way to peruse files, you can turn on "Quick View" mode (bound to <code>Control-x q</code>).
 In this mode, any regular file that is selected in the active window will have its
 contents shown in the inactive window. When you navigate around, the preview window
-will update accordingly. It even comes with some basic search and goto functionality.
+will update accordingly. It even comes with some basic search and go to functionality.
 </p>
 
 
-<figure id="org1a10d45">
+<figure id="org353c6da">
 <img src="../../images/terminal_tooling/posts/2023_10_13_mc/quick_view.png" alt="quick_view.png" width="900px">
 
 </figure>
@@ -208,7 +252,7 @@ directory to the hotlist.
 </p>
 
 
-<figure id="orgb8837bd">
+<figure id="org29dccb2">
 <img src="../../images/terminal_tooling/posts/2023_10_13_mc/hotlist.png" alt="hotlist.png" width="900px">
 
 </figure>
@@ -238,7 +282,7 @@ on the selected file(s) you can access any time from the <code>Command</code> me
 </p>
 
 
-<figure id="org4cdc9f0">
+<figure id="orgee7cf27">
 <img src="../../images/terminal_tooling/posts/2023_10_13_mc/user_menu.png" alt="user_menu.png" width="900px">
 
 </figure>
@@ -290,6 +334,21 @@ stay tuned for next week's article&#x2026;
 </div>
 </div>
 
+
+<div id="outline-container-org23937e2" class="outline-2">
+<h2 id="org23937e2">Alternatives</h2>
+<div class="outline-text-2" id="text-org23937e2">
+<p>
+If you're on Linux, <a href="https://doublecmd.sourceforge.io/">Double Commander</a> is a good GUI based dual window file manager.
+Unfortunately, it has lost support for macOS. <a href="https://www.mplsoftware.com/products/maxcommander">MaxCommander</a> looks like a good mac
+native option (<b>note</b>: I have not tried either of these applications, but have heard
+good things). It uses <code>Command-num</code> based shortcuts instead of function keys which
+sounds far more ergonomic to me. It is currently $7.99 as of the time of writing
+this article and closed source, which could be a deal breaker for you. If you happen
+to give it a shot, let me know how you like it.
+</p>
+</div>
+</div>
 <div id="outline-container-org5708254" class="outline-2">
 <h2 id="org5708254">Additional Resources</h2>
 <div class="outline-text-2" id="text-org5708254">
