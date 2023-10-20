@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-10-13 Fri 13:02 -->
+<!-- 2023-10-20 Fri 14:10 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Vifm - [[file:../index.org][Terminal Tooling]]</title>
@@ -19,7 +19,207 @@
 
 <div id="outline-container-orgb81de1a" class="outline-2">
 <h2 id="orgb81de1a">Vifm&#xa0;&#xa0;&#xa0;<span class="tag"><span class="file_managers">file_managers</span></span></h2>
+<div class="outline-text-2" id="text-orgb81de1a">
+</div>
+<div id="outline-container-orgc96589a" class="outline-3">
+<h3 id="orgc96589a">Overview</h3>
+<div class="outline-text-3" id="text-orgc96589a">
+<p>
+Vifm is the vi file manager. It uses dual window design reminiscient
+of midnight commander, but attempts to replicate vi keybindings as
+much as possible. 
+</p>
+
+
+<figure id="org3ffc754">
+<img src="../../images/terminal_tooling/posts/2023_10_20_vifm/overview.png" alt="overview.png">
+
+</figure>
+
+<p>
+The emulation is so complete that I can confidently say, if you know how to use vi (or vim or neovim)
+you already know how to use vifm. Your intuition as to moving around, copying and pasting files,
+using marks, etc will guide you to the correct key or command.
+</p>
+
+<p>
+For some of you, this might already be enough of a sell that you could close this tab, install vifm,
+and have some fun exploring its features. For the rest of you however, I'll dig into some of the
+unique features, quirks and pain points.
+</p>
 </div>
 </div>
+
+<div id="outline-container-org33ad3d9" class="outline-3">
+<h3 id="org33ad3d9">Basic features</h3>
+<div class="outline-text-3" id="text-org33ad3d9">
+<p>
+As expected, all the basic navigation from vim works here. <code>h</code>, <code>j</code>, <code>k</code> and <code>l</code> move up, down, back and
+forward through the directory tree. <code>gg</code> moves to the first item in the current directory,
+<code>G</code> goes to the last. <code>H</code>, <code>M</code>, <code>L</code> move to the top, middle, and bottom of the visible window's contents.
+</p>
+
+<p>
+You can rename, cut, copy, and delete files just like you would expect for a vim inspired file
+manager (just like in <a href="2023_10_06_ranger.html#orgffe91a1">ranger</a>). And bulk updates work the same way (using a temporary file which
+you edit in order to specify the desired changes)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb38819a" class="outline-3">
+<h3 id="orgb38819a">Finding files</h3>
+<div class="outline-text-3" id="text-orgb38819a">
+<p>
+There are many commands you can execute by triggering <code>ex</code> mode (using <code>:</code>). However one notable one
+that deserves some attention is <code>:grep</code>.
+</p>
+
+<p>
+Consider the following situation: You're at the root of some project, and you want to find
+all the files which contain the string <code>db</code>.
+</p>
+
+
+<figure id="orgc6910e5">
+<img src="../../images/terminal_tooling/posts/2023_10_20_vifm/grep_1.png" alt="grep_1.png">
+
+</figure>
+
+<p>
+Execute <code>:grep database</code>, and a window will pop up with all the results recursively.
+</p>
+
+
+<figure id="org03f5ae6">
+<img src="../../images/terminal_tooling/posts/2023_10_20_vifm/grep_2.png" alt="grep_2.png">
+
+</figure>
+
+<p>
+Hmmm&#x2026; that certainly gave us <i>all</i> the results. But there's probably some files included
+in the results that we don't care about, notably <code>go.mod</code> and <code>go.sum</code>.
+</p>
+
+<p>
+Let's select those two files (using <code>t</code>), then invert the selection (using <code>:invert s</code>, for
+invert selection)
+</p>
+
+
+<figure id="org3fd3840">
+<img src="../../images/terminal_tooling/posts/2023_10_20_vifm/grep_3.png" alt="grep_3.png">
+
+</figure>
+
+<p>
+Now running grep will limit its search to only the selected files.
+</p>
+
+
+<figure id="orgc03204d">
+<img src="../../images/terminal_tooling/posts/2023_10_20_vifm/grep_4.png" alt="grep_4.png">
+
+</figure>
+
+<p>
+Now that's much easier to work with. This window can be navigated with the same vim
+bindings for regular navigation, and pressing (<code>l</code> or <code>enter)</code> on any of the lines will jump
+into that file to the relevant line.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org00b39d3" class="outline-3">
+<h3 id="org00b39d3">Marks</h3>
+<div class="outline-text-3" id="text-org00b39d3">
+<p>
+True to its vim inspiration, you can use <a href="https://vim.fandom.com/wiki/Using_marks">marks</a> to set temporary bookmarks you can
+jump back to later. The marks you set are ephemeral and are lost when you close
+vifm.
+</p>
+
+<p>
+Marks can be made permanent by adding them to the <a href="#org4dd9e8a">configuration</a> file. This is a
+great way to set easy access to common directories you work on frequently.
+</p>
+
+<p>
+Speaking of configuration, vifm supports a huge number of configurable settings.
+It should be a surprise to no one that the syntax of its configuration file is
+the same as vim's.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4dd9e8a" class="outline-3">
+<h3 id="org4dd9e8a">Configuration</h3>
+<div class="outline-text-3" id="text-org4dd9e8a">
+<p>
+Stored in <code>~/.config/vifm/vifmrc</code>, vifm's configuration comes pre-populated upon
+installation with extensive commentary and default values for each setting.
+You can change this file however you like, there are many like it, but this
+one is yours.
+</p>
+
+<p>
+For example, to add by default a mark for your home directory, add the following
+line to your <code>vifmrc</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-vimrc"><span style="color: #af85ea; font-weight: bold;">mark</span> h ~/
+</pre>
+</div>
+
+<p>
+Now, any time you want to jump home in vifm, simply hit <code>'h</code>.
+</p>
+
+<p>
+To fully explore all the configuration settings would warrant a whole article of
+its own so I'll end the discussion here for now.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbb5ba99" class="outline-3">
+<h3 id="orgbb5ba99">Conclusion</h3>
+<div class="outline-text-3" id="text-orgbb5ba99">
+<p>
+Vifm and ranger share many keybindings and a similar philosophy, so why would
+you choose one over the other? In my mind it depends on two things. 1.) Do you like
+miller columns<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> or dual window displays? And 2.) do you like to customize your tools
+with a programming language (ranger uses python) or a simple declarative format
+like vifm's?
+</p>
+
+<p>
+There's no right or wrong here, but simply a matter of taste. Whichever you choose,
+you can rest assured that taking time to find the tool works for you will remove
+one source of friction in your workflow.
+</p>
+
+<p>
+This also concludes the month of terminal file managers. Coming up next will be a series
+of articles reviewing basic POSIX tools and how to squeeze every last ounce of utility
+you can.
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Vifm technically supports miller columns as well using <code>:set millerview</code> but I struggled
+to get it working nicely. I would say if you really want this design, ranger may be the better
+choice for you.
+</p></div></div>
+
+
+</div>
+</div></div>
 </body>
 </html>
