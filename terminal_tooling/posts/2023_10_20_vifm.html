@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-10-20 Fri 14:10 -->
+<!-- 2023-10-20 Fri 14:42 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Vifm - [[file:../index.org][Terminal Tooling]]</title>
@@ -31,10 +31,14 @@ much as possible.
 </p>
 
 
-<figure id="org3ffc754">
+<figure id="org037e434">
 <img src="../../images/terminal_tooling/posts/2023_10_20_vifm/overview.png" alt="overview.png">
 
 </figure>
+
+<p>
+<i>NOTE: I have installed the catppuccin theme and the <a href="https://github.com/thimc/vifm_devicons">vim devicons</a> plugin.</i>
+</p>
 
 <p>
 The emulation is so complete that I can confidently say, if you know how to use vi (or vim or neovim)
@@ -81,7 +85,7 @@ all the files which contain the string <code>db</code>.
 </p>
 
 
-<figure id="orgc6910e5">
+<figure id="org8510c25">
 <img src="../../images/terminal_tooling/posts/2023_10_20_vifm/grep_1.png" alt="grep_1.png">
 
 </figure>
@@ -91,7 +95,7 @@ Execute <code>:grep database</code>, and a window will pop up with all the resul
 </p>
 
 
-<figure id="org03f5ae6">
+<figure id="org2100852">
 <img src="../../images/terminal_tooling/posts/2023_10_20_vifm/grep_2.png" alt="grep_2.png">
 
 </figure>
@@ -107,7 +111,7 @@ invert selection)
 </p>
 
 
-<figure id="org3fd3840">
+<figure id="org31cf2d2">
 <img src="../../images/terminal_tooling/posts/2023_10_20_vifm/grep_3.png" alt="grep_3.png">
 
 </figure>
@@ -117,7 +121,7 @@ Now running grep will limit its search to only the selected files.
 </p>
 
 
-<figure id="orgc03204d">
+<figure id="orge7ae9fa">
 <img src="../../images/terminal_tooling/posts/2023_10_20_vifm/grep_4.png" alt="grep_4.png">
 
 </figure>
@@ -187,11 +191,22 @@ its own so I'll end the discussion here for now.
 <h3 id="orgbb5ba99">Conclusion</h3>
 <div class="outline-text-3" id="text-orgbb5ba99">
 <p>
+This is a shorter article is part because there is so much overlap with ranger, which
+received a fuller write up.
+</p>
+
+<p>
 Vifm and ranger share many keybindings and a similar philosophy, so why would
 you choose one over the other? In my mind it depends on two things. 1.) Do you like
 miller columns<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> or dual window displays? And 2.) do you like to customize your tools
 with a programming language (ranger uses python) or a simple declarative format
 like vifm's?
+</p>
+
+<p>
+Additionally, though ranger utilizes many vim keybindings, only vifm can honestly claim
+"If you know vim, you know vifm". That's a pretty strong statement that I'm making on their
+behalf. This is perhaps the biggest sell, and it may just be the deciding factor for you.
 </p>
 
 <p>
