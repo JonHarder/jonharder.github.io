@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2023-10-27 Fri 10:43 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>grep - [[file:../index.org][Terminal Tooling]]</title>
+<meta name="author" content="Jonathan Harder" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="/css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body>
+<div id="content" class="content">
+<header>
+<h1 class="title">grep - <a href="../index.html">Terminal Tooling</a></h1>
+</header>
+
+<div id="outline-container-orgc79a9da" class="outline-2">
+<h2 id="orgc79a9da">grep&#xa0;&#xa0;&#xa0;<span class="tag"><span class="unix_tools">unix_tools</span></span></h2>
+<div class="outline-text-2" id="text-orgc79a9da">
+</div>
+<div id="outline-container-org66a5451" class="outline-3">
+<h3 id="org66a5451">Overview</h3>
+<div class="outline-text-3" id="text-org66a5451">
+<p>
+Grep is a fundamental part of the command line toolbelt. True to the <a href="https://en.wikipedia.org/wiki/Unix_philosophy">Unix philosophy</a>,
+grep does one thing, and does it well. Its job is to search input for a given
+search pattern and print all lines that match. Think of it like <code>Command-f</code> for the
+terminal.
+</p>
+
+<p>
+Its origins date back to the <code>ed</code> text editor. It was a common practice within <code>ed</code> to execute
+the command <code>g/r(egular) e(expression)/p</code>, meaning, <code>globally</code> search for lines that match
+the given <code>regular expression</code> and <code>print</code> them. This functionality was so useful, that the
+name "grep" became synonomous with the act of searching files and printing matches, and
+a standalone <code>grep</code> program was born.<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>
+</p>
+
+<p>
+There are two ways to have <code>grep</code> search text. One is to provide a list of files as
+an the target of the search which will be searched line-by-line for your pattern
+and matching lines will be printed. The other is to search incoming text from <a target="_blank" href="http://man.he.net/?topic=stdin&section=all">stdin</a>
+and print the matching lines.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org952a48e" class="outline-3">
+<h3 id="org952a48e">Examples - Searching files</h3>
+<div class="outline-text-3" id="text-org952a48e">
+</div>
+<div id="outline-container-org211e680" class="outline-4">
+<h4 id="org211e680">Basics</h4>
+<div class="outline-text-4" id="text-org211e680">
+<p>
+Let's look at some examples, looking in the same <code>k8s-app</code> project you've seen
+in all previous examples. In this case, we'll focus first in the <code>backend</code> directory.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Current directory: $(pwd)"</span>
+<span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"----------"</span>
+ls
+</pre>
+</div>
+
+<pre class="example">
+Current directory: /Users/jharder/Code/k8s-app/backend
+----------
+Dockerfile
+app.go
+db.go
+go.mod
+go.sum
+main.go
+tracing.go
+</pre>
+
+
+<p>
+Let's say you're interesting in finding all occurrences of the phrase <code>trace</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep trace *
+</pre>
+</div>
+
+<pre class="example" id="orgd154561">
+app.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+app.go:func newApp(ctx context.Context, tp *sdktrace.TracerProvider) (*App, error) {
+db.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+db.go:func dbConn(ctx context.Context, tp *sdktrace.TracerProvider) (*mongo.Client, error) {
+go.mod:	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.14.0
+go.mod:	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.14.0
+go.mod:	go.opentelemetry.io/otel/trace v1.14.0
+go.sum:go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.14.0 h1:TKf2uAs2ueguzLaxOCBXNpHxfO/aC7PAdDsSH0IbeRQ=
+go.sum:go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.14.0/go.mod h1:HrbCVv40OOLTABmOn1ZWty6CHXkU8DK/Urc43tHug70=
+go.sum:go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.14.0 h1:3jAYbRHQAqzLjd9I4tzxwJ8Pk/N6AqBcF6m1ZHrxG94=
+go.sum:go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.14.0/go.mod h1:+N7zNjIJv4K+DeX67XXET0P+eIciESgaFDBqh+ZJFS4=
+go.sum:go.opentelemetry.io/otel/trace v1.14.0 h1:wp2Mmvj41tDsyAJXiWDWpfNsOiIyd38fy85pyKcFq/M=
+go.sum:go.opentelemetry.io/otel/trace v1.14.0/go.mod h1:8avnQLK+CG77yNLUae4ea2JDQ6iT+gozhnZjy/rw9G8=
+main.go:	"go.opentelemetry.io/otel/trace"
+main.go:		span := trace.SpanFromContext(ctx)
+main.go:			log.Printf("Error shutting down tracer provider: %v", err)
+tracing.go:	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
+tracing.go:	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
+tracing.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+tracing.go:func initExporter(ctx context.Context) (*otlptrace.Exporter, error) {
+tracing.go:	client := otlptracehttp.NewClient()
+tracing.go:	exporter, err := otlptrace.New(ctx, client)
+tracing.go:func initTracer(ctx context.Context) (*sdktrace.TracerProvider, error) {
+tracing.go:	// https://github.com/open-telemetry/opentelemetry-go/blob/main/exporters/otlp/otlptrace/otlptracehttp/example_test.go#L68
+tracing.go:	// exporter, err := stdouttrace.New(stdouttrace.WithPrettyPrint())
+tracing.go:	trace_provider := sdktrace.NewTracerProvider(
+tracing.go:		sdktrace.WithSampler(sdktrace.AlwaysSample()),
+tracing.go:		sdktrace.WithBatcher(exporter),
+tracing.go:		sdktrace.WithResource(resource.NewWithAttributes(semconv.SchemaURL, semconv.ServiceName(name))),
+tracing.go:	otel.SetTracerProvider(trace_provider)
+tracing.go:	return trace_provider, nil
+</pre>
+
+
+<p>
+That's a lot of results, but we probably don't care about <code>go.mod</code> and <code>go.sum</code>. We can trim the
+results down by specifying a <a href="https://tldp.org/LDP/abs/html/globbingref.html">glob</a> that feeds only specific files to grep to search through.<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>
+Let's search for only Go files (with the <code>.go</code> suffix).
+</p>
+
+<p>
+If we instead run <code>grep trace **.go</code>, our shell will expand <code>*.go</code> to <code>app.go db.go main.go tracing.go</code><sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup>,
+and then feed that as arguments to <code>grep</code>. Let's see the results:<sup><a id="fnr.4" class="footref" href="#fn.4" role="doc-backlink">4</a></sup>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep trace *.go
+</pre>
+</div>
+
+<pre class="example" id="orgf4b9608">
+app.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+app.go:func newApp(ctx context.Context, tp *sdktrace.TracerProvider) (*App, error) {
+db.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+db.go:func dbConn(ctx context.Context, tp *sdktrace.TracerProvider) (*mongo.Client, error) {
+main.go:	"go.opentelemetry.io/otel/trace"
+main.go:		span := trace.SpanFromContext(ctx)
+main.go:			log.Printf("Error shutting down tracer provider: %v", err)
+tracing.go:	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
+tracing.go:	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
+tracing.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+tracing.go:func initExporter(ctx context.Context) (*otlptrace.Exporter, error) {
+tracing.go:	client := otlptracehttp.NewClient()
+tracing.go:	exporter, err := otlptrace.New(ctx, client)
+tracing.go:func initTracer(ctx context.Context) (*sdktrace.TracerProvider, error) {
+tracing.go:	// https://github.com/open-telemetry/opentelemetry-go/blob/main/exporters/otlp/otlptrace/otlptracehttp/example_test.go#L68
+tracing.go:	// exporter, err := stdouttrace.New(stdouttrace.WithPrettyPrint())
+tracing.go:	trace_provider := sdktrace.NewTracerProvider(
+tracing.go:		sdktrace.WithSampler(sdktrace.AlwaysSample()),
+tracing.go:		sdktrace.WithBatcher(exporter),
+tracing.go:		sdktrace.WithResource(resource.NewWithAttributes(semconv.SchemaURL, semconv.ServiceName(name))),
+tracing.go:	otel.SetTracerProvider(trace_provider)
+tracing.go:	return trace_provider, nil
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org59fe709" class="outline-4">
+<h4 id="org59fe709">Excluding files</h4>
+<div class="outline-text-4" id="text-org59fe709">
+<p>
+It's a bit annoying to have to deal with <code>tracing.go</code> polluting our results as it's obviously
+going to have a bunch of hits which we don't care about. There's no quick and easy way to
+exclude it from the shell glob, but <code>grep</code> itself gives us a way to exclude certain files
+from being processed when it runs. <code>--exclude</code> takes a pattern that it will run against the
+name of each file it will process, if the pattern matches, <code>grep</code> will skip that file. The
+opposite behavior can be achieved with <code>--include</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep --exclude <span style="color: #df9080;">'tracing.go'</span> trace *.go
+</pre>
+</div>
+
+<pre class="example">
+app.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+app.go:func newApp(ctx context.Context, tp *sdktrace.TracerProvider) (*App, error) {
+db.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+db.go:func dbConn(ctx context.Context, tp *sdktrace.TracerProvider) (*mongo.Client, error) {
+main.go:	"go.opentelemetry.io/otel/trace"
+main.go:		span := trace.SpanFromContext(ctx)
+main.go:			log.Printf("Error shutting down tracer provider: %v", err)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org06bdd2c" class="outline-4">
+<h4 id="org06bdd2c">Line numbers</h4>
+<div class="outline-text-4" id="text-org06bdd2c">
+<p>
+Having these results is handy, but it would be better to know where in the file these matches
+can be found. Passing the <code>-n</code> or <code>--line-number</code> flag provides the line number of each hit.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep -n trace 
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf8dbd8a" class="outline-4">
+<h4 id="orgf8dbd8a">Context</h4>
+<div class="outline-text-4" id="text-orgf8dbd8a">
+<p>
+This is indeed nicer, but it would be nicer <i>still</i> if we had a bit of context for each
+of the matches. What is going on around the lines where these results were found?
+</p>
+
+<p>
+You can use the <code>-C</code> or <code>--context</code> argument with a positive number and that number of
+lines before and after the match will be printed to stdout as well.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep -n --context=3 trace main.go
+</pre>
+</div>
+
+<pre class="example" id="orgfd748de">
+8-
+9-	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+10-	"go.opentelemetry.io/otel"
+11:	"go.opentelemetry.io/otel/trace"
+12-)
+13-
+14-const name = "recipe-service"
+--
+23-	return func(w http.ResponseWriter, r *http.Request) {
+24-		ctx := r.Context()
+25-		// grabs the current span
+26:		span := trace.SpanFromContext(ctx)
+27-		span.AddEvent("GetRecipes")
+28-		log.Println("GET /recipes")
+29-		recipes, err := app.getRecipes(ctx)
+--
+74-	}
+75-	defer func() {
+76-		if err := tp.Shutdown(context.Background()); err != nil {
+77:			log.Printf("Error shutting down tracer provider: %v", err)
+78-		}
+79-	}()
+80-
+</pre>
+
+
+<p>
+Lines ending in <code>-</code> signify they are lines added for context, lines ending in <code>:</code> signify the
+matched line itself, and <code>--</code> separates each matched line (and its context).
+</p>
+
+<p>
+You can also specify the number of lines to display before and after separately using <code>B</code> or <code>--before-context</code>
+and <code>-A</code> or <code>--after-context</code> respectively.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc4ea6cf" class="outline-4">
+<h4 id="orgc4ea6cf">Count</h4>
+<div class="outline-text-4" id="text-orgc4ea6cf">
+<p>
+Sometimes it can be helpful to understand how often a particular search term appears
+in your searched files. For this, you can use <code>-c</code> or <code>--count</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep -c trace *.go
+</pre>
+</div>
+
+<pre class="example">
+app.go:2
+db.go:2
+main.go:3
+tracing.go:15
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orge1127b8" class="outline-4">
+<h4 id="orge1127b8">Matching files only</h4>
+<div class="outline-text-4" id="text-orge1127b8">
+<p>
+If you didn't care about <i>which</i> lines specifically mached your pattern, but only which
+<i>files</i> contained the match, you can use the <code>-l</code> or <code>--files-with-matches</code> flag to only show
+the files instead.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep -l --exclude <span style="color: #df9080;">'*.sum'</span> --exclude <span style="color: #df9080;">'*.mod'</span> trace *
+</pre>
+</div>
+
+<pre class="example">
+app.go
+db.go
+main.go
+tracing.go
+</pre>
+
+
+<p>
+You can also see here that the exclude (and their <code>--include</code> couterpart) actually take
+a shell glob as their argument, not just an exact file name. Here we use this to exclude
+<i>all</i> files ending in <code>.sum</code> or <code>.mod</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org69ce361" class="outline-4">
+<h4 id="org69ce361">Printing mached content only</h4>
+<div class="outline-text-4" id="text-org69ce361">
+<p>
+Perhaps the inverse of showing the files that match is showing the match only, not the rest
+of the line. This is accomplished using the <code>-o</code> or <code>--only-matching</code> flag. This is likely most
+handy when paired witn the <code>-E</code> or <code>--extended-regexp</code> flag which enables full regular expression
+support.
+</p>
+
+<p>
+The regular expression searches for anything that starts with <code>With</code> and matches any number of
+characters that aren't the <code>(</code> symbol. This has the effect of finding any function definition
+or call starting with <code>With</code>. Using <code>-o</code> means all we get back is what actually mached the regular
+expression, and which file it came from. If we were interested in knowing where in the file
+the match was, we could add the <code>-n</code> flag as well.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep --exclude <span style="color: #df9080;">'*.sum'</span> --exclude <span style="color: #df9080;">'*.mod'</span> -o -E <span style="color: #df9080;">'With[^(]*'</span> *
+</pre>
+</div>
+
+<pre class="example">
+db.go:WithTracerProvider
+tracing.go:WithPrettyPrint
+tracing.go:WithSampler
+tracing.go:WithBatcher
+tracing.go:WithResource
+tracing.go:WithAttributes
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org25bf64e" class="outline-4">
+<h4 id="org25bf64e">Searching recursively</h4>
+<div class="outline-text-4" id="text-org25bf64e">
+<p>
+Now suppose you didn't know which folder contained the files you were looking for. Instead
+you can run <code>grep</code> from any directory and pass the <code>-r</code> or <code>--recursive</code> flag to change grep from
+searching through only the files explicitly given to searching all files recursively in the
+provided directory and all children directories and files.
+</p>
+
+<p>
+Lets go up one directory from our go app example. In the parent directory we have
+directories for multiple applications and the IaC kubernetes code to deploy each of them:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Current Directry: $(pwd)"</span>
+<span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"---------------"</span>
+ls -F
+</pre>
+</div>
+
+<pre class="example">
+Current Directry: /Users/jharder/Code/k8s-app
+---------------
+backend/
+docker-compose.yml
+files/
+frontend/
+kubernetes/
+</pre>
+
+
+<p>
+We may not want to restrict our search to just the backend; let's search for <code>trace</code> from here
+using the recursive flag.
+</p>
+
+<p>
+When searching recursively, you can specify the directry to start the search from in place
+of the files to search in. If you don't provide a directory, the current working directory
+will be used instead
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep -r trace | head -n 10
+</pre>
+</div>
+
+<pre class="example" id="orga2152b0">
+./frontend/node_modules/@types/express-serve-static-core/index.d.ts:    trace: IRouterMatcher&lt;this&gt;;
+./frontend/node_modules/@types/express-serve-static-core/index.d.ts:    trace: IRouterHandler&lt;this, Route&gt;;
+./frontend/node_modules/@types/node/globals.d.ts:     * Optional override for formatting stack traces
+./frontend/node_modules/@types/node/globals.d.ts:     * @see https://v8.dev/docs/stack-trace-api#customizing-stack-traces
+./frontend/node_modules/@types/node/ts4.8/globals.d.ts:     * Optional override for formatting stack traces
+./frontend/node_modules/@types/node/ts4.8/globals.d.ts:     * @see https://v8.dev/docs/stack-trace-api#customizing-stack-traces
+./frontend/node_modules/@types/node/ts4.8/tls.d.ts:         * When enabled, TLS packet trace information is written to `stderr`. This can be
+./frontend/node_modules/@types/node/ts4.8/tls.d.ts:         * Note: The format of the output is identical to the output of `openssl s_client -trace` or `openssl s_server -trace`. While it is produced by OpenSSL's`SSL_trace()` function, the format is
+./frontend/node_modules/@types/node/ts4.8/tls.d.ts:         * When enabled, TLS packet trace information is written to `stderr`. This can be
+./frontend/node_modules/@types/node/ts4.8/trace_events.d.ts: * The `trace_events` module provides a mechanism to centralize tracing information
+</pre>
+
+<p>
+I'll save you from scrolling through the thousands of lines of results from
+<code>./frontend/node_modules/</code> by just displaying the first 10 lines using <a target="_blank" href="http://man.he.net/?topic=head&section=all">head</a>.
+</p>
+
+<p>
+Grep can save us from this annoyance as well; when searching recursively, you can exclude
+whole directories from its search in the same way that you could exclude individual files.
+Rather than using <code>--exclude</code>, we can use <code>--exclude-dir</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep -r --exclude-dir <span style="color: #df9080;">'node_modules'</span> trace
+</pre>
+</div>
+
+<pre class="example" id="org9a9f818">
+./backend/go.mod:	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.14.0
+./backend/go.mod:	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.14.0
+./backend/go.mod:	go.opentelemetry.io/otel/trace v1.14.0
+./backend/db.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+./backend/db.go:func dbConn(ctx context.Context, tp *sdktrace.TracerProvider) (*mongo.Client, error) {
+./backend/tracing.go:	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
+./backend/tracing.go:	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
+./backend/tracing.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+./backend/tracing.go:func initExporter(ctx context.Context) (*otlptrace.Exporter, error) {
+./backend/tracing.go:	client := otlptracehttp.NewClient()
+./backend/tracing.go:	exporter, err := otlptrace.New(ctx, client)
+./backend/tracing.go:func initTracer(ctx context.Context) (*sdktrace.TracerProvider, error) {
+./backend/tracing.go:	// https://github.com/open-telemetry/opentelemetry-go/blob/main/exporters/otlp/otlptrace/otlptracehttp/example_test.go#L68
+./backend/tracing.go:	// exporter, err := stdouttrace.New(stdouttrace.WithPrettyPrint())
+./backend/tracing.go:	trace_provider := sdktrace.NewTracerProvider(
+./backend/tracing.go:		sdktrace.WithSampler(sdktrace.AlwaysSample()),
+./backend/tracing.go:		sdktrace.WithBatcher(exporter),
+./backend/tracing.go:		sdktrace.WithResource(resource.NewWithAttributes(semconv.SchemaURL, semconv.ServiceName(name))),
+./backend/tracing.go:	otel.SetTracerProvider(trace_provider)
+./backend/tracing.go:	return trace_provider, nil
+./backend/go.sum:go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.14.0 h1:TKf2uAs2ueguzLaxOCBXNpHxfO/aC7PAdDsSH0IbeRQ=
+./backend/go.sum:go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.14.0/go.mod h1:HrbCVv40OOLTABmOn1ZWty6CHXkU8DK/Urc43tHug70=
+./backend/go.sum:go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.14.0 h1:3jAYbRHQAqzLjd9I4tzxwJ8Pk/N6AqBcF6m1ZHrxG94=
+./backend/go.sum:go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.14.0/go.mod h1:+N7zNjIJv4K+DeX67XXET0P+eIciESgaFDBqh+ZJFS4=
+./backend/go.sum:go.opentelemetry.io/otel/trace v1.14.0 h1:wp2Mmvj41tDsyAJXiWDWpfNsOiIyd38fy85pyKcFq/M=
+./backend/go.sum:go.opentelemetry.io/otel/trace v1.14.0/go.mod h1:8avnQLK+CG77yNLUae4ea2JDQ6iT+gozhnZjy/rw9G8=
+./backend/app.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+./backend/app.go:func newApp(ctx context.Context, tp *sdktrace.TracerProvider) (*App, error) {
+./backend/main.go:	"go.opentelemetry.io/otel/trace"
+./backend/main.go:		span := trace.SpanFromContext(ctx)
+./backend/main.go:			log.Printf("Error shutting down tracer provider: %v", err)
+./files/config.yml:    traces:
+./kubernetes/otelcollector-config.yml:        traces:
+</pre>
+
+<p>
+<code>--exclude</code> and <code>--exclude-dir</code> can be compined as well. Let's remove <code>./backend/tracing.go</code>  and <code>go.mod</code> and
+<code>go.sum</code> from our results using <code>--exclude</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep -r --exclude-dir <span style="color: #df9080;">'node_modules'</span> --exclude <span style="color: #df9080;">'tracing.go'</span> --exclude <span style="color: #df9080;">'*.sum'</span> --exclude <span style="color: #df9080;">'*.mod'</span> trace
+</pre>
+</div>
+
+<pre class="example">
+./backend/db.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+./backend/db.go:func dbConn(ctx context.Context, tp *sdktrace.TracerProvider) (*mongo.Client, error) {
+./backend/app.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+./backend/app.go:func newApp(ctx context.Context, tp *sdktrace.TracerProvider) (*App, error) {
+./backend/main.go:	"go.opentelemetry.io/otel/trace"
+./backend/main.go:		span := trace.SpanFromContext(ctx)
+./backend/main.go:			log.Printf("Error shutting down tracer provider: %v", err)
+./files/config.yml:    traces:
+./kubernetes/otelcollector-config.yml:        traces:
+</pre>
+
+
+<p>
+Hopefully this gives you a feel for how you can combine some of the different flags and
+features of grep to pinpoint what you're looking for. But that's just half of the story
+for grep. In addition to searching files, it is just as capable at searching anything
+that you throw at it coming from STDIN.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb6e5aa4" class="outline-3">
+<h3 id="orgb6e5aa4">Examples - Searching STDIN</h3>
+<div class="outline-text-3" id="text-orgb6e5aa4">
+</div>
+<div id="outline-container-orgc18eb28" class="outline-4">
+<h4 id="orgc18eb28">Filtering command output</h4>
+<div class="outline-text-4" id="text-orgc18eb28">
+<p>
+When you use the pipline operator <code>|</code>, the output of the previous command is fed as input
+to the next command. For grep, this means that you can search the results of anything
+that produces output.
+</p>
+
+<p>
+One example I've used recently is when trying to figure out which docker containers
+I have downloaded on my system. <code>docker image ls</code> just shows me the complete list, but if
+I have hundreds of images downloaded it can be quite a bear to look through them all to find
+the one I'm looking for. Grep comes to the rescue! If I'm looking only for which versions of python
+I have available, I can filter the results of <code>docker image ls</code> down using grep.<sup><a id="fnr.5" class="footref" href="#fn.5" role="doc-backlink">5</a></sup>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">docker image ls | grep -h python | cut -w -f 1,2
+</pre>
+</div>
+
+<pre class="example">
+python	3.7
+python	latest
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgdd6f8eb" class="outline-4">
+<h4 id="orgdd6f8eb">Filtering streams</h4>
+<div class="outline-text-4" id="text-orgdd6f8eb">
+<p>
+Because of the wonderful magic of streams combined with <a href="https://en.wikipedia.org/wiki/Pipeline_(Unix)">pipelines</a>, you can grep the output
+of a command that may run for a long time (or forever). Say you are trying to monitor a
+log file that's being continuously written to. You can use <a target="_blank" href="http://man.he.net/?topic=tail&section=all">tail</a> <code>-f</code> to follow the contents
+and display each new line as soon as it's written to the file, but there might be a lot of
+noise is this particular log file. You can filter the contents in mid stream by piping tail
+to grep.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">tail -f tmp.log | grep -h -E <span style="color: #df9080;">'WARNING|ERROR|FATAL'</span>
+</pre>
+</div>
+
+<pre class="example">
+[2023-07-15T19:23:31.968712+00:00] app.ERROR: Something went wrong.
+[2023-07-15T19:23:32.205448+00:00] app.ERROR: Something slightly worse went wrong.
+[2023-07-15T19:23:34.422216+00:00] app.WARNING: Could not find file, I'm freaking out man.
+[2023-07-15T19:23:35.382214+00:00] app.FATAL: Something really bad happened, crashing now.
+</pre>
+
+
+<p>
+With the power of imagination you can see each line appearing as it is written to the log.
+Here we're using the <code>-E</code> flag which allows us to use regular expressions for our pattern,
+allowing us to only print logs with severity 'WARNING' or 'ERROR' or 'FATAL'.
+</p>
+
+<p>
+With this, we can filter results as they're streamed to only <code>warning</code> or higher severity
+logs. But sometimes we want to see wore context before a fatal log occurs. Simple filtering
+out <code>info</code> and <code>warning</code> logs might have conceiled the problem. Let's use <code>--before-context</code> to
+see what happened before that fatal event.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep --before-context=4 FATAL tmp.log
+</pre>
+</div>
+
+<pre class="example">
+[2023-07-15T19:23:33.542697+00:00] app.DEBUG: I'm just going to delete this file, this is fine.
+[2023-07-15T19:23:34.101258+00:00] app.DEBUG: Buisiness as usual.
+[2023-07-15T19:23:34.223435+00:00] app.DEBUG: Trying to open file.
+[2023-07-15T19:23:34.422216+00:00] app.WARNING: Could not find file, I'm freaking out man.
+[2023-07-15T19:23:35.382214+00:00] app.FATAL: Something really bad happened, crashing now.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2cf35f9" class="outline-3">
+<h3 id="org2cf35f9">Conclusion</h3>
+<div class="outline-text-3" id="text-org2cf35f9">
+<p>
+Because grep can operate on any input sent to it, the possible ways to use it are endless. If
+you ever find yourself in a situation where you wish you could filter some data, you should
+probably reach for grep first and see if it meets your needs. There are other searching and
+filtering tools out there that are more specialized, but grep works everywhere, and it's
+installed everywhere.
+</p>
+
+<p>
+I would encourage you to read the whole grep <a target="_blank" href="http://man.he.net/?topic=man&section=all">man</a> pages, <a target="_blank" href="http://man.he.net/?topic=grep&section=all">here</a>.
+I covered most of the common use cases, but there are many more flags and features hidden
+away in grep for those willing to search for them.
+</p>
+
+<p>
+Notably, this article did not cover any of the variations of grep like <code>pgrep</code>, <code>rgrep</code>, <code>egrep</code>,
+<code>fgrep</code>, etc. You can read more about them in the grep manual.
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://en.wikipedia.org/wiki/Ed_(text_editor)">https://en.wikipedia.org/wiki/Ed_(text_editor)</a>
+</p>
+
+<p class="footpara">
+Despite being notoriously difficult to understand, ed went on to influence and spawn ex, then
+vi, leading to vim and neovim.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+One thing to note is that file expansion done through globbing is done prior to feeding any
+arguments to grep; this doesn't matter in this case but it's something to keep in mind.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Another thing to note is that shell filename expansion (globbing) does not use regular
+expressions. <code>*.go</code> would be an illegal regular expression because <code>*</code> is a <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference?redirectedfrom=MSDN#quantifiers">quantifier</a> and must
+come after some character class expression (like <code>.</code>). In shell filename expansion, <code>*</code> matches
+every filename. <code>*.go</code> matches every file that ends with <code>.go</code> (note the <code>.</code> is not a special
+character like it is in regex). <code>?</code> matches any one character (this is exactly like <code>.</code> in
+regular expressions).
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+If you're ever unsure of the result of a shell glob, you can run <a target="_blank" href="http://man.he.net/?topic=echo&section=all">echo</a> or <a target="_blank" href="http://man.he.net/?topic=ls&section=all">ls</a> first to
+see which files will selected.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5" role="doc-backlink">5</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+I'm using the <code>-h</code> flag for <code>grep</code> which surpresses the 'filename' prefix of its output. When grep
+is used in a pipeline instead of the filename, it prefixes every line with '(standard input):'
+which is not super helpful.
+</p>
+
+<p class="footpara">
+I'm also using <a target="_blank" href="http://man.he.net/?topic=cut&section=all">cut</a> to just show the columns I care about. This is mostly so that the output
+shows up nicely in this blog; it's not strictly necessary.
+</p></div></div>
+
+
+</div>
+</div></div>
+</body>
+</html>
