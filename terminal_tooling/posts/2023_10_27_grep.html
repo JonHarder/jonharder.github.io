@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-10-27 Fri 10:43 -->
+<!-- 2023-10-27 Fri 11:00 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>grep - [[file:../index.org][Terminal Tooling]]</title>
@@ -41,7 +41,7 @@ a standalone <code>grep</code> program was born.<sup><a id="fnr.1" class="footre
 
 <p>
 There are two ways to have <code>grep</code> search text. One is to provide a list of files as
-an the target of the search which will be searched line-by-line for your pattern
+the target of the search which will be searched line-by-line for your pattern
 and matching lines will be printed. The other is to search incoming text from <a target="_blank" href="http://man.he.net/?topic=stdin&section=all">stdin</a>
 and print the matching lines.
 </p>
@@ -89,7 +89,7 @@ Let's say you're interesting in finding all occurrences of the phrase <code>trac
 </pre>
 </div>
 
-<pre class="example" id="orgd154561">
+<pre class="example" id="org9a9f818">
 app.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 app.go:func newApp(ctx context.Context, tp *sdktrace.TracerProvider) (*App, error) {
 db.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
@@ -140,7 +140,7 @@ and then feed that as arguments to <code>grep</code>. Let's see the results:<sup
 </pre>
 </div>
 
-<pre class="example" id="orgf4b9608">
+<pre class="example" id="org8c8b0e4">
 app.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 app.go:func newApp(ctx context.Context, tp *sdktrace.TracerProvider) (*App, error) {
 db.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
@@ -229,7 +229,7 @@ lines before and after the match will be printed to stdout as well.
 </pre>
 </div>
 
-<pre class="example" id="orgfd748de">
+<pre class="example" id="orgf84388b">
 8-
 9-	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 10-	"go.opentelemetry.io/otel"
@@ -403,7 +403,7 @@ will be used instead
 </pre>
 </div>
 
-<pre class="example" id="orga2152b0">
+<pre class="example" id="org53413bf">
 ./frontend/node_modules/@types/express-serve-static-core/index.d.ts:    trace: IRouterMatcher&lt;this&gt;;
 ./frontend/node_modules/@types/express-serve-static-core/index.d.ts:    trace: IRouterHandler&lt;this, Route&gt;;
 ./frontend/node_modules/@types/node/globals.d.ts:     * Optional override for formatting stack traces
@@ -432,7 +432,7 @@ Rather than using <code>--exclude</code>, we can use <code>--exclude-dir</code>
 </pre>
 </div>
 
-<pre class="example" id="org9a9f818">
+<pre class="example" id="org8fba617">
 ./backend/go.mod:	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.14.0
 ./backend/go.mod:	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.14.0
 ./backend/go.mod:	go.opentelemetry.io/otel/trace v1.14.0
@@ -641,7 +641,7 @@ regular expressions).
 
 <div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
 If you're ever unsure of the result of a shell glob, you can run <a target="_blank" href="http://man.he.net/?topic=echo&section=all">echo</a> or <a target="_blank" href="http://man.he.net/?topic=ls&section=all">ls</a> first to
-see which files will selected.
+see which files will be selected.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5" role="doc-backlink">5</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
