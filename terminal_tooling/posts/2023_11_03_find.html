@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-11-03 Fri 15:28 -->
+<!-- 2023-11-03 Fri 16:25 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>find - [[file:../index.org][Terminal Tooling]]</title>
@@ -126,6 +126,13 @@ files that have been accessed <span class="underline">more</span> than 30 minute
 with a <code>+</code> (<code>-amin +30</code>). This use of <code>+</code> and <code>-</code> applies to any primary that takes a numeric
 argument.
 </p>
+
+<p>
+If you wanted to look at the files changed over a longer period of time without
+having to pull in a <a href="https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html">command substitution</a> (<code>-amin -$(expr 60 \* 24 \* 15)</code>), you can
+instead use <code>-atime</code> which excepts a number and a time spcifier. <code>a</code> for seconds, <code>m</code> for
+minutes, <code>h</code> for hours, <code>d</code> for days, and <code>w</code> for weeks.
+</p>
 </div>
 </div>
 
@@ -133,14 +140,7 @@ argument.
 <h4 id="org462a2db">By creation time</h4>
 <div class="outline-text-4" id="text-org462a2db">
 <p>
-If you wanted to look at the files changed over a longer period of time without
-having to pull in a <a href="https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html">command substitution</a> (<code>-amin -$(expr 60 \* 24 \* 15)</code>), you can
-instead use <code>-atime</code> which excepts a number and a time spcifier. <code>a</code> for seconds, <code>m</code> for
-minutes, <code>h</code> for hours, <code>d</code> for days, and <code>w</code> for weeks.
-</p>
-
-<p>
-If you were instead insterested in the file <i>creation</i> time rather than <i>access</i> time,
+If you were instead interested in the file <i>creation</i> time rather than <i>access</i> time,
 you could use <code>-Bmin</code> and its counterpart <code>-Btime</code> which peform the same searches as
 <code>-amin</code> and <code>-atime</code> but for file creation time.
 </p>
