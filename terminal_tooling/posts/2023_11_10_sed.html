@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2023-11-10 Fri 16:21 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>sed - [[file:../index.org][Terminal Tooling]]</title>
+<meta name="author" content="Jonathan Harder" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="/css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body>
+<div id="content" class="content">
+<header>
+<h1 class="title">sed - <a href="../index.html">Terminal Tooling</a></h1>
+</header>
+
+<div id="outline-container-org2ad1b1f" class="outline-2">
+<h2 id="org2ad1b1f">sed (part 1)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="unix_tools">unix_tools</span></span></h2>
+<div class="outline-text-2" id="text-org2ad1b1f">
+</div>
+
+<div id="outline-container-org096cc16" class="outline-3">
+<h3 id="org096cc16">Overview</h3>
+<div class="outline-text-3" id="text-org096cc16">
+<p>
+<a target="_blank" href="http://man.he.net/?topic=sed&section=all">Sed</a> stands for (s)tream (ed)itor and is useful for taking any input you have
+and modifying it in some way before sending it along as output, either to
+the console or as input to the next command in your pipeline. It operates
+on each line of your input, executing some command on each as the input is
+read. 
+</p>
+
+<p>
+Chances are if you've encountered <code>sed</code> before, it came from some sage linux
+master on stack overflow when providing an answer to a bash scripting question.
+If you've used <code>sed</code> yourself for some task, it's likely using the <code>substitute</code>
+command to find and replace some search term.
+</p>
+
+<p>
+You may have seen a command like this before:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #f78fe7; font-weight: bold;">echo</span> <span style="color: #79a8ff;">"this is line one\nthis is line two"</span> | sed <span style="color: #79a8ff;">'s/line/snake/'</span>
+</pre>
+</div>
+
+<pre class="example">
+this is snake one
+this is snake two
+</pre>
+
+
+<p>
+However, <code>sed</code> can do so much more, if only you spend the time to figure out what
+on earth it's talking about in its manual. In general, a command is defined in
+the man page as follows:
+</p>
+
+<blockquote>
+<p>
+[address[,address]]function[arguments]
+</p>
+</blockquote>
+
+<p>
+But to unpack this fully, we will need to clear up some strange terminology.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdd0b17e" class="outline-3">
+<h3 id="orgdd0b17e">Terminology</h3>
+<div class="outline-text-3" id="text-orgdd0b17e">
+<dl class="org-dl">
+<dt>Address</dt><dd><p>
+If all you've ever used <code>sed</code> to do is substitute terms using <code>s/term/replacement/</code>,
+the concept of an <code>address</code> might not make sense at first. If one is provided, it will be before
+the function (<code>s</code> - substitute, in this case). An <code>address</code> provides some way to restrict which
+lines of the input <code>sed</code> will actually operate on. You can also optionally provide a second
+address to create a range of lines for <code>sed</code> to restrict its operation over.
+</p>
+
+<p>
+An address can be one of three things:
+</p></dd>
+</dl>
+
+
+<ol class="org-ol">
+<li>a number representing which line(s) of input to act on. ex <code>3,7s/apple/banana/</code></li>
+<li>the <code>$</code> sign, meaning the last line of input</li>
+<li>a regex, meaning only lines of input which match the regex will be passed along to the function</li>
+</ol>
+
+
+<p>
+In this example, we're telling <code>sed</code> to execute the substitude command only on lines 2 through
+four. For lines within that range, the provided function will be ran. For lines <b>outside</b> the
+range, lines will be left untouched and printed as is.
+</p>
+
+<pre class="example" id="org000f4a9">
+sed '2,4s/line/fish/'
+</pre>
+
+<p>
+In the next example, <code>$</code> is used as the terminating address to restrict the lines <code>s</code> operates
+on.
+</p>
+
+<pre class="example" id="org05ee1a7">
+sed '3,$s/foo/bar/'
+</pre>
+
+<p>
+In this example, there are two lines with the word <code>two</code>. If we just did a substitute
+command without an address, <b>all</b> lines with the word <code>two</code> would be changed to <code>snake</code>.
+But because we are providing a regex address (restricting to lines containing <code>apple</code>),
+only line four (containing the word <code>apple</code>) actually has the text in the substitute
+command replaced.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #f78fe7; font-weight: bold;">echo</span> <span style="color: #79a8ff;">"line one\nline two\nline two\napple two"</span> | sed <span style="color: #79a8ff;">'/apple/s/two/snake/'</span>
+</pre>
+</div>
+
+<pre class="example">
+line one
+line two
+line two
+apple snake
+</pre>
+
+
+<dl class="org-dl">
+<dt>function</dt><dd>The actual thing you want <code>sed</code> to <span class="underline">do</span>.</dd>
+<dt>arguments</dt><dd>Some functions take arguments. We'll cover this a bit more when
+covering some of those functions.</dd>
+<dt>cycle</dt><dd>Because <code>sed</code> is line oriented, it filters input and executes functions
+on a per line bases. Each round of reading in a line from input, checking if
+the line is within the given address, executing the function, and printing output
+constitutes one <i>cycle</i>.</dd>
+</dl>
+</div>
+</div>
+
+
+<div id="outline-container-org16de827" class="outline-3">
+<h3 id="org16de827">Functions</h3>
+<div class="outline-text-3" id="text-org16de827">
+<p>
+So far we're only shown examples using the (s)ubstitute function. There are many more.
+Let's start with a simple one. The <code>p</code> function "<i>Writes the pattern space to standard output.</i>".
+Ok, hold up. What's a <i>pattern space</i>? To answer that, we'll need to dig a bit deeper into
+how <code>sed</code> works.
+</p>
+
+<p>
+To do that, let's visualize a some of the moving parts of a <code>sed</code> execution with the following input:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #f78fe7; font-weight: bold;">echo</span> <span style="color: #79a8ff;">"This is the first line of text.</span>
+<span style="color: #79a8ff;">And this is another line.</span>
+<span style="color: #79a8ff;">Here's another for you.</span>
+<span style="color: #79a8ff;">This is anonther line with the word 'line' in it.</span>
+<span style="color: #79a8ff;">and this is the last line."</span> &gt; example.txt
+</pre>
+</div>
+
+<p>
+Say we have the given <code>sed</code> command: <code>sed '2,4s/line/REPLACED/'</code>. The addresses are the lines 2
+through four. The command is <code>substitute</code> the text <code>line</code> with <code>REPLACED</code>.
+</p>
+
+
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">line no.</th>
+<th scope="col" class="org-left">pattern space</th>
+<th scope="col" class="org-left">output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">This is the first line of text.</td>
+<td class="org-left">This is the first line of text.</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">And this is another line.</td>
+<td class="org-left">And this is another REPLACED.</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">Here's another for you.</td>
+<td class="org-left">Here's another for you.</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-left">This is another line with the word 'line' in it.</td>
+<td class="org-left">This is another REPLACED with the word 'line' in it.</td>
+</tr>
+
+<tr>
+<td class="org-right">5</td>
+<td class="org-left">and this is the last line.</td>
+<td class="org-left">and this is the last line.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Let's walk through each line <code>sed</code> read and operated on (remember this is called a <code>cycle</code>).
+Line one loaded the text into the pattern space, which is a temporary buffer used to
+operate on with the given function. <code>Sed</code> loads each line into the pattern space regardless
+of if the line falls within the address (if provided).
+</p>
+
+<p>
+Next <code>sed</code> checks if the line <i>is</i> within the provided address (<code>2,4</code> in this case). Because
+this is line 1, it does <b>not</b> fall within the address provided, so <code>sed</code> just prints it
+to output without operating on it.
+</p>
+
+<p>
+After this, it clears the pattern space, and a new cycle begins by loading the next
+line of input into the pattern space.
+</p>
+
+<p>
+Line 2 <i>is</i> within the pattern provided, so the substitute function will run. We provided
+the arguments <code>line</code> and <code>REPLACED</code> to the function, and so the output reflects that
+substitution.
+</p>
+
+<p>
+The same happens for line 3, except there was no match for the substitute to replace.
+Line 4 is the last line in the address space of <code>2,4</code>, so <code>line</code> is replaced, however you
+will notice only the <b>first</b> occurrence of <code>line</code> was replaced. By default, <code>sed</code> will only find
+the first instance. This can be changed if you provide the <code>g</code> flag to the function:
+<code>sed 's/foo/bar/g'</code> . Line 5 is outside the address space, and so <code>line</code> is <b>not</b> replaced.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed <span style="color: #79a8ff;">'2,4s/line/REPLACED/'</span> example.txt
+</pre>
+</div>
+
+<pre class="example">
+This is the first line of text.
+And this is another REPLACED.
+Here's another for you.
+This is anonther REPLACED with the word 'line' in it.
+and this is the last line.
+</pre>
+
+
+<p>
+Additionally, the behavior of, <i>print the line, unchanged, when outside the address</i> can be
+modified by using the <code>-n</code> flag.
+</p>
+
+<p>
+With all of this, we're now ready to look at the <code>p</code> function again. Consider our example again.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed <span style="color: #79a8ff;">'2,4s/line/REPLACED/p'</span> example.txt
+</pre>
+</div>
+
+<pre class="example">
+This is the first line of text.
+And this is another REPLACED.
+And this is another REPLACED.
+Here's another for you.
+This is anonther REPLACED with the word 'line' in it.
+This is anonther REPLACED with the word 'line' in it.
+and this is the last line.
+</pre>
+
+
+<p>
+Whith the additional <code>p</code> function executing after the <code>s</code> function, only the lines
+that <code>s</code> successfully operated on get passed along to the <code>p</code> function. This is why
+line 3 was not printed twice even though it was within the address range.
+</p>
+
+<p>
+Now let's try it without printing by default.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'2,4s/line/REPLACED/p'</span> example.txt
+</pre>
+</div>
+
+<pre class="example">
+And this is another REPLACED.
+This is anonther REPLACED with the word 'line' in it.
+</pre>
+
+
+<p>
+Is this what you expected? Hopefully by this point it should make sense. Lines are not printed
+by default because of the <code>-n</code> flag, and only lines that passed <code>s</code> successfully were then sent
+to <code>p</code> to be printed.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgdddeb42" class="outline-2">
+<h2 id="orgdddeb42">Next time</h2>
+<div class="outline-text-2" id="text-orgdddeb42">
+<p>
+The more I dug into said, the more powerful I discovered it really was. This is only the
+beginning. Hopefully this alone was helpful to try and understand the <a target="_blank" href="http://man.he.net/?topic=sed&section=all">man</a> page on <code>sed</code>.
+</p>
+
+<p>
+Next time will be almost entirely examples of using all of the other functions <code>sed</code> provides
+and fun ways to combine them into surprisingly powerful commands.
+</p>
+</div>
+</div>
+</div>
+</body>
+</html>

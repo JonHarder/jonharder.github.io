@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-11-04 Sat 09:48 -->
+<!-- 2023-11-10 Fri 16:21 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>find - [[file:../index.org][Terminal Tooling]]</title>
@@ -78,7 +78,7 @@ a Ruby library meant to query Jira's API.
 <h4 id="orgf3a98e6">By file names</h4>
 <div class="outline-text-4" id="text-orgf3a98e6">
 <div class="org-src-container">
-<pre class="src src-sh">find . -name <span style="color: #f06a3f;">'*.yml'</span>
+<pre class="src src-sh">find . -name <span style="color: #79a8ff;">'*.yml'</span>
 </pre>
 </div>
 
@@ -110,7 +110,7 @@ see which files you have edited in the last 30 minutes.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">find . -amin -30 -name <span style="color: #f06a3f;">'*.rb'</span>
+<pre class="src src-sh">find . -amin -30 -name <span style="color: #79a8ff;">'*.rb'</span>
 </pre>
 </div>
 
@@ -226,7 +226,7 @@ You can tell <code>find</code> to only return results of a given type with the <
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">find . -type d ! -path <span style="color: #f06a3f;">'*git*'</span> ! -path <span style="color: #f06a3f;">'*coverage*'</span>
+<pre class="src src-sh">find . -type d ! -path <span style="color: #79a8ff;">'*git*'</span> ! -path <span style="color: #79a8ff;">'*coverage*'</span>
 </pre>
 </div>
 
@@ -276,7 +276,7 @@ as though you had ran <code>ls -l</code> on the list of files returned.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">find . -type f -name <span style="color: #f06a3f;">'*.md'</span> -ls
+<pre class="src src-sh">find . -type f -name <span style="color: #79a8ff;">'*.md'</span> -ls
 </pre>
 </div>
 
@@ -304,7 +304,7 @@ find when your exec command ends and the next primary begins.</li>
 </ol>
 
 <div class="org-src-container">
-<pre class="src src-sh">find . -type f -name <span style="color: #f06a3f;">'*.md'</span> -exec echo <span style="color: #d0730f;">{}</span> <span style="color: #f06a3f;">\;</span>
+<pre class="src src-sh">find . -type f -name <span style="color: #79a8ff;">'*.md'</span> -exec echo <span style="color: #ffffff;">{}</span> <span style="color: #79a8ff;">\;</span>
 </pre>
 </div>
 
@@ -323,7 +323,7 @@ to delete a handful of files but wanted to confirm before they get deleted
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">find . -empty -ok rm <span style="color: #d0730f;">{}</span> <span style="color: #f06a3f;">\;</span>
+<pre class="src src-sh">find . -empty -ok rm <span style="color: #ffffff;">{}</span> <span style="color: #79a8ff;">\;</span>
 </pre>
 </div>
 
