@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-11-10 Fri 16:21 -->
+<!-- 2023-11-17 Fri 09:04 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>grep - [[file:../index.org][Terminal Tooling]]</title>
 <meta name="author" content="Jonathan Harder" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
-<link rel="stylesheet" href="/css/stylesheet.css" />
-<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="../css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 </head>
 <body>
 <div id="content" class="content">
@@ -17,13 +17,13 @@
 <h1 class="title">grep - <a href="../index.html">Terminal Tooling</a></h1>
 </header>
 
-<div id="outline-container-orgc79a9da" class="outline-2">
-<h2 id="orgc79a9da">grep&#xa0;&#xa0;&#xa0;<span class="tag"><span class="unix_tools">unix_tools</span></span></h2>
-<div class="outline-text-2" id="text-orgc79a9da">
+<div id="outline-container-org174408c" class="outline-2">
+<h2 id="org174408c">grep&#xa0;&#xa0;&#xa0;<span class="tag"><span class="unix_tools">unix_tools</span></span></h2>
+<div class="outline-text-2" id="text-org174408c">
 </div>
-<div id="outline-container-org66a5451" class="outline-3">
-<h3 id="org66a5451">Overview</h3>
-<div class="outline-text-3" id="text-org66a5451">
+<div id="outline-container-orgbbe4eab" class="outline-3">
+<h3 id="orgbbe4eab">Overview</h3>
+<div class="outline-text-3" id="text-orgbbe4eab">
 <p>
 Grep is a fundamental part of the command line toolbelt. True to the <a href="https://en.wikipedia.org/wiki/Unix_philosophy">Unix philosophy</a>,
 grep does one thing, and does it well. Its job is to search input for a given
@@ -48,13 +48,13 @@ and print the matching lines.
 </div>
 </div>
 
-<div id="outline-container-org952a48e" class="outline-3">
-<h3 id="org952a48e">Examples - Searching files</h3>
-<div class="outline-text-3" id="text-org952a48e">
+<div id="outline-container-org024b0de" class="outline-3">
+<h3 id="org024b0de">Examples - Searching files</h3>
+<div class="outline-text-3" id="text-org024b0de">
 </div>
-<div id="outline-container-org211e680" class="outline-4">
-<h4 id="org211e680">Basics</h4>
-<div class="outline-text-4" id="text-org211e680">
+<div id="outline-container-org38b8839" class="outline-4">
+<h4 id="org38b8839">Basics</h4>
+<div class="outline-text-4" id="text-org38b8839">
 <p>
 Let's look at some examples, looking in the same <code>k8s-app</code> project you've seen
 in all previous examples. In this case, we'll focus first in the <code>backend</code> directory.
@@ -89,7 +89,7 @@ Let's say you're interesting in finding all occurrences of the phrase <code>trac
 </pre>
 </div>
 
-<pre class="example" id="orgc3ea62c">
+<pre class="example" id="org21f6150">
 app.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 app.go:func newApp(ctx context.Context, tp *sdktrace.TracerProvider) (*App, error) {
 db.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
@@ -140,7 +140,7 @@ and then feed that as arguments to <code>grep</code>. Let's see the results:<sup
 </pre>
 </div>
 
-<pre class="example" id="org5ba5673">
+<pre class="example" id="orgd1e3329">
 app.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 app.go:func newApp(ctx context.Context, tp *sdktrace.TracerProvider) (*App, error) {
 db.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
@@ -167,9 +167,9 @@ tracing.go:	return trace_provider, nil
 </div>
 </div>
 
-<div id="outline-container-org59fe709" class="outline-4">
-<h4 id="org59fe709">Excluding files</h4>
-<div class="outline-text-4" id="text-org59fe709">
+<div id="outline-container-org301ebb8" class="outline-4">
+<h4 id="org301ebb8">Excluding files</h4>
+<div class="outline-text-4" id="text-org301ebb8">
 <p>
 It's a bit annoying to have to deal with <code>tracing.go</code> polluting our results as it's obviously
 going to have a bunch of hits which we don't care about. There's no quick and easy way to
@@ -196,9 +196,9 @@ main.go:			log.Printf("Error shutting down tracer provider: %v", err)
 </div>
 </div>
 
-<div id="outline-container-org06bdd2c" class="outline-4">
-<h4 id="org06bdd2c">Line numbers</h4>
-<div class="outline-text-4" id="text-org06bdd2c">
+<div id="outline-container-orgc5f194a" class="outline-4">
+<h4 id="orgc5f194a">Line numbers</h4>
+<div class="outline-text-4" id="text-orgc5f194a">
 <p>
 Having these results is handy, but it would be better to know where in the file these matches
 can be found. Passing the <code>-n</code> or <code>--line-number</code> flag provides the line number of each hit.
@@ -211,9 +211,9 @@ can be found. Passing the <code>-n</code> or <code>--line-number</code> flag pro
 </div>
 </div>
 
-<div id="outline-container-orgf8dbd8a" class="outline-4">
-<h4 id="orgf8dbd8a">Context</h4>
-<div class="outline-text-4" id="text-orgf8dbd8a">
+<div id="outline-container-org42cc7b7" class="outline-4">
+<h4 id="org42cc7b7">Context</h4>
+<div class="outline-text-4" id="text-org42cc7b7">
 <p>
 This is indeed nicer, but it would be nicer <i>still</i> if we had a bit of context for each
 of the matches. What is going on around the lines where these results were found?
@@ -229,7 +229,7 @@ lines before and after the match will be printed to stdout as well.
 </pre>
 </div>
 
-<pre class="example" id="org765bfdd">
+<pre class="example" id="org3f0d20c">
 8-
 9-	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 10-	"go.opentelemetry.io/otel"
@@ -268,9 +268,9 @@ and <code>-A</code> or <code>--after-context</code> respectively.
 </div>
 </div>
 
-<div id="outline-container-orgc4ea6cf" class="outline-4">
-<h4 id="orgc4ea6cf">Count</h4>
-<div class="outline-text-4" id="text-orgc4ea6cf">
+<div id="outline-container-orgbcb9926" class="outline-4">
+<h4 id="orgbcb9926">Count</h4>
+<div class="outline-text-4" id="text-orgbcb9926">
 <p>
 Sometimes it can be helpful to understand how often a particular search term appears
 in your searched files. For this, you can use <code>-c</code> or <code>--count</code>.
@@ -290,9 +290,9 @@ tracing.go:15
 </div>
 </div>
 
-<div id="outline-container-orge1127b8" class="outline-4">
-<h4 id="orge1127b8">Matching files only</h4>
-<div class="outline-text-4" id="text-orge1127b8">
+<div id="outline-container-org252d24f" class="outline-4">
+<h4 id="org252d24f">Matching files only</h4>
+<div class="outline-text-4" id="text-org252d24f">
 <p>
 If you didn't care about <i>which</i> lines specifically mached your pattern, but only which
 <i>files</i> contained the match, you can use the <code>-l</code> or <code>--files-with-matches</code> flag to only show
@@ -320,9 +320,9 @@ a shell glob as their argument, not just an exact file name. Here we use this to
 </div>
 </div>
 
-<div id="outline-container-org69ce361" class="outline-4">
-<h4 id="org69ce361">Printing mached content only</h4>
-<div class="outline-text-4" id="text-org69ce361">
+<div id="outline-container-org57eacf3" class="outline-4">
+<h4 id="org57eacf3">Printing mached content only</h4>
+<div class="outline-text-4" id="text-org57eacf3">
 <p>
 Perhaps the inverse of showing the files that match is showing the match only, not the rest
 of the line. This is accomplished using the <code>-o</code> or <code>--only-matching</code> flag. This is likely most
@@ -354,9 +354,9 @@ tracing.go:WithAttributes
 </div>
 </div>
 
-<div id="outline-container-org25bf64e" class="outline-4">
-<h4 id="org25bf64e">Searching recursively</h4>
-<div class="outline-text-4" id="text-org25bf64e">
+<div id="outline-container-org67955cd" class="outline-4">
+<h4 id="org67955cd">Searching recursively</h4>
+<div class="outline-text-4" id="text-org67955cd">
 <p>
 Now suppose you didn't know which folder contained the files you were looking for. Instead
 you can run <code>grep</code> from any directory and pass the <code>-r</code> or <code>--recursive</code> flag to change grep from
@@ -403,7 +403,7 @@ will be used instead
 </pre>
 </div>
 
-<pre class="example" id="org8a90cbb">
+<pre class="example" id="org2199e4c">
 ./frontend/node_modules/@types/express-serve-static-core/index.d.ts:    trace: IRouterMatcher&lt;this&gt;;
 ./frontend/node_modules/@types/express-serve-static-core/index.d.ts:    trace: IRouterHandler&lt;this, Route&gt;;
 ./frontend/node_modules/@types/node/globals.d.ts:     * Optional override for formatting stack traces
@@ -432,7 +432,7 @@ Rather than using <code>--exclude</code>, we can use <code>--exclude-dir</code>
 </pre>
 </div>
 
-<pre class="example" id="orge5c7962">
+<pre class="example" id="org9917df1">
 ./backend/go.mod:	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.14.0
 ./backend/go.mod:	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.14.0
 ./backend/go.mod:	go.opentelemetry.io/otel/trace v1.14.0
@@ -501,13 +501,13 @@ that you throw at it coming from STDIN.
 </div>
 </div>
 
-<div id="outline-container-orgb6e5aa4" class="outline-3">
-<h3 id="orgb6e5aa4">Examples - Searching STDIN</h3>
-<div class="outline-text-3" id="text-orgb6e5aa4">
+<div id="outline-container-org99f97fc" class="outline-3">
+<h3 id="org99f97fc">Examples - Searching STDIN</h3>
+<div class="outline-text-3" id="text-org99f97fc">
 </div>
-<div id="outline-container-orgc18eb28" class="outline-4">
-<h4 id="orgc18eb28">Filtering command output</h4>
-<div class="outline-text-4" id="text-orgc18eb28">
+<div id="outline-container-orga788bca" class="outline-4">
+<h4 id="orga788bca">Filtering command output</h4>
+<div class="outline-text-4" id="text-orga788bca">
 <p>
 When you use the pipline operator <code>|</code>, the output of the previous command is fed as input
 to the next command. For grep, this means that you can search the results of anything
@@ -534,9 +534,9 @@ python	latest
 </div>
 </div>
 
-<div id="outline-container-orgdd6f8eb" class="outline-4">
-<h4 id="orgdd6f8eb">Filtering streams</h4>
-<div class="outline-text-4" id="text-orgdd6f8eb">
+<div id="outline-container-orgd9c4e23" class="outline-4">
+<h4 id="orgd9c4e23">Filtering streams</h4>
+<div class="outline-text-4" id="text-orgd9c4e23">
 <p>
 Because of the wonderful magic of streams combined with <a href="https://en.wikipedia.org/wiki/Pipeline_(Unix)">pipelines</a>, you can grep the output
 of a command that may run for a long time (or forever). Say you are trying to monitor a
@@ -588,9 +588,9 @@ see what happened before that fatal event.
 </div>
 </div>
 
-<div id="outline-container-org2cf35f9" class="outline-3">
-<h3 id="org2cf35f9">Conclusion</h3>
-<div class="outline-text-3" id="text-org2cf35f9">
+<div id="outline-container-org46b73b7" class="outline-3">
+<h3 id="org46b73b7">Conclusion</h3>
+<div class="outline-text-3" id="text-org46b73b7">
 <p>
 Because grep can operate on any input sent to it, the possible ways to use it are endless. If
 you ever find yourself in a situation where you wish you could filter some data, you should

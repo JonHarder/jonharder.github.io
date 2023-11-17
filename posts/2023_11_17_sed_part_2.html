@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2023-11-17 Fri 09:04 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>sed (part 2) - [[file:../index.org][Terminal Tooling]]</title>
+<meta name="author" content="Jonathan Harder" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="../css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+</head>
+<body>
+<div id="content" class="content">
+<header>
+<h1 class="title">sed (part 2) - <a href="../index.html">Terminal Tooling</a></h1>
+</header>
+
+<div id="outline-container-orgf194b89" class="outline-3">
+<h3 id="orgf194b89">Overview&#xa0;&#xa0;&#xa0;<span class="tag"><span class="unix_tools">unix_tools</span></span></h3>
+<div class="outline-text-3" id="text-orgf194b89">
+<p>
+<a href="2023_11_10_sed.html">Last</a> time we discussed the command line utility, <code>sed</code>. As a stream editor, <code>sed</code>
+provides a programmatic way to edit files or streams of data. Rather than
+opening up a full-fledged, interactive text editor or IDE you can reach for
+<code>sed</code>.
+</p>
+
+<p>
+This is particularily useful when you need to make repetative edits over
+many lines, or only on particular lines. <code>Sed</code> is also useful for general
+purpose use cases when viewing parts of files or trimming and cleaning up
+data.
+</p>
+
+<p>
+As promised, this article will be primarily examples showing off <code>sed</code> in
+different scenarios with light instructional details where necessary.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge1f3dd2" class="outline-3">
+<h3 id="orge1f3dd2">Examples</h3>
+<div class="outline-text-3" id="text-orge1f3dd2">
+</div>
+<div id="outline-container-org3a08bd7" class="outline-4">
+<h4 id="org3a08bd7">Replicating head/tail</h4>
+<div class="outline-text-4" id="text-org3a08bd7">
+<p>
+You may have heard of the complimentary tools, <a target="_blank" href="http://man.he.net/?topic=head&section=all">head</a> and <a target="_blank" href="http://man.he.net/?topic=tail&section=all">tail</a> in order to
+view select number of lines in a file.
+</p>
+
+<p>
+The following prints the first 5 lines of a file:<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">head -n5 moby_dick.txt
+</pre>
+</div>
+
+<pre class="example">
+Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.
+
+There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
+
+Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by Whitehall, northward. What do you see?—Posted like silent sentinels all around the town, stand thousands upon thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still better seaward peep. But these are all landsmen; of week days pent up in lath and plaster—tied to counters, nailed to benches, clinched to desks. How then is this? Are the green fields gone? What do they here?
+</pre>
+
+
+<p>
+The same can be done with <code>sed</code> using a numeric address range:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed <span style="color: #79a8ff;">'5q'</span> moby_dick.txt
+</pre>
+</div>
+
+<pre class="example">
+Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.
+
+There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
+
+Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by Whitehall, northward. What do you see?—Posted like silent sentinels all around the town, stand thousands upon thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still better seaward peep. But these are all landsmen; of week days pent up in lath and plaster—tied to counters, nailed to benches, clinched to desks. How then is this? Are the green fields gone? What do they here?
+</pre>
+
+
+<p>
+The <code>q</code> function immediately quits the execution of <code>sed</code>. So this in effect says, "do the default 'print' function for all lines,
+and once line 5 is processed, quit."
+</p>
+
+<p>
+We could achieve the same result inversely by using <code>sed</code>'s <code>p</code> function and the <code>-n</code> flag to disable the default print:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'1,5 p'</span> moby_dick.txt
+</pre>
+</div>
+
+<pre class="example">
+Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.
+
+There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
+
+Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by Whitehall, northward. What do you see?—Posted like silent sentinels all around the town, stand thousands upon thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still better seaward peep. But these are all landsmen; of week days pent up in lath and plaster—tied to counters, nailed to benches, clinched to desks. How then is this? Are the green fields gone? What do they here?
+</pre>
+
+
+<p>
+The added benefit of using <code>sed</code> here is you can provide a range that doesn't start at the beginning of the file:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'5,9 p'</span> moby_dick.txt
+</pre>
+</div>
+
+<pre class="example">
+Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by Whitehall, northward. What do you see?—Posted like silent sentinels all around the town, stand thousands upon thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still better seaward peep. But these are all landsmen; of week days pent up in lath and plaster—tied to counters, nailed to benches, clinched to desks. How then is this? Are the green fields gone? What do they here?
+
+But look! here come more crowds, pacing straight for the water, and seemingly bound for a dive. Strange! Nothing will content them but the extremest limit of the land; loitering under the shady lee of yonder warehouses will not suffice. No. They must get just as nigh the water as they possibly can without falling in. And there they stand—miles of them—leagues. Inlanders all, they come from lanes and alleys, streets and avenues—north, east, south, and west. Yet here they all unite. Tell me, does the magnetic virtue of the needles of the compasses of all those ships attract them thither?
+
+Once more. Say you are in the country; in some high land of lakes. Take almost any path you please, and ten to one it carries you down in a dale, and leaves you there by a pool in the stream. There is magic in it. Let the most absent-minded of men be plunged in his deepest reveries—stand that man on his legs, set his feet a-going, and he will infallibly lead you to water, if water there be in all that region. Should you ever be athirst in the great American desert, try this experiment, if your caravan happen to be supplied with a metaphysical professor. Yes, as every one knows, meditation and water are wedded for ever.
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-org4859fb5" class="outline-4">
+<h4 id="org4859fb5">Replicating grep</h4>
+<div class="outline-text-4" id="text-org4859fb5">
+<p>
+<a href="2023_10_27_grep.html">grep</a> can also easily be replaced with a similar construction by using <code>-n</code>, <code>p</code> and a regex address:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'/whale/ p'</span> moby_dick.txt
+</pre>
+</div>
+
+<pre class="example">
+Chief among these motives was the overwhelming idea of the great whale himself. Such a portentous and mysterious monster roused all my curiosity. Then the wild and distant seas where he rolled his island bulk; the undeliverable, nameless perils of the whale; these, with all the attending marvels of a thousand Patagonian sights and sounds, helped to sway me to my wish. With other men, perhaps, such things would not have been inducements; but as for me, I am tormented with an everlasting itch for things remote. I love to sail forbidden seas, and land on barbarous coasts. Not ignoring what is good, I am quick to perceive a horror, and could still be social with it—would they let me—since it is but well to be on friendly terms with all the inmates of the place one lodges in.
+By reason of these things, then, the whaling voyage was welcome; the great flood-gates of the wonder-world swung open, and in the wild conceits that swayed me to my purpose, two and two there floated into my inmost soul, endless processions of the whale, and, mid most of them all, one grand hooded phantom, like a snow hill in the air.
+</pre>
+
+
+<p>
+You can replicate grep's <code>-o</code> flag to print only the matching part of a regex as well.
+It is a bit more complicated but it will help to show a broader range of <code>sed</code>'s features:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed -E -n <span style="color: #79a8ff;">'s/^.*(whal(e|ing)).*$/\1/g p'</span> moby_dick.txt
+</pre>
+</div>
+
+<pre class="example">
+whaling
+whaling
+whale
+whale
+</pre>
+
+
+<p>
+Ok, that was a mouthful. The gist is that we match the whole line and substitute that
+with just our search term using a capture group. Let's break the command down into its
+constituent parts.
+</p>
+
+<p>
+The <code>-E</code> flag to <code>sed</code> enables extended (modern) regular expressions<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup> allowing for the
+alternative <code>|</code> regex character in the substitution: <code>whal(e|ing)</code>. The <code>^</code> matches
+the beginning of the line, and the <code>$</code> matches the end. Putting it all together, the regex
+matches the whole line, but creates a capture group around <i>only</i> the word with alternatives
+for whale and whaling.
+</p>
+
+<p>
+The second argument to the substitution is the replacement text, <code>\1</code>. This is standard
+regex syntax and means, the contents of the first capture group. The effect of this
+substitution is to replace each entire line that contains our regex with just what
+was captured. Because we ran <code>sed</code> with the <code>-n</code> flag, nothing gets printed by default. We
+specify <code>p</code> as the second function to run after the substitute in order to print lines
+that the first substitute matched.
+</p>
+
+<p>
+You could turn this into a reusable script if you wanted by replacing the contents of
+the capture group with the argument fed into your script:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #b6a0ff; font-weight: bold;">function</span> <span style="color: #feacd0;">mygrep_o</span><span style="color: #ffffff;">()</span> <span style="color: #ffffff;">{</span>
+    sed -E -n <span style="color: #79a8ff;">'s/^.*('</span>$<span style="color: #00d3d0;">1</span><span style="color: #79a8ff;">').*$/\1/g p'</span> <span style="color: #79a8ff;">"$2"</span>
+<span style="color: #ffffff;">}</span>
+
+mygrep_o <span style="color: #79a8ff;">'whal(e|ing)'</span> moby_dick.txt
+</pre>
+</div>
+
+<pre class="example">
+whaling
+whaling
+whale
+whale
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgb8fdf41" class="outline-4">
+<h4 id="orgb8fdf41">Cleaning up files</h4>
+<div class="outline-text-4" id="text-orgb8fdf41">
+<p>
+Rather than trying to replicate other commands, let's do something a little different.
+In our examples, the text has a blank line between each line of text. We can delete
+these pretty easily by using the <code>d</code> command which stands for <code>delete</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed <span style="color: #79a8ff;">'/^$/ d'</span> moby_dick.txt
+</pre>
+</div>
+
+<pre class="example" id="org0115c1e">
+Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.
+There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
+Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by Whitehall, northward. What do you see?—Posted like silent sentinels all around the town, stand thousands upon thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still better seaward peep. But these are all landsmen; of week days pent up in lath and plaster—tied to counters, nailed to benches, clinched to desks. How then is this? Are the green fields gone? What do they here?
+But look! here come more crowds, pacing straight for the water, and seemingly bound for a dive. Strange! Nothing will content them but the extremest limit of the land; loitering under the shady lee of yonder warehouses will not suffice. No. They must get just as nigh the water as they possibly can without falling in. And there they stand—miles of them—leagues. Inlanders all, they come from lanes and alleys, streets and avenues—north, east, south, and west. Yet here they all unite. Tell me, does the magnetic virtue of the needles of the compasses of all those ships attract them thither?
+Once more. Say you are in the country; in some high land of lakes. Take almost any path you please, and ten to one it carries you down in a dale, and leaves you there by a pool in the stream. There is magic in it. Let the most absent-minded of men be plunged in his deepest reveries—stand that man on his legs, set his feet a-going, and he will infallibly lead you to water, if water there be in all that region. Should you ever be athirst in the great American desert, try this experiment, if your caravan happen to be supplied with a metaphysical professor. Yes, as every one knows, meditation and water are wedded for ever.
+But here is an artist. He desires to paint you the dreamiest, shadiest, quietest, most enchanting bit of romantic landscape in all the valley of the Saco. What is the chief element he employs? There stand his trees, each with a hollow trunk, as if a hermit and a crucifix were within; and here sleeps his meadow, and there sleep his cattle; and up from yonder cottage goes a sleepy smoke. Deep into distant woodlands winds a mazy way, reaching to overlapping spurs of mountains bathed in their hill-side blue. But though the picture lies thus tranced, and though this pine-tree shakes down its sighs like leaves upon this shepherd’s head, yet all were vain, unless the shepherd’s eye were fixed upon the magic stream before him. Go visit the Prairies in June, when for scores on scores of miles you wade knee-deep among Tiger-lilies—what is the one charm wanting?—Water—there is not a drop of water there! Were Niagara but a cataract of sand, would you travel your thousand miles to see it? Why did the poor poet of Tennessee, upon suddenly receiving two handfuls of silver, deliberate whether to buy him a coat, which he sadly needed, or invest his money in a pedestrian trip to Rockaway Beach? Why is almost every robust healthy boy with a robust healthy soul in him, at some time or other crazy to go to sea? Why upon your first voyage as a passenger, did you yourself feel such a mystical vibration, when first told that you and your ship were now out of sight of land? Why did the old Persians hold the sea holy? Why did the Greeks give it a separate deity, and own brother of Jove? Surely all this is not without meaning. And still deeper the meaning of that story of Narcissus, who because he could not grasp the tormenting, mild image he saw in the fountain, plunged into it and was drowned. But that same image, we ourselves see in all rivers and oceans. It is the image of the ungraspable phantom of life; and this is the key to it all.
+Now, when I say that I am in the habit of going to sea whenever I begin to grow hazy about the eyes, and begin to be over conscious of my lungs, I do not mean to have it inferred that I ever go to sea as a passenger. For to go as a passenger you must needs have a purse, and a purse is but a rag unless you have something in it. Besides, passengers get sea-sick—grow quarrelsome—don’t sleep of nights—do not enjoy themselves much, as a general thing;—no, I never go as a passenger; nor, though I am something of a salt, do I ever go to sea as a Commodore, or a Captain, or a Cook. I abandon the glory and distinction of such offices to those who like them. For my part, I abominate all honorable respectable toils, trials, and tribulations of every kind whatsoever. It is quite as much as I can do to take care of myself, without taking care of ships, barques, brigs, schooners, and what not. And as for going as cook,—though I confess there is considerable glory in that, a cook being a sort of officer on ship-board—yet, somehow, I never fancied broiling fowls;—though once broiled, judiciously buttered, and judgmatically salted and peppered, there is no one who will speak more respectfully, not to say reverentially, of a broiled fowl than I will. It is out of the idolatrous dotings of the old Egyptians upon broiled ibis and roasted river horse, that you see the mummies of those creatures in their huge bake-houses the pyramids.
+No, when I go to sea, I go as a simple sailor, right before the mast, plumb down into the forecastle, aloft there to the royal mast-head. True, they rather order me about some, and make me jump from spar to spar, like a grasshopper in a May meadow. And at first, this sort of thing is unpleasant enough. It touches one’s sense of honor, particularly if you come of an old established family in the land, the Van Rensselaers, or Randolphs, or Hardicanutes. And more than all, if just previous to putting your hand into the tar-pot, you have been lording it as a country schoolmaster, making the tallest boys stand in awe of you. The transition is a keen one, I assure you, from a schoolmaster to a sailor, and requires a strong decoction of Seneca and the Stoics to enable you to grin and bear it. But even this wears off in time.
+What of it, if some old hunks of a sea-captain orders me to get a broom and sweep down the decks? What does that indignity amount to, weighed, I mean, in the scales of the New Testament? Do you think the archangel Gabriel thinks anything the less of me, because I promptly and respectfully obey that old hunks in that particular instance? Who ain’t a slave? Tell me that. Well, then, however the old sea-captains may order me about—however they may thump and punch me about, I have the satisfaction of knowing that it is all right; that everybody else is one way or other served in much the same way—either in a physical or metaphysical point of view, that is; and so the universal thump is passed round, and all hands should rub each other’s shoulder-blades, and be content.
+Again, I always go to sea as a sailor, because they make a point of paying me for my trouble, whereas they never pay passengers a single penny that I ever heard of. On the contrary, passengers themselves must pay. And there is all the difference in the world between paying and being paid. The act of paying is perhaps the most uncomfortable infliction that the two orchard thieves entailed upon us. But being paid,—what will compare with it? The urbane activity with which a man receives money is really marvellous, considering that we so earnestly believe money to be the root of all earthly ills, and that on no account can a monied man enter heaven. Ah! how cheerfully we consign ourselves to perdition!
+Finally, I always go to sea as a sailor, because of the wholesome exercise and pure air of the fore-castle deck. For as in this world, head winds are far more prevalent than winds from astern (that is, if you never violate the Pythagorean maxim), so for the most part the Commodore on the quarter-deck gets his atmosphere at second hand from the sailors on the forecastle. He thinks he breathes it first; but not so. In much the same way do the commonalty lead their leaders in many other things, at the same time that the leaders little suspect it. But wherefore it was that after having repeatedly smelt the sea as a merchant sailor, I should now take it into my head to go on a whaling voyage; this the invisible police officer of the Fates, who has the constant surveillance of me, and secretly dogs me, and influences me in some unaccountable way—he can better answer than any one else. And, doubtless, my going on this whaling voyage, formed part of the grand programme of Providence that was drawn up a long time ago. It came in as a sort of brief interlude and solo between more extensive performances. I take it that this part of the bill must have run something like this:
+“Grand Contested Election for the Presidency of the United States. “WHALING VOYAGE BY ONE ISHMAEL. “BLOODY BATTLE IN AFFGHANISTAN.”
+Though I cannot tell why it was exactly that those stage managers, the Fates, put me down for this shabby part of a whaling voyage, when others were set down for magnificent parts in high tragedies, and short and easy parts in genteel comedies, and jolly parts in farces—though I cannot tell why this was exactly; yet, now that I recall all the circumstances, I think I can see a little into the springs and motives which being cunningly presented to me under various disguises, induced me to set about performing the part I did, besides cajoling me into the delusion that it was a choice resulting from my own unbiased freewill and discriminating judgment.
+Chief among these motives was the overwhelming idea of the great whale himself. Such a portentous and mysterious monster roused all my curiosity. Then the wild and distant seas where he rolled his island bulk; the undeliverable, nameless perils of the whale; these, with all the attending marvels of a thousand Patagonian sights and sounds, helped to sway me to my wish. With other men, perhaps, such things would not have been inducements; but as for me, I am tormented with an everlasting itch for things remote. I love to sail forbidden seas, and land on barbarous coasts. Not ignoring what is good, I am quick to perceive a horror, and could still be social with it—would they let me—since it is but well to be on friendly terms with all the inmates of the place one lodges in.
+By reason of these things, then, the whaling voyage was welcome; the great flood-gates of the wonder-world swung open, and in the wild conceits that swayed me to my purpose, two and two there floated into my inmost soul, endless processions of the whale, and, mid most of them all, one grand hooded phantom, like a snow hill in the air.
+</pre>
+
+<p>
+It worked! But what if you only want to view the first few lines? We <i>coooould</i> pipe the output
+of the previous script through head, but where's the fun in that? This is an article on <code>sed</code>
+and by golly we're going to use <code>sed</code>!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'1,6 {</span>
+<span style="color: #79a8ff;">  /^$/ d</span>
+<span style="color: #79a8ff;">  p</span>
+<span style="color: #79a8ff;">}'</span> moby_dick.txt
+</pre>
+</div>
+
+<pre class="example">
+Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.
+There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
+Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by Whitehall, northward. What do you see?—Posted like silent sentinels all around the town, stand thousands upon thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still better seaward peep. But these are all landsmen; of week days pent up in lath and plaster—tied to counters, nailed to benches, clinched to desks. How then is this? Are the green fields gone? What do they here?
+</pre>
+
+
+<p>
+Well that <i>technically</i> worked. But that leaves two questions. 1) If the address provided was lines
+1 through 6, why were only 3 lines printed? And 2) What is going on with the curly braces?
+</p>
+
+<p>
+The first question is easily enough answered; of the first 6 lines we specified in the address
+range, 3 of them were blank, so though they don't show up in the output, there were considered
+as we requested from the input stream.
+</p>
+
+<p>
+Question 2 will take a bit more explanation. In the man page, the first function listed is the
+following:
+</p>
+
+<pre class="example" id="org278d438">
+[2addr] function-list
+        Execute function-list only when the pattern space is selected.
+</pre>
+
+<p>
+This means you can specify a list of functions rather than just one function (like <code>p</code> or <code>d</code>).
+The <code>[2addr]</code> means this function is compatible with up to 2 addresses (meaning it can be used
+with 0, 1, or 2 addresses). Function lists are expressed within <code>{ }</code>, with each function specified
+on its own line.
+</p>
+
+<p>
+So back to our last example:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'1,6 {</span>
+<span style="color: #79a8ff;">  /^$/ d</span>
+<span style="color: #79a8ff;">  p</span>
+<span style="color: #79a8ff;">}'</span> moby_dick.txt
+</pre>
+</div>
+
+<pre class="example">
+Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.
+There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
+Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by Whitehall, northward. What do you see?—Posted like silent sentinels all around the town, stand thousands upon thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still better seaward peep. But these are all landsmen; of week days pent up in lath and plaster—tied to counters, nailed to benches, clinched to desks. How then is this? Are the green fields gone? What do they here?
+</pre>
+
+
+<p>
+In this function list, we provide 2 functions, the <code>d</code> delete function (which itself only
+operates on lines selected by the address <code>/^$/</code> e.g. empty lines). The man page tells us
+that the <code>d</code> function <i>"Deletes the pattern space and starts the next cycle."</i>. Therefore if
+there was a blank line, the function list is cut short by the <code>d</code> function. If it encounters
+a <i>non</i>-empty line, the address provided for <code>d</code> would not select the line and therefore be
+skipped. The next function, <code>p</code> would run, meaning we only print non empty lines.
+</p>
+
+<p>
+This could have been done more simply using a regex address that selected non-empty lines
+and printed them, but then we wouldn't have gotten to see how function lists work. Actually
+you know what, why not, lets see how we would do that.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'1,6 {</span>
+<span style="color: #79a8ff;">  /./ p</span>
+<span style="color: #79a8ff;">}'</span> moby_dick.txt
+</pre>
+</div>
+
+<pre class="example">
+Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.
+There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
+Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by Whitehall, northward. What do you see?—Posted like silent sentinels all around the town, stand thousands upon thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still better seaward peep. But these are all landsmen; of week days pent up in lath and plaster—tied to counters, nailed to benches, clinched to desks. How then is this? Are the green fields gone? What do they here?
+</pre>
+
+
+<p>
+Because we needed to perform a regex match on lines within an address range, we still needed
+the function list, even though there was only one function in it. This just prints any line
+that has any character (newlines are excluded from <code>.</code>) on it.
+</p>
+
+<p>
+This could be expressed in yet another way by using address negation.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'1,6 {</span>
+<span style="color: #79a8ff;">  /^$/ !p</span>
+<span style="color: #79a8ff;">}'</span> moby_dick.txt
+</pre>
+</div>
+
+<pre class="example">
+Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.
+There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
+Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by Whitehall, northward. What do you see?—Posted like silent sentinels all around the town, stand thousands upon thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still better seaward peep. But these are all landsmen; of week days pent up in lath and plaster—tied to counters, nailed to benches, clinched to desks. How then is this? Are the green fields gone? What do they here?
+</pre>
+
+
+<p>
+The effect of the <code>!</code> is to only run the given function when the line is <b>not</b> selected by the address.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org23bdafe" class="outline-2">
+<h2 id="org23bdafe">The hold space</h2>
+<div class="outline-text-2" id="text-org23bdafe">
+<p>
+So there's actually another buffer that <code>sed</code> can hold data in while it's executing. In addition
+to the pattern space, there's also the <i>hold space</i>. When <code>sed</code> is running, it wipes the <i>pattern space</i>
+clean after each cycle, meaning on each iteration the pattern space only contains the current
+input line (by default).
+</p>
+
+<p>
+The <i>hold space</i> does not follow this rule. When you put some text into the hold space, it stays
+there until you explicitly clear it or add to it or move it to the pattern space.
+</p>
+
+<p>
+The next handful of examples will cover just why exactly the hold space can be useful.
+</p>
+</div>
+
+<div id="outline-container-org33733b4" class="outline-3">
+<h3 id="org33733b4">Replicating grep &#x2013;context</h3>
+<div class="outline-text-3" id="text-org33733b4">
+<p>
+The <code>--context</code> flag in grep allows you to print the adjacent <code>NUM</code> lines before and after each
+match. Keeping a memory of lines before seeing a matching line is exactly the sort of thing
+<code>sed</code>'s hold pattern can help us with.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed -e <span style="color: #79a8ff;">'/^$/ d'</span> moby_dick.txt | sed -n <span style="color: #79a8ff;">'</span>
+<span style="color: #79a8ff;">/ship/ !{</span>
+<span style="color: #79a8ff;">    x</span>
+<span style="color: #79a8ff;">    d</span>
+<span style="color: #79a8ff;">}</span>
+<span style="color: #79a8ff;">/ship/ {</span>
+<span style="color: #79a8ff;">    x</span>
+<span style="color: #79a8ff;">    p</span>
+<span style="color: #79a8ff;">    x</span>
+<span style="color: #79a8ff;">    p</span>
+<span style="color: #79a8ff;">    n</span>
+<span style="color: #79a8ff;">    p</span>
+<span style="color: #79a8ff;">    a\</span>
+<span style="color: #79a8ff;">---</span>
+<span style="color: #79a8ff;">    x</span>
+<span style="color: #79a8ff;">}'</span>
+</pre>
+</div>
+
+<pre class="example" id="orgb566096">
+
+Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.
+There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
+---
+There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
+Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by Whitehall, northward. What do you see?—Posted like silent sentinels all around the town, stand thousands upon thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still better seaward peep. But these are all landsmen; of week days pent up in lath and plaster—tied to counters, nailed to benches, clinched to desks. How then is this? Are the green fields gone? What do they here?
+But look! here come more crowds, pacing straight for the water, and seemingly bound for a dive. Strange! Nothing will content them but the extremest limit of the land; loitering under the shady lee of yonder warehouses will not suffice. No. They must get just as nigh the water as they possibly can without falling in. And there they stand—miles of them—leagues. Inlanders all, they come from lanes and alleys, streets and avenues—north, east, south, and west. Yet here they all unite. Tell me, does the magnetic virtue of the needles of the compasses of all those ships attract them thither?
+---
+Once more. Say you are in the country; in some high land of lakes. Take almost any path you please, and ten to one it carries you down in a dale, and leaves you there by a pool in the stream. There is magic in it. Let the most absent-minded of men be plunged in his deepest reveries—stand that man on his legs, set his feet a-going, and he will infallibly lead you to water, if water there be in all that region. Should you ever be athirst in the great American desert, try this experiment, if your caravan happen to be supplied with a metaphysical professor. Yes, as every one knows, meditation and water are wedded for ever.
+But here is an artist. He desires to paint you the dreamiest, shadiest, quietest, most enchanting bit of romantic landscape in all the valley of the Saco. What is the chief element he employs? There stand his trees, each with a hollow trunk, as if a hermit and a crucifix were within; and here sleeps his meadow, and there sleep his cattle; and up from yonder cottage goes a sleepy smoke. Deep into distant woodlands winds a mazy way, reaching to overlapping spurs of mountains bathed in their hill-side blue. But though the picture lies thus tranced, and though this pine-tree shakes down its sighs like leaves upon this shepherd’s head, yet all were vain, unless the shepherd’s eye were fixed upon the magic stream before him. Go visit the Prairies in June, when for scores on scores of miles you wade knee-deep among Tiger-lilies—what is the one charm wanting?—Water—there is not a drop of water there! Were Niagara but a cataract of sand, would you travel your thousand miles to see it? Why did the poor poet of Tennessee, upon suddenly receiving two handfuls of silver, deliberate whether to buy him a coat, which he sadly needed, or invest his money in a pedestrian trip to Rockaway Beach? Why is almost every robust healthy boy with a robust healthy soul in him, at some time or other crazy to go to sea? Why upon your first voyage as a passenger, did you yourself feel such a mystical vibration, when first told that you and your ship were now out of sight of land? Why did the old Persians hold the sea holy? Why did the Greeks give it a separate deity, and own brother of Jove? Surely all this is not without meaning. And still deeper the meaning of that story of Narcissus, who because he could not grasp the tormenting, mild image he saw in the fountain, plunged into it and was drowned. But that same image, we ourselves see in all rivers and oceans. It is the image of the ungraspable phantom of life; and this is the key to it all.
+Now, when I say that I am in the habit of going to sea whenever I begin to grow hazy about the eyes, and begin to be over conscious of my lungs, I do not mean to have it inferred that I ever go to sea as a passenger. For to go as a passenger you must needs have a purse, and a purse is but a rag unless you have something in it. Besides, passengers get sea-sick—grow quarrelsome—don’t sleep of nights—do not enjoy themselves much, as a general thing;—no, I never go as a passenger; nor, though I am something of a salt, do I ever go to sea as a Commodore, or a Captain, or a Cook. I abandon the glory and distinction of such offices to those who like them. For my part, I abominate all honorable respectable toils, trials, and tribulations of every kind whatsoever. It is quite as much as I can do to take care of myself, without taking care of ships, barques, brigs, schooners, and what not. And as for going as cook,—though I confess there is considerable glory in that, a cook being a sort of officer on ship-board—yet, somehow, I never fancied broiling fowls;—though once broiled, judiciously buttered, and judgmatically salted and peppered, there is no one who will speak more respectfully, not to say reverentially, of a broiled fowl than I will. It is out of the idolatrous dotings of the old Egyptians upon broiled ibis and roasted river horse, that you see the mummies of those creatures in their huge bake-houses the pyramids.
+---
+</pre>
+
+<p>
+There's a lot going on here. But it's mostly a culmination of everything that we're covered so far
+so I think we can work through it. First we run the file contents through a simple <code>sed</code> invocation
+that just deletes all the empty lines. From there, the edited output is piped into our
+main <code>sed</code> script.
+</p>
+
+<p>
+It's composed of two commands: both with a regex address looking for the string, "ship". In the
+first case, we provide a function list preceded by <code>!</code> meaning the following functions will be
+executed on any line that <b>doesn't</b> match the regex <code>ship</code>. Let's take a deeper look at those two
+functions.
+</p>
+
+<pre class="example" id="org7122b97">
+/ship/ !{
+  x
+  d
+}
+</pre>
+
+<p>
+The <code>d</code> you should already know, but the <code>x</code> is new. Our trusty <a target="_blank" href="http://man.he.net/?topic=sed&section=all">man</a> page tells us the <code>x</code>
+function <i>"Swaps the contents of the pattern and hold spaces."</i> So the two functions
+together with the negated function list and the regex address say:
+</p>
+
+<p>
+On any line that doesn't contain the string "ship", place that line into the hold
+space, taking the current contents of the hold space and place them into the
+pattern space. Then delete the pattern space. Effectively, this saves each line
+into the hold space just in case the next line <b>does</b> match our regex. Because we
+need to keep a memory of the prior line to display the context around the match,
+this will always have the line of the previous cycle in memory.
+</p>
+
+<p>
+Next let's tackle the bigger section:
+</p>
+
+<pre class="example" id="org31bff9a">
+/ship/ {
+  x
+  p
+  x
+  p
+  n
+  p
+  a\
+---
+  x
+}
+</pre>
+
+<p>
+The first section ran for all lines that didn't match our search pattern, and this
+is the counterpart. This runs the list of functions over each line that <b>does</b> match
+our search term.
+</p>
+
+<p>
+<code>x</code> and then <code>p</code> will swap the hold space with the pattern space and then print it.
+Because of the first section, we know that the hold space will always contain
+the contents of the previous cycle. So <code>x</code> and <code>p</code> together print the previous line.
+The next <code>x</code> and <code>p</code> swap the hold and pattern spaces back, meaning the current line
+is back in the pattern space which is then printed.
+</p>
+
+<p>
+The <code>n</code> is a new function as well. You can think of it as hitting the down arrow in
+your text editor. Sed wipes the current pattern space, and pulls the next line
+into the pattern space. So with <code>n</code> and <code>p</code>, we print the <i>next</i> line of input.
+</p>
+
+<p>
+The last function we still have to introduce is <code>a</code>. <code>a</code> writes the given text <i>after</i>
+proccessing the current line. The man page has this to say about the <code>a</code> function:
+<i>"Write <code>text</code> to standard output immediately before each attempt to read a line
+of input&#x2026;"</i> but I find that description really confusing since it seems to indicate
+the text should appear before other things. How it clicked for me was thinking about
+it as an append action like in vim. <code>a</code> for after, <code>i</code> for before.<sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup> For any of the
+functions that take some <code>text</code>, the function must have a back slash and a newline
+immediately after it, followed by the text you wish to add, followed by the
+newline.<sup><a id="fnr.4" class="footref" href="#fn.4" role="doc-backlink">4</a></sup>
+</p>
+
+<p>
+In this instance:
+</p>
+
+<pre class="example" id="orgf9d7d8b">
+   a\
+--- 
+</pre>
+
+<p>
+Means that after we have printed our three lines (before, current, and next), we
+append <code>---</code> as a marker to make it clear where the current triplet stops and the
+next one begins.
+</p>
+
+<p>
+Lastly, because we've pulled in the next line within our script with the <code>n</code>
+function, we need to add it to the hold space in order to continue the
+logic of adding each "previous" line to the hold space.
+</p>
+
+<p>
+Here's the script again in all its glory:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sed -e <span style="color: #79a8ff;">'/^$/ d'</span> moby_dick.txt | sed -n <span style="color: #79a8ff;">'</span>
+<span style="color: #79a8ff;">/ship/ !{</span>
+<span style="color: #79a8ff;">    x</span>
+<span style="color: #79a8ff;">    d</span>
+<span style="color: #79a8ff;">}</span>
+<span style="color: #79a8ff;">/ship/ {</span>
+<span style="color: #79a8ff;">    x</span>
+<span style="color: #79a8ff;">    p</span>
+<span style="color: #79a8ff;">    x</span>
+<span style="color: #79a8ff;">    p</span>
+<span style="color: #79a8ff;">    n</span>
+<span style="color: #79a8ff;">    p</span>
+<span style="color: #79a8ff;">    a\</span>
+<span style="color: #79a8ff;">---</span>
+<span style="color: #79a8ff;">    x</span>
+<span style="color: #79a8ff;">}'</span>
+</pre>
+</div>
+
+<pre class="example" id="org0796a29">
+
+Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.
+There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
+---
+There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
+Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by Whitehall, northward. What do you see?—Posted like silent sentinels all around the town, stand thousands upon thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still better seaward peep. But these are all landsmen; of week days pent up in lath and plaster—tied to counters, nailed to benches, clinched to desks. How then is this? Are the green fields gone? What do they here?
+But look! here come more crowds, pacing straight for the water, and seemingly bound for a dive. Strange! Nothing will content them but the extremest limit of the land; loitering under the shady lee of yonder warehouses will not suffice. No. They must get just as nigh the water as they possibly can without falling in. And there they stand—miles of them—leagues. Inlanders all, they come from lanes and alleys, streets and avenues—north, east, south, and west. Yet here they all unite. Tell me, does the magnetic virtue of the needles of the compasses of all those ships attract them thither?
+---
+Once more. Say you are in the country; in some high land of lakes. Take almost any path you please, and ten to one it carries you down in a dale, and leaves you there by a pool in the stream. There is magic in it. Let the most absent-minded of men be plunged in his deepest reveries—stand that man on his legs, set his feet a-going, and he will infallibly lead you to water, if water there be in all that region. Should you ever be athirst in the great American desert, try this experiment, if your caravan happen to be supplied with a metaphysical professor. Yes, as every one knows, meditation and water are wedded for ever.
+But here is an artist. He desires to paint you the dreamiest, shadiest, quietest, most enchanting bit of romantic landscape in all the valley of the Saco. What is the chief element he employs? There stand his trees, each with a hollow trunk, as if a hermit and a crucifix were within; and here sleeps his meadow, and there sleep his cattle; and up from yonder cottage goes a sleepy smoke. Deep into distant woodlands winds a mazy way, reaching to overlapping spurs of mountains bathed in their hill-side blue. But though the picture lies thus tranced, and though this pine-tree shakes down its sighs like leaves upon this shepherd’s head, yet all were vain, unless the shepherd’s eye were fixed upon the magic stream before him. Go visit the Prairies in June, when for scores on scores of miles you wade knee-deep among Tiger-lilies—what is the one charm wanting?—Water—there is not a drop of water there! Were Niagara but a cataract of sand, would you travel your thousand miles to see it? Why did the poor poet of Tennessee, upon suddenly receiving two handfuls of silver, deliberate whether to buy him a coat, which he sadly needed, or invest his money in a pedestrian trip to Rockaway Beach? Why is almost every robust healthy boy with a robust healthy soul in him, at some time or other crazy to go to sea? Why upon your first voyage as a passenger, did you yourself feel such a mystical vibration, when first told that you and your ship were now out of sight of land? Why did the old Persians hold the sea holy? Why did the Greeks give it a separate deity, and own brother of Jove? Surely all this is not without meaning. And still deeper the meaning of that story of Narcissus, who because he could not grasp the tormenting, mild image he saw in the fountain, plunged into it and was drowned. But that same image, we ourselves see in all rivers and oceans. It is the image of the ungraspable phantom of life; and this is the key to it all.
+Now, when I say that I am in the habit of going to sea whenever I begin to grow hazy about the eyes, and begin to be over conscious of my lungs, I do not mean to have it inferred that I ever go to sea as a passenger. For to go as a passenger you must needs have a purse, and a purse is but a rag unless you have something in it. Besides, passengers get sea-sick—grow quarrelsome—don’t sleep of nights—do not enjoy themselves much, as a general thing;—no, I never go as a passenger; nor, though I am something of a salt, do I ever go to sea as a Commodore, or a Captain, or a Cook. I abandon the glory and distinction of such offices to those who like them. For my part, I abominate all honorable respectable toils, trials, and tribulations of every kind whatsoever. It is quite as much as I can do to take care of myself, without taking care of ships, barques, brigs, schooners, and what not. And as for going as cook,—though I confess there is considerable glory in that, a cook being a sort of officer on ship-board—yet, somehow, I never fancied broiling fowls;—though once broiled, judiciously buttered, and judgmatically salted and peppered, there is no one who will speak more respectfully, not to say reverentially, of a broiled fowl than I will. It is out of the idolatrous dotings of the old Egyptians upon broiled ibis and roasted river horse, that you see the mummies of those creatures in their huge bake-houses the pyramids.
+---
+</pre>
+
+<p>
+There are a handful of additional functions to explore, but this article has already gone on far longer than
+I anticipated, so feel free to take your newfound knowledge and experiment with them.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5eb4b0b" class="outline-2">
+<h2 id="org5eb4b0b">Conclusion</h2>
+<div class="outline-text-2" id="text-org5eb4b0b">
+<p>
+The examples (and a great deal of my understanding of how sed works) has come from this article: 
+<a href="https://www.grymoire.com/Unix/Sed.html">https://www.grymoire.com/Unix/Sed.html</a>. I owe Bruce a great debt for taking the terse man page
+for <code>sed</code> and bringing it alive. I wouldn't have been able to write this article without his
+writing.
+</p>
+
+<p>
+As for the <code>sed</code> tool itself, there was a major mental shift that occurred to me as I began
+to understand how it thinks about the world. I pictured it as a simple line processing
+tool similar to <a href="2023_10_27_grep.html">grep</a> or <a target="_blank" href="http://man.he.net/?topic=tr&section=all">tr</a>, but the more I started to see things <code>sed</code>'s way, I started
+to see its power. It's not an exaggeration that <code>sed</code> is called a stream <i>editor</i>.
+</p>
+
+<p>
+<code>Sed</code> equips you with the same sort of editing commands an interactive text editor provides,
+but in a stream based way. This yields two primary benefits: 1) You can use it to edit
+more than just files. Anything that outputs text can be fed through <code>sed</code> using pipelines.
+And 2) The editing commands you assemble with sed can be saved in a bash script or even
+as a sed script itself (check out the <code>-f</code> flag) and repeated whenever you need to wrangle
+text the same way again in the future. These scripts can be made executable and saved
+to your path, adding more custom tools to your command line toolbelt.
+</p>
+
+<p>
+When does it make sense to use <code>sed</code> rather than a bash script or lugging python out for
+fancier changes? That depends. When do you need to just open up an interactive editor
+and poke around? That also depends on what you're looking for and what you're trying
+to change. I'm just trying to give you another option, rather than <i>needing</i> to open
+up VS Code or some other application just for simple, repetitive edits. When your
+primary aim with sed is to read in a file, make some changes and save the results
+back to the same file, you can use <code>sed</code>'s <code>-i</code> flag.<sup><a id="fnr.5" class="footref" href="#fn.5" role="doc-backlink">5</a></sup>
+</p>
+
+<p>
+Hopefully this pulls back the curtain on <code>sed</code> a bit. I don't think you should always
+reach for sed when building a shell pipeline to edit some text, but you should at
+least ask yourself, could I just do all of this using <code>sed</code>?
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+In this article, the input text is the first chapter of the novel <i>Moby Dick</i>,
+accessed from <a href="https://www.gutenberg.org/cache/epub/2701/pg2701-images.html#link2HCH0001">www.gutenberg.org</a>.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+The <a target="_blank" href="http://man.he.net/?topic=sed&section=all">sed</a> man page is helpful here to understand the differences, if only to
+point the viewer to the man page of <a target="_blank" href="http://man.he.net/?topic=re_format(7)&section=all">re_format(7)</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Sed does support the <code>i</code> function, which writes the text before the next command.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Thinking about <code>sed</code> as a text editor really helps to understand how it sees
+the world. If you're famaliar with vim, you know of <code>d</code> to delete things, <code>i</code> to
+insert before, <code>a</code> to insert after, <code>c</code> to change things. These all have counterparts
+in <code>sed</code>, but all are <i>line-oriented</i>. So <code>d</code> deletes the current line from the input
+stream, <code>i</code> inserts a given line before the current line, <code>a</code> inserts after, and <code>c</code>
+replaces the current line with the given <code>text</code>.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5" role="doc-backlink">5</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+I recently updated the layout if posts on this blog and needed to update the
+links in all the articles to match the update. Once I figured out what changes
+I needed to make, <code>sed</code> performed all the heavy lifting for me:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #b6a0ff; font-weight: bold;">for</span> file<span style="color: #b6a0ff; font-weight: bold;"> in</span> *.org; <span style="color: #b6a0ff; font-weight: bold;">do</span>
+    sed -e <span style="color: #79a8ff;">'s#\.\./images#images#'</span> -e <span style="color: #79a8ff;">'s#terminal_tooling/##'</span> -i <span style="color: #79a8ff;">'.bak'</span> <span style="color: #79a8ff;">"$file"</span>
+<span style="color: #b6a0ff; font-weight: bold;">done</span>
+</pre>
+</div>
+
+<p class="footpara">
+The <code>#</code> is the separator for my substitution commands. Most examples of the <code>s</code> function
+use <code>/</code>, but it's not strictly necessary. Whichever token you provide after the <code>s</code> becomes
+the deliniator between each component of the substitution.
+</p>
+
+<p class="footpara">
+This has the effect of going through each article source file and replacing each image
+link with the same path, one directory up. The <code>-e</code> allows you to specify multiple scripts
+which <code>sed</code> will run serially.
+</p>
+
+<p class="footpara">
+The <code>-i '.bak'</code> tells <code>sed</code> to make backups of each file it changes so you can recover the
+pre-changed version in case things went wrong.
+</p>
+
+<p class="footpara">
+p.s. When setting up a blog which auto executes embedded scripts, don't let it run
+the scripts that mess with the articles themselves. Things get&#x2026;.weird.
+</p></div></div>
+
+
+</div>
+</div></div>
+</body>
+</html>

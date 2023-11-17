@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-11-10 Fri 16:21 -->
+<!-- 2023-11-17 Fri 09:04 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ranger - [[file:../index.org][Terminal Tooling]]</title>
 <meta name="author" content="Jonathan Harder" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
-<link rel="stylesheet" href="/css/stylesheet.css" />
-<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="../css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 </head>
 <body>
 <div id="content" class="content">
 <header>
 <h1 class="title">Ranger - <a href="../index.html">Terminal Tooling</a></h1>
 </header>
-<div id="outline-container-orgfc446b0" class="outline-2">
-<h2 id="orgfc446b0">Ranger&#xa0;&#xa0;&#xa0;<span class="tag"><span class="file_managers">file_managers</span></span></h2>
-<div class="outline-text-2" id="text-orgfc446b0">
+<div id="outline-container-orgfacae16" class="outline-2">
+<h2 id="orgfacae16">Ranger&#xa0;&#xa0;&#xa0;<span class="tag"><span class="file_managers">file_managers</span></span></h2>
+<div class="outline-text-2" id="text-orgfacae16">
 <p>
 <a href="https://ranger.github.io/">Ranger</a> is a "console file manager with VI key bindings." Specifically it is a terminal
 file manager. You're most likely familiar with GUI file managers in the form of mac's
@@ -42,9 +42,9 @@ Convinced? Not yet? Let's see some examples
 </p>
 </div>
 
-<div id="outline-container-org84bf15d" class="outline-3">
-<h3 id="org84bf15d">Installing</h3>
-<div class="outline-text-3" id="text-org84bf15d">
+<div id="outline-container-orgc257e9d" class="outline-3">
+<h3 id="orgc257e9d">Installing</h3>
+<div class="outline-text-3" id="text-orgc257e9d">
 <p>
 If you want to follow along and run these examples in your own terminal, you can install
 ranger easily using the package manager on your operating system. On mac, it's as easy
@@ -58,12 +58,12 @@ as:
 </div>
 </div>
 
-<div id="outline-container-org10bd57a" class="outline-3">
-<h3 id="org10bd57a">Overview</h3>
-<div class="outline-text-3" id="text-org10bd57a">
+<div id="outline-container-org7b61af2" class="outline-3">
+<h3 id="org7b61af2">Overview</h3>
+<div class="outline-text-3" id="text-org7b61af2">
 
-<figure id="org1a2d22c">
-<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/dir_view.png" alt="dir_view.png" width="900px">
+<figure id="org7943f84">
+<img src="../images/posts/2023_10_06_ranger/dir_view.png" alt="dir_view.png" width="900px">
 
 </figure>
 
@@ -81,8 +81,8 @@ is highlighted.
 </p>
 
 
-<figure id="org8d88f09">
-<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/file_view.png" alt="file_view.png" width="900px">
+<figure id="org6df15b1">
+<img src="../images/posts/2023_10_06_ranger/file_view.png" alt="file_view.png" width="900px">
 
 </figure>
 
@@ -92,21 +92,20 @@ for macOS, Finder, this design has been a staple since their <a href="https://fl
 </p>
 
 
-<figure id="org24b36a6">
-<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/finder.png" alt="finder.png" width="900px">
+<figure id="org14a1c58">
+<img src="../images/posts/2023_10_06_ranger/finder.png" alt="finder.png" width="900px">
 
 </figure>
 </div>
 </div>
 
-
-<div id="outline-container-org80b8291" class="outline-3">
-<h3 id="org80b8291">Navigation and file manipulation</h3>
-<div class="outline-text-3" id="text-org80b8291">
+<div id="outline-container-org0efd73c" class="outline-3">
+<h3 id="org0efd73c">Navigation and file manipulation</h3>
+<div class="outline-text-3" id="text-org0efd73c">
 </div>
-<div id="outline-container-org1106aa7" class="outline-4">
-<h4 id="org1106aa7">Movement</h4>
-<div class="outline-text-4" id="text-org1106aa7">
+<div id="outline-container-org5ed5daf" class="outline-4">
+<h4 id="org5ed5daf">Movement</h4>
+<div class="outline-text-4" id="text-org5ed5daf">
 <p>
 For a tool that touts "VI key bindings", no one should be surprised at the basic file
 and directory navigation keys: <code>h</code>, <code>j</code>, <code>k</code>, and <code>l</code>. <code>j</code> moves the selection in the center column one item
@@ -129,9 +128,9 @@ more however.
 </div>
 </div>
 
-<div id="outline-container-orgd479b06" class="outline-4">
-<h4 id="orgd479b06">Copying, Deleting, Moving</h4>
-<div class="outline-text-4" id="text-orgd479b06">
+<div id="outline-container-orgb73a65a" class="outline-4">
+<h4 id="orgb73a65a">Copying, Deleting, Moving</h4>
+<div class="outline-text-4" id="text-orgb73a65a">
 <p>
 Ranger takes the "VI bindings" much further than simple movement. Want to copy a file? Hit
 <code>yy</code> (the letter y, hit twice) to copy the file into a temporary register, then in the
@@ -148,8 +147,8 @@ as before only this time, all the selected files will be copied/pasted.
 </p>
 
 
-<figure id="org87fd2e8">
-<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/multiple_selection.png" alt="multiple_selection.png" width="900px">
+<figure id="org32d88da">
+<img src="../images/posts/2023_10_06_ranger/multiple_selection.png" alt="multiple_selection.png" width="900px">
 
 </figure>
 
@@ -162,9 +161,9 @@ the multiple selection.
 </div>
 </div>
 
-<div id="outline-container-orgffe91a1" class="outline-4">
-<h4 id="orgffe91a1">Renaming</h4>
-<div class="outline-text-4" id="text-orgffe91a1">
+<div id="outline-container-orga593b7f" class="outline-4">
+<h4 id="orga593b7f">Renaming</h4>
+<div class="outline-text-4" id="text-orga593b7f">
 <p>
 So far, the mechanism to move a file does not allow for renaming it (it is just copied
 and pasted without changing anything). How do you rename a file then? Like in vim, there's
@@ -176,8 +175,8 @@ with the file and the cursor will be on the <code>.</code> file just before the 
 </p>
 
 
-<figure id="org8a259fe">
-<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_lower_case_a.png" alt="rename_lower_case_a.png" width="275px">
+<figure id="org307d379">
+<img src="../images/posts/2023_10_06_ranger/rename_lower_case_a.png" alt="rename_lower_case_a.png" width="275px">
 
 </figure>
 
@@ -188,8 +187,8 @@ name in the prompt.
 </p>
 
 
-<figure id="org65005d7">
-<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_upper_case_a.png" alt="rename_upper_case_a.png" width="275px">
+<figure id="org382f375">
+<img src="../images/posts/2023_10_06_ranger/rename_upper_case_a.png" alt="rename_upper_case_a.png" width="275px">
 
 </figure>
 
@@ -199,16 +198,16 @@ pre-populate with the file and the cursor at the front.
 </p>
 
 
-<figure id="orgccebac5">
-<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/rename_capital_i.png" alt="rename_capital_i.png" width="275px">
+<figure id="org276bcd7">
+<img src="../images/posts/2023_10_06_ranger/rename_capital_i.png" alt="rename_capital_i.png" width="275px">
 
 </figure>
 </div>
 </div>
 
-<div id="outline-container-orge5b2559" class="outline-4">
-<h4 id="orge5b2559">Bulk renaming</h4>
-<div class="outline-text-4" id="text-orge5b2559">
+<div id="outline-container-orgee3aa87" class="outline-4">
+<h4 id="orgee3aa87">Bulk renaming</h4>
+<div class="outline-text-4" id="text-orgee3aa87">
 <p>
 But what if you have a bunch of files to rename, and you may or may not want to rename
 them differently? What if you want to make the same change to each file name?
@@ -222,8 +221,8 @@ your editor to rename the files however you want.
 </p>
 
 
-<figure id="org7846a06">
-<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/bulk_rename_1.png" alt="bulk_rename_1.png" width="900px">
+<figure id="org1b5e02d">
+<img src="../images/posts/2023_10_06_ranger/bulk_rename_1.png" alt="bulk_rename_1.png" width="900px">
 
 </figure>
 
@@ -235,8 +234,8 @@ will be renamed/moved to). After saving, ranger will execute the rename.
 </p>
 
 
-<figure id="org0e18c11">
-<img src="../../images/terminal_tooling/posts/2023_10_06_ranger/bulk_rename_2.png" alt="bulk_rename_2.png" width="900px">
+<figure id="orgb4493c0">
+<img src="../images/posts/2023_10_06_ranger/bulk_rename_2.png" alt="bulk_rename_2.png" width="900px">
 
 </figure>
 </div>
@@ -245,9 +244,9 @@ will be renamed/moved to). After saving, ranger will execute the rename.
 </div>
 
 
-<div id="outline-container-orgfc9ac19" class="outline-2">
-<h2 id="orgfc9ac19">Further reading</h2>
-<div class="outline-text-2" id="text-orgfc9ac19">
+<div id="outline-container-org52089ea" class="outline-2">
+<h2 id="org52089ea">Further reading</h2>
+<div class="outline-text-2" id="text-org52089ea">
 <p>
 This only scratches the surface of ranger's functionality. Ranger supports tabs, bookmarks, macros
 custom user-defined functionality using python and more. Their <a href="https://github.com/ranger/ranger/wiki/Official-user-guide">documentation</a> is extensive
@@ -256,9 +255,9 @@ and it can do more than I have the time to go over. The <code>:flat</code> comma
 </div>
 </div>
 
-<div id="outline-container-orge92ec1b" class="outline-2">
-<h2 id="orge92ec1b">Alternatives</h2>
-<div class="outline-text-2" id="text-orge92ec1b">
+<div id="outline-container-org5022dea" class="outline-2">
+<h2 id="org5022dea">Alternatives</h2>
+<div class="outline-text-2" id="text-org5022dea">
 <p>
 Beyond ranger, there are a handful of other terminal file managers with varying degrees of
 overlap in their design goals. These are just the ones that more or less conform to the

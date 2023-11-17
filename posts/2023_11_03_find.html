@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-11-10 Fri 16:21 -->
+<!-- 2023-11-17 Fri 09:04 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>find - [[file:../index.org][Terminal Tooling]]</title>
 <meta name="author" content="Jonathan Harder" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
-<link rel="stylesheet" href="/css/stylesheet.css" />
-<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="../css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 </head>
 <body>
 <div id="content" class="content">
@@ -17,13 +17,13 @@
 <h1 class="title">find - <a href="../index.html">Terminal Tooling</a></h1>
 </header>
 
-<div id="outline-container-org8027ec6" class="outline-2">
-<h2 id="org8027ec6">find&#xa0;&#xa0;&#xa0;<span class="tag"><span class="unix_tools">unix_tools</span></span></h2>
-<div class="outline-text-2" id="text-org8027ec6">
+<div id="outline-container-orgcaf05f1" class="outline-2">
+<h2 id="orgcaf05f1">find&#xa0;&#xa0;&#xa0;<span class="tag"><span class="unix_tools">unix_tools</span></span></h2>
+<div class="outline-text-2" id="text-orgcaf05f1">
 </div>
-<div id="outline-container-org0fba212" class="outline-3">
-<h3 id="org0fba212">Overview</h3>
-<div class="outline-text-3" id="text-org0fba212">
+<div id="outline-container-orgf04bd4a" class="outline-3">
+<h3 id="orgf04bd4a">Overview</h3>
+<div class="outline-text-3" id="text-orgf04bd4a">
 <p>
 <a target="_blank" href="http://man.he.net/?topic=find&section=all">Find</a> is a utility to <i>find</i> files on your computer given a wide range of search
 parameters. It will recursively walk your filesystem (<a href="https://en.wikipedia.org/wiki/Breadth-first_search">breadth-first</a>) and print
@@ -43,9 +43,9 @@ Additionally you can execute a variety of commands on the files <code>find</code
 </div>
 </div>
 
-<div id="outline-container-orgeaf96b6" class="outline-3">
-<h3 id="orgeaf96b6">Terminology</h3>
-<div class="outline-text-3" id="text-orgeaf96b6">
+<div id="outline-container-org4c1ad45" class="outline-3">
+<h3 id="org4c1ad45">Terminology</h3>
+<div class="outline-text-3" id="text-org4c1ad45">
 <p>
 If you read the <a target="_blank" href="http://man.he.net/?topic=find&section=all">docs</a>, which I <a target="_blank" href="http://man.he.net/?topic=find&section=all">recommend</a> that you <a target="_blank" href="http://man.he.net/?topic=find&section=all">do</a>, you'll see referenes to
 a handful of terms which may be unfamiliar.
@@ -65,18 +65,18 @@ ways to combine expressions, like <code>or</code> or <code>and</code>.</dd>
 </div>
 </div>
 
-<div id="outline-container-org306e163" class="outline-3">
-<h3 id="org306e163">Primaries - Finding Files</h3>
-<div class="outline-text-3" id="text-org306e163">
+<div id="outline-container-org78718c6" class="outline-3">
+<h3 id="org78718c6">Primaries - Finding Files</h3>
+<div class="outline-text-3" id="text-org78718c6">
 <p>
 Enough theory, let's see some examples. For these examples, we will be investigating
 a Ruby library meant to query Jira's API.
 </p>
 </div>
 
-<div id="outline-container-orgf3a98e6" class="outline-4">
-<h4 id="orgf3a98e6">By file names</h4>
-<div class="outline-text-4" id="text-orgf3a98e6">
+<div id="outline-container-org8673d15" class="outline-4">
+<h4 id="org8673d15">By file names</h4>
+<div class="outline-text-4" id="text-org8673d15">
 <div class="org-src-container">
 <pre class="src src-sh">find . -name <span style="color: #79a8ff;">'*.yml'</span>
 </pre>
@@ -101,9 +101,9 @@ Truth be told, this pattern of searching for files by some name glob accounts fo
 </div>
 </div>
 
-<div id="outline-container-org1d497f5" class="outline-4">
-<h4 id="org1d497f5">By access time</h4>
-<div class="outline-text-4" id="text-org1d497f5">
+<div id="outline-container-org9de7aa4" class="outline-4">
+<h4 id="org9de7aa4">By access time</h4>
+<div class="outline-text-4" id="text-org9de7aa4">
 <p>
 Consider the scenario where you were recently working on a project and wanted to
 see which files you have edited in the last 30 minutes.
@@ -136,9 +136,9 @@ minutes, <code>h</code> for hours, <code>d</code> for days, and <code>w</code> f
 </div>
 </div>
 
-<div id="outline-container-org462a2db" class="outline-4">
-<h4 id="org462a2db">By creation time</h4>
-<div class="outline-text-4" id="text-org462a2db">
+<div id="outline-container-org2e55fc0" class="outline-4">
+<h4 id="org2e55fc0">By creation time</h4>
+<div class="outline-text-4" id="text-org2e55fc0">
 <p>
 If you were instead interested in the file <i>creation</i> time rather than <i>access</i> time,
 you could use <code>-Bmin</code> and its counterpart <code>-Btime</code> which peform the same searches as
@@ -156,9 +156,9 @@ you could use <code>-Bmin</code> and its counterpart <code>-Btime</code> which p
 </div>
 </div>
 
-<div id="outline-container-orgb53f1db" class="outline-4">
-<h4 id="orgb53f1db">By owner and group</h4>
-<div class="outline-text-4" id="text-orgb53f1db">
+<div id="outline-container-org9c035a8" class="outline-4">
+<h4 id="org9c035a8">By owner and group</h4>
+<div class="outline-text-4" id="text-org9c035a8">
 <p>
 In some instances it can be handy to find files owned by a particular user, or
 particular group. Find has you covered.
@@ -188,9 +188,9 @@ very helpful so I would recommend reading up more on it if you're curious.<sup><
 </div>
 </div>
 
-<div id="outline-container-org0d8254b" class="outline-4">
-<h4 id="org0d8254b">By type and size</h4>
-<div class="outline-text-4" id="text-org0d8254b">
+<div id="outline-container-orgc04e82f" class="outline-4">
+<h4 id="orgc04e82f">By type and size</h4>
+<div class="outline-text-4" id="text-orgc04e82f">
 <p>
 Shifting gears, let's say you're trying to track down files that are hogging
 your hard drive space. <code>-size</code> helps you find files larger or smaller than
@@ -230,7 +230,7 @@ You can tell <code>find</code> to only return results of a given type with the <
 </pre>
 </div>
 
-<pre class="example" id="org20b298a">
+<pre class="example" id="org073452c">
 .
 ./bin
 ./spec
@@ -259,15 +259,15 @@ You can tell <code>find</code> to only return results of a given type with the <
 <p>
 This returns only the directories in the current directory and its children.
 The <code>-path</code> primary searches in the whole path of the file, not just the file
-itself, and the <code>!</code> will be covered later when we talk about <a href="#org1eddc71">operands</a>
+itself, and the <code>!</code> will be covered later when we talk about <a href="#org3b7bb7f">operands</a>
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org801215c" class="outline-3">
-<h3 id="org801215c">Primaries - Acting on files</h3>
-<div class="outline-text-3" id="text-org801215c">
+<div id="outline-container-org527c8e1" class="outline-3">
+<h3 id="org527c8e1">Primaries - Acting on files</h3>
+<div class="outline-text-3" id="text-org527c8e1">
 <p>
 So far <code>find</code> has only been printing the results that it finds, but you can
 take other actions on the matched files as well. This is implicitly the same
@@ -336,9 +336,9 @@ to delete a handful of files but wanted to confirm before they get deleted
 </div>
 
 
-<div id="outline-container-org1eddc71" class="outline-3">
-<h3 id="org1eddc71">Operands</h3>
-<div class="outline-text-3" id="text-org1eddc71">
+<div id="outline-container-org3b7bb7f" class="outline-3">
+<h3 id="org3b7bb7f">Operands</h3>
+<div class="outline-text-3" id="text-org3b7bb7f">
 <p>
 Operands are quite simple, in fact, most of these examples have been using them!
 The operators listed in the <a target="_blank" href="http://man.he.net/?topic=man&section=all">man</a> pages list <code>(</code> <code>)</code>, <code>!</code>, <code>-and</code>, and <code>-or</code>. When multiple
@@ -358,9 +358,9 @@ familiar with.
 </div>
 </div>
 
-<div id="outline-container-org9b1bbe8" class="outline-2">
-<h2 id="org9b1bbe8">Conclusion</h2>
-<div class="outline-text-2" id="text-org9b1bbe8">
+<div id="outline-container-org844d615" class="outline-2">
+<h2 id="org844d615">Conclusion</h2>
+<div class="outline-text-2" id="text-org844d615">
 <p>
 Find is a humble utility that seems simple on its face, but weilds great power
 in the hands of those who know how to handle it. I've used find for years mostly

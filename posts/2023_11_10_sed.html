@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-11-10 Fri 16:21 -->
+<!-- 2023-11-17 Fri 09:04 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>sed - [[file:../index.org][Terminal Tooling]]</title>
 <meta name="author" content="Jonathan Harder" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
-<link rel="stylesheet" href="/css/stylesheet.css" />
-<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="../css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 </head>
 <body>
 <div id="content" class="content">
@@ -17,14 +17,14 @@
 <h1 class="title">sed - <a href="../index.html">Terminal Tooling</a></h1>
 </header>
 
-<div id="outline-container-org2ad1b1f" class="outline-2">
-<h2 id="org2ad1b1f">sed (part 1)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="unix_tools">unix_tools</span></span></h2>
-<div class="outline-text-2" id="text-org2ad1b1f">
+<div id="outline-container-org0af79d5" class="outline-2">
+<h2 id="org0af79d5">sed (part 1)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="unix_tools">unix_tools</span></span></h2>
+<div class="outline-text-2" id="text-org0af79d5">
 </div>
 
-<div id="outline-container-org096cc16" class="outline-3">
-<h3 id="org096cc16">Overview</h3>
-<div class="outline-text-3" id="text-org096cc16">
+<div id="outline-container-org2618156" class="outline-3">
+<h3 id="org2618156">Overview</h3>
+<div class="outline-text-3" id="text-org2618156">
 <p>
 <a target="_blank" href="http://man.he.net/?topic=sed&section=all">Sed</a> stands for (s)tream (ed)itor and is useful for taking any input you have
 and modifying it in some way before sending it along as output, either to
@@ -73,9 +73,9 @@ But to unpack this fully, we will need to clear up some strange terminology.
 </div>
 </div>
 
-<div id="outline-container-orgdd0b17e" class="outline-3">
-<h3 id="orgdd0b17e">Terminology</h3>
-<div class="outline-text-3" id="text-orgdd0b17e">
+<div id="outline-container-org8982ff0" class="outline-3">
+<h3 id="org8982ff0">Terminology</h3>
+<div class="outline-text-3" id="text-org8982ff0">
 <dl class="org-dl">
 <dt>Address</dt><dd><p>
 If all you've ever used <code>sed</code> to do is substitute terms using <code>s/term/replacement/</code>,
@@ -104,7 +104,7 @@ four. For lines within that range, the provided function will be ran. For lines 
 range, lines will be left untouched and printed as is.
 </p>
 
-<pre class="example" id="org000f4a9">
+<pre class="example" id="org320914f">
 sed '2,4s/line/fish/'
 </pre>
 
@@ -113,7 +113,7 @@ In the next example, <code>$</code> is used as the terminating address to restri
 on.
 </p>
 
-<pre class="example" id="org05ee1a7">
+<pre class="example" id="orgbb100e5">
 sed '3,$s/foo/bar/'
 </pre>
 
@@ -151,9 +151,9 @@ constitutes one <i>cycle</i>.</dd>
 </div>
 
 
-<div id="outline-container-org16de827" class="outline-3">
-<h3 id="org16de827">Functions</h3>
-<div class="outline-text-3" id="text-org16de827">
+<div id="outline-container-org1bdee44" class="outline-3">
+<h3 id="org1bdee44">Functions</h3>
+<div class="outline-text-3" id="text-org1bdee44">
 <p>
 So far we're only shown examples using the (s)ubstitute function. There are many more.
 Let's start with a simple one. The <code>p</code> function "<i>Writes the pattern space to standard output.</i>".
@@ -332,9 +332,9 @@ to <code>p</code> to be printed.
 </div>
 
 
-<div id="outline-container-orgdddeb42" class="outline-2">
-<h2 id="orgdddeb42">Next time</h2>
-<div class="outline-text-2" id="text-orgdddeb42">
+<div id="outline-container-orgd78fe38" class="outline-2">
+<h2 id="orgd78fe38">Next time</h2>
+<div class="outline-text-2" id="text-orgd78fe38">
 <p>
 The more I dug into said, the more powerful I discovered it really was. This is only the
 beginning. Hopefully this alone was helpful to try and understand the <a target="_blank" href="http://man.he.net/?topic=sed&section=all">man</a> page on <code>sed</code>.

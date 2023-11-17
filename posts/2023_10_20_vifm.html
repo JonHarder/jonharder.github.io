@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-11-10 Fri 16:21 -->
+<!-- 2023-11-17 Fri 09:04 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Vifm - [[file:../index.org][Terminal Tooling]]</title>
 <meta name="author" content="Jonathan Harder" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
-<link rel="stylesheet" href="/css/stylesheet.css" />
-<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="../css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 </head>
 <body>
 <div id="content" class="content">
@@ -17,13 +17,13 @@
 <h1 class="title">Vifm - <a href="../index.html">Terminal Tooling</a></h1>
 </header>
 
-<div id="outline-container-orgb81de1a" class="outline-2">
-<h2 id="orgb81de1a">Vifm&#xa0;&#xa0;&#xa0;<span class="tag"><span class="file_managers">file_managers</span></span></h2>
-<div class="outline-text-2" id="text-orgb81de1a">
+<div id="outline-container-org5016532" class="outline-2">
+<h2 id="org5016532">Vifm&#xa0;&#xa0;&#xa0;<span class="tag"><span class="file_managers">file_managers</span></span></h2>
+<div class="outline-text-2" id="text-org5016532">
 </div>
-<div id="outline-container-orgc96589a" class="outline-3">
-<h3 id="orgc96589a">Overview</h3>
-<div class="outline-text-3" id="text-orgc96589a">
+<div id="outline-container-orgbc35acf" class="outline-3">
+<h3 id="orgbc35acf">Overview</h3>
+<div class="outline-text-3" id="text-orgbc35acf">
 <p>
 Vifm is the vi file manager. It uses dual window design reminiscient
 of midnight commander, but attempts to replicate vi keybindings as
@@ -31,8 +31,8 @@ much as possible.
 </p>
 
 
-<figure id="org8d5a371">
-<img src="../../images/terminal_tooling/posts/2023_10_20_vifm/overview.png" alt="overview.png">
+<figure id="org1e69189">
+<img src="../images/posts/2023_10_20_vifm/overview.png" alt="overview.png">
 
 </figure>
 
@@ -54,9 +54,9 @@ unique features, quirks and pain points.
 </div>
 </div>
 
-<div id="outline-container-org33ad3d9" class="outline-3">
-<h3 id="org33ad3d9">Basic features</h3>
-<div class="outline-text-3" id="text-org33ad3d9">
+<div id="outline-container-org7a79bf7" class="outline-3">
+<h3 id="org7a79bf7">Basic features</h3>
+<div class="outline-text-3" id="text-org7a79bf7">
 <p>
 As expected, all the basic navigation from vim works here. <code>h</code>, <code>j</code>, <code>k</code> and <code>l</code> move up, down, back and
 forward through the directory tree. <code>gg</code> moves to the first item in the current directory,
@@ -65,15 +65,15 @@ forward through the directory tree. <code>gg</code> moves to the first item in t
 
 <p>
 You can rename, cut, copy, and delete files just like you would expect for a vim inspired file
-manager (just like in <a href="2023_10_06_ranger.html#orgffe91a1">ranger</a>). And bulk updates work the same way (using a temporary file which
+manager (just like in <a href="2023_10_06_ranger.html#orga593b7f">ranger</a>. And bulk updates work the same way (using a temporary file which
 you edit in order to specify the desired changes)
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb38819a" class="outline-3">
-<h3 id="orgb38819a">Finding files</h3>
-<div class="outline-text-3" id="text-orgb38819a">
+<div id="outline-container-orga1d2867" class="outline-3">
+<h3 id="orga1d2867">Finding files</h3>
+<div class="outline-text-3" id="text-orga1d2867">
 <p>
 There are many commands you can execute by triggering <code>ex</code> mode (using <code>:</code>). However one notable one
 that deserves some attention is <code>:grep</code>.
@@ -85,8 +85,8 @@ all the files which contain the string <code>db</code>.
 </p>
 
 
-<figure id="orgfc1cf61">
-<img src="../../images/terminal_tooling/posts/2023_10_20_vifm/grep_1.png" alt="grep_1.png">
+<figure id="org7d5212c">
+<img src="../images/posts/2023_10_20_vifm/grep_1.png" alt="grep_1.png">
 
 </figure>
 
@@ -95,8 +95,8 @@ Execute <code>:grep database</code>, and a window will pop up with all the resul
 </p>
 
 
-<figure id="org443b0a3">
-<img src="../../images/terminal_tooling/posts/2023_10_20_vifm/grep_2.png" alt="grep_2.png">
+<figure id="org81c4aea">
+<img src="../images/posts/2023_10_20_vifm/grep_2.png" alt="grep_2.png">
 
 </figure>
 
@@ -111,8 +111,8 @@ invert selection)
 </p>
 
 
-<figure id="org8d10525">
-<img src="../../images/terminal_tooling/posts/2023_10_20_vifm/grep_3.png" alt="grep_3.png">
+<figure id="org6bb1b4f">
+<img src="../images/posts/2023_10_20_vifm/grep_3.png" alt="grep_3.png">
 
 </figure>
 
@@ -121,8 +121,8 @@ Now running grep will limit its search to only the selected files.
 </p>
 
 
-<figure id="org1200311">
-<img src="../../images/terminal_tooling/posts/2023_10_20_vifm/grep_4.png" alt="grep_4.png">
+<figure id="orgaf71a29">
+<img src="../images/posts/2023_10_20_vifm/grep_4.png" alt="grep_4.png">
 
 </figure>
 
@@ -134,9 +134,9 @@ into that file to the relevant line.
 </div>
 </div>
 
-<div id="outline-container-org00b39d3" class="outline-3">
-<h3 id="org00b39d3">Marks</h3>
-<div class="outline-text-3" id="text-org00b39d3">
+<div id="outline-container-org4c5ccf5" class="outline-3">
+<h3 id="org4c5ccf5">Marks</h3>
+<div class="outline-text-3" id="text-org4c5ccf5">
 <p>
 True to its vim inspiration, you can use <a href="https://vim.fandom.com/wiki/Using_marks">marks</a> to set temporary bookmarks you can
 jump back to later. The marks you set are ephemeral and are lost when you close
@@ -144,7 +144,7 @@ vifm.
 </p>
 
 <p>
-Marks can be made permanent by adding them to the <a href="#org4dd9e8a">configuration</a> file. This is a
+Marks can be made permanent by adding them to the <a href="#org1e3e029">configuration</a> file. This is a
 great way to set easy access to common directories you work on frequently.
 </p>
 
@@ -156,9 +156,9 @@ the same as vim's.
 </div>
 </div>
 
-<div id="outline-container-org4dd9e8a" class="outline-3">
-<h3 id="org4dd9e8a">Configuration</h3>
-<div class="outline-text-3" id="text-org4dd9e8a">
+<div id="outline-container-org1e3e029" class="outline-3">
+<h3 id="org1e3e029">Configuration</h3>
+<div class="outline-text-3" id="text-org1e3e029">
 <p>
 Stored in <code>~/.config/vifm/vifmrc</code>, vifm's configuration comes pre-populated upon
 installation with extensive commentary and default values for each setting.
@@ -187,9 +187,9 @@ its own so I'll end the discussion here for now.
 </div>
 </div>
 
-<div id="outline-container-orgbb5ba99" class="outline-3">
-<h3 id="orgbb5ba99">Conclusion</h3>
-<div class="outline-text-3" id="text-orgbb5ba99">
+<div id="outline-container-orga9dcc2c" class="outline-3">
+<h3 id="orga9dcc2c">Conclusion</h3>
+<div class="outline-text-3" id="text-orga9dcc2c">
 <p>
 This is a shorter article is part because there is so much overlap with ranger, which
 received a fuller write up.

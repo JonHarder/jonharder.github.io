@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-11-10 Fri 16:21 -->
+<!-- 2023-11-17 Fri 09:04 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Midnight Commander - [[file:../index.org][Terminal Tooling]]</title>
 <meta name="author" content="Jonathan Harder" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
-<link rel="stylesheet" href="/css/stylesheet.css" />
-<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="../css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 </head>
 <body>
 <div id="content" class="content">
 <header>
 <h1 class="title">Midnight Commander - <a href="../index.html">Terminal Tooling</a></h1>
 </header>
-<div id="outline-container-org121edae" class="outline-2">
-<h2 id="org121edae">mc&#xa0;&#xa0;&#xa0;<span class="tag"><span class="file_managers">file_managers</span></span></h2>
-<div class="outline-text-2" id="text-org121edae">
+<div id="outline-container-org1492ba0" class="outline-2">
+<h2 id="org1492ba0">mc&#xa0;&#xa0;&#xa0;<span class="tag"><span class="file_managers">file_managers</span></span></h2>
+<div class="outline-text-2" id="text-org1492ba0">
 <p>
 Let's start with a quick screenshot of mc in action.
 </p>
 
 
-<figure id="orgf3ba030">
-<img src="../../images/terminal_tooling/posts/2023_10_13_mc/overview_unstyled.png" alt="overview_unstyled.png" width="900px">
+<figure id="orgb264ee3">
+<img src="../images/posts/2023_10_13_mc/overview_unstyled.png" alt="overview_unstyled.png" width="900px">
 
 </figure>
 
@@ -42,20 +42,20 @@ I've downloaded the <a href="https://github.com/catppuccin/mc">Catppuccin</a> th
 </p>
 
 
-<figure id="orgefc6fbf">
-<img src="../../images/terminal_tooling/posts/2023_10_13_mc/catppuccin_file.png" alt="catppuccin_file.png" width="900px">
+<figure id="orgcf27ce6">
+<img src="../images/posts/2023_10_13_mc/catppuccin_file.png" alt="catppuccin_file.png" width="900px">
 
 </figure>
 
 
-<figure id="org88655e9">
-<img src="../../images/terminal_tooling/posts/2023_10_13_mc/config_theme_1.png" alt="config_theme_1.png" width="900px">
+<figure id="org475a929">
+<img src="../images/posts/2023_10_13_mc/config_theme_1.png" alt="config_theme_1.png" width="900px">
 
 </figure>
 
 
-<figure id="orgaee8cf9">
-<img src="../../images/terminal_tooling/posts/2023_10_13_mc/config_theme_2.png" alt="config_theme_2.png" width="900px">
+<figure id="org337e3b1">
+<img src="../images/posts/2023_10_13_mc/config_theme_2.png" alt="config_theme_2.png" width="900px">
 
 </figure>
 
@@ -64,8 +64,8 @@ Let's take another look:
 </p>
 
 
-<figure id="orgfa00f07">
-<img src="../../images/terminal_tooling/posts/2023_10_13_mc/overview.png" alt="overview.png" width="900px">
+<figure id="orgece58a2">
+<img src="../images/posts/2023_10_13_mc/overview.png" alt="overview.png" width="900px">
 
 </figure>
 
@@ -74,9 +74,9 @@ Much better.
 </p>
 </div>
 
-<div id="outline-container-orgbd4e0f6" class="outline-3">
-<h3 id="orgbd4e0f6">Overview</h3>
-<div class="outline-text-3" id="text-orgbd4e0f6">
+<div id="outline-container-org7f47e39" class="outline-3">
+<h3 id="org7f47e39">Overview</h3>
+<div class="outline-text-3" id="text-org7f47e39">
 <p>
 This is midnight commander (or <code>mc</code> for short). If you read the previous post
 about <a href="2023_10_06_ranger.html">ranger</a>, you'll notice there are two windows not three. Less obvious
@@ -99,8 +99,8 @@ installed using Homebrew:
 </div>
 
 
-<figure id="orge50f916">
-<img src="../../images/terminal_tooling/posts/2023_10_13_mc/example_copy_1.png" alt="example_copy_1.png" width="900px">
+<figure id="org7e25ef4">
+<img src="../images/posts/2023_10_13_mc/example_copy_1.png" alt="example_copy_1.png" width="900px">
 
 </figure>
 
@@ -116,28 +116,28 @@ mc. Each number indicates which function key triggers the command (<code>f1</cod
 
 
 
-<div id="outline-container-orgb405a5e" class="outline-2">
-<h2 id="orgb405a5e">Interacting with mc</h2>
-<div class="outline-text-2" id="text-orgb405a5e">
+<div id="outline-container-org4d16b93" class="outline-2">
+<h2 id="org4d16b93">Interacting with mc</h2>
+<div class="outline-text-2" id="text-org4d16b93">
 <p>
 Midnight commander does not attempt to emulate vim bindings, but rather seeks to replicate
 a graphical application with menu bar and all. You can even click on almost any element
 on the screen and interact with it primarily with your mouse. The most common commands
-of a file manager: Viewing, Editing, Copying, Moving, Deleting, Mkdir&#x2026;ing, are all
+of a file manager: Viewing, Editing, Copying, Moving, Deleting, Mkdir.ing, are all
 one shortcut away using the function keys. Hints are provided at the bottom, including
 access to a robust help manual:
 </p>
 
 
-<figure id="org196a9c6">
-<img src="../../images/terminal_tooling/posts/2023_10_13_mc/help.png" alt="help.png" width="900px">
+<figure id="org737553e">
+<img src="../images/posts/2023_10_13_mc/help.png" alt="help.png" width="900px">
 
 </figure>
 </div>
 
-<div id="outline-container-org25f409d" class="outline-3">
-<h3 id="org25f409d">Basic Copy, Rename, Delete</h3>
-<div class="outline-text-3" id="text-org25f409d">
+<div id="outline-container-orgd5a4e51" class="outline-3">
+<h3 id="orgd5a4e51">Basic Copy, Rename, Delete</h3>
+<div class="outline-text-3" id="text-orgd5a4e51">
 <p>
 As the bottom row suggests, you can copy the highlighted file with <code>f5</code>. It will be copied
 to the other window (by default, you can edit the destination if you want to copy to a
@@ -145,8 +145,8 @@ different destination).
 </p>
 
 
-<figure id="org1411328">
-<img src="../../images/terminal_tooling/posts/2023_10_13_mc/example_copy_2.png" alt="example_copy_2.png" width="900px">
+<figure id="org5c21d0a">
+<img src="../images/posts/2023_10_13_mc/example_copy_2.png" alt="example_copy_2.png" width="900px">
 
 </figure>
 
@@ -168,9 +168,9 @@ Hitting enter will move the file to the other window and rename it to whatever y
 </div>
 </div>
 
-<div id="outline-container-org51cadcb" class="outline-3">
-<h3 id="org51cadcb">Advanced Copy, Rename, Delete</h3>
-<div class="outline-text-3" id="text-org51cadcb">
+<div id="outline-container-org4090300" class="outline-3">
+<h3 id="org4090300">Advanced Copy, Rename, Delete</h3>
+<div class="outline-text-3" id="text-org4090300">
 <p>
 Like ranger, you can select multiple files to execute any of the actions on. Hit <code>+</code> to
 open up a prompt for selection. You can leave the value as is, <code>*</code> for selecting all entries
@@ -188,9 +188,9 @@ From here, any <code>Copy</code>, <code>RenMov</code>, or <code>Delete</code> co
 </div>
 </div>
 
-<div id="outline-container-org2fb1f5e" class="outline-3">
-<h3 id="org2fb1f5e">Interacting With the Windows</h3>
-<div class="outline-text-3" id="text-org2fb1f5e">
+<div id="outline-container-org7e1ef88" class="outline-3">
+<h3 id="org7e1ef88">Interacting With the Windows</h3>
+<div class="outline-text-3" id="text-org7e1ef88">
 <p>
 You can swap focus between windows with <code>Tab</code>. To synchronize the directory viewed by the
 unfocused tab, hit <code>Option-i</code>. To enter the currently selected directory in the other
@@ -201,16 +201,16 @@ hit <code>Control-u</code>.
 </p>
 
 
-<figure id="orgccb9136">
-<img src="../../images/terminal_tooling/posts/2023_10_13_mc/cd.png" alt="cd.png" width="900px">
+<figure id="org448f624">
+<img src="../images/posts/2023_10_13_mc/cd.png" alt="cd.png" width="900px">
 
 </figure>
 </div>
 </div>
 
-<div id="outline-container-orgd3270e1" class="outline-3">
-<h3 id="orgd3270e1">Viewing and Editing Files</h3>
-<div class="outline-text-3" id="text-orgd3270e1">
+<div id="outline-container-orgcd46834" class="outline-3">
+<h3 id="orgcd46834">Viewing and Editing Files</h3>
+<div class="outline-text-3" id="text-orgcd46834">
 <p>
 There are a few different ways you can view files, depending on your needs.
 You can use the <code>View</code> quick command (bound to <code>f3</code>). This will either open the built
@@ -232,17 +232,17 @@ will update accordingly. It even comes with some basic search and go to function
 </p>
 
 
-<figure id="org9ace847">
-<img src="../../images/terminal_tooling/posts/2023_10_13_mc/quick_view.png" alt="quick_view.png" width="900px">
+<figure id="org0998be3">
+<img src="../images/posts/2023_10_13_mc/quick_view.png" alt="quick_view.png" width="900px">
 
 </figure>
 </div>
 </div>
 
 
-<div id="outline-container-orgb3795f1" class="outline-3">
-<h3 id="orgb3795f1">Hotlist</h3>
-<div class="outline-text-3" id="text-orgb3795f1">
+<div id="outline-container-org082ac27" class="outline-3">
+<h3 id="org082ac27">Hotlist</h3>
+<div class="outline-text-3" id="text-org082ac27">
 <p>
 The "hotlist" is mc's name for what would commonly be called bookmarks today. Using the
 hotlist (bound to <code>Control-\</code>), you can save a list of directories that you often visit
@@ -252,8 +252,8 @@ directory to the hotlist.
 </p>
 
 
-<figure id="org5c99efd">
-<img src="../../images/terminal_tooling/posts/2023_10_13_mc/hotlist.png" alt="hotlist.png" width="900px">
+<figure id="org4ba19a6">
+<img src="../images/posts/2023_10_13_mc/hotlist.png" alt="hotlist.png" width="900px">
 
 </figure>
 
@@ -267,9 +267,9 @@ of them.
 </div>
 </div>
 
-<div id="outline-container-org7be66fa" class="outline-2">
-<h2 id="org7be66fa">Customization</h2>
-<div class="outline-text-2" id="text-org7be66fa">
+<div id="outline-container-orgd078906" class="outline-2">
+<h2 id="orgd078906">Customization</h2>
+<div class="outline-text-2" id="text-orgd078906">
 <p>
 Midnight commander is very, very customizable. All its configuration is stored in
 <code>~/.config/mc/ini</code><sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>. You could edit this file by hand, but for most settings,
@@ -282,15 +282,15 @@ on the selected file(s) you can access any time from the <code>Command</code> me
 </p>
 
 
-<figure id="orgbc7de58">
-<img src="../../images/terminal_tooling/posts/2023_10_13_mc/user_menu.png" alt="user_menu.png" width="900px">
+<figure id="orgadd8935">
+<img src="../images/posts/2023_10_13_mc/user_menu.png" alt="user_menu.png" width="900px">
 
 </figure>
 
 
 <p>
 In today's day and age, I find a couple of these actions helpful, like <code>tar.gz</code>-ing the
-current directory or viewing a man page, but others like <i>Strip headers from current newsarticle</i>&#x2026;quaint.
+current directory or viewing a man page, but others like <i>Strip headers from current newsarticle</i>.quaint.
 However even this menu is customizable! You can add, remove, or edit any command in this menu
 that you like. If there's commands that you often run only in the context of a particular
 directory, you can create a local user menu file. How this file actually works and what
@@ -299,9 +299,9 @@ all the weird symbols mean is an exercise left to the reader.
 </div>
 </div>
 
-<div id="outline-container-orgb8dc4b3" class="outline-2">
-<h2 id="orgb8dc4b3">Conclusion</h2>
-<div class="outline-text-2" id="text-orgb8dc4b3">
+<div id="outline-container-org32fcf7f" class="outline-2">
+<h2 id="org32fcf7f">Conclusion</h2>
+<div class="outline-text-2" id="text-org32fcf7f">
 <p>
 The dual window setup might feel a little awkward at first if you're not used to it, but
 after getting comfortable with it you'll groan every time you have to write out a whole
@@ -329,15 +329,15 @@ is likely an answer found online. Is there a feature you liked from some other f
 manager? Someone else has probably missed that feature and written a patch for mc enabling
 it. New apps may come and go, but mc remains. If the keybindings don't deter you, there
 could be a very long and happy future for you and midnight commander. If you're not a fan,
-stay tuned for next week's article&#x2026;
+stay tuned for next week's article.
 </p>
 </div>
 </div>
 
 
-<div id="outline-container-org23937e2" class="outline-2">
-<h2 id="org23937e2">Alternatives</h2>
-<div class="outline-text-2" id="text-org23937e2">
+<div id="outline-container-orgec20736" class="outline-2">
+<h2 id="orgec20736">Alternatives</h2>
+<div class="outline-text-2" id="text-orgec20736">
 <p>
 If you're on Linux, <a href="https://doublecmd.sourceforge.io/">Double Commander</a> is a good GUI based dual window file manager.
 Unfortunately, it has lost support for macOS. <a href="https://www.mplsoftware.com/products/maxcommander">MaxCommander</a> looks like a good mac
@@ -349,9 +349,9 @@ to give it a shot, let me know how you like it.
 </p>
 </div>
 </div>
-<div id="outline-container-org5708254" class="outline-2">
-<h2 id="org5708254">Additional Resources</h2>
-<div class="outline-text-2" id="text-org5708254">
+<div id="outline-container-org7403c5f" class="outline-2">
+<h2 id="org7403c5f">Additional Resources</h2>
+<div class="outline-text-2" id="text-org7403c5f">
 <ul class="org-ul">
 <li><a href="https://midnight-commander.org/wiki/doc/common/actions">key bindings</a></li>
 <li><a href="https://www.youtube.com/watch?v=fJOkuaihAek">video overview</a></li>
