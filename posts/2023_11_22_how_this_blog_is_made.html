@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-11-17 Fri 09:04 -->
+<!-- 2023-11-22 Wed 15:36 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>How This Blog is Made - [[file:../index.org][Terminal Tooling]]</title>
@@ -31,9 +31,9 @@ We will cover the proccess in three distinct sections:
 </p>
 
 <ul class="org-ul">
-<li>Writing</li>
-<li>Exporting</li>
-<li>Publishing</li>
+<li><a href="#orgf74c189">Writing</a></li>
+<li><a href="#orgb2a8ae6">Exporting</a></li>
+<li><a href="#org2da25a8">Publishing</a></li>
 </ul>
 </div>
 </div>
@@ -41,37 +41,183 @@ We will cover the proccess in three distinct sections:
 <div id="outline-container-orgf74c189" class="outline-2">
 <h2 id="orgf74c189">Writing</h2>
 <div class="outline-text-2" id="text-orgf74c189">
-<ul class="org-ul">
-<li>emacs</li>
-<li>org</li>
-<li>simple-httpd</li>
-</ul>
+<p>
+First, the cornerstone of this whole project is <a href="https://www.gnu.org/software/emacs/">emacs</a>. Emacs is the integrated text
+editing environment that came out decades before IDEs were a thing. It is a text editor
+with a teeny tiny C kernel, and lots and lots of lisp code written to handle all the
+rest. What is unique about emacs is that all that lisp code is open to the user. You
+can call any function, change any variable, write new behavior, augment existing
+behavior using pre or post hooks.
+</p>
+
+<p>
+This means practically <i>every</i> facet of emacs' behavior can be customized, and done so
+using the tools that the editor itself is built with. The line between user and developer
+are so blurred in emacs that it might as well not exist. I use it for writing notes,
+making this blog, writing software, reading <a target="_blank" href="http://man.he.net/?topic=man&section=all">man</a> pages (very helpful when writing a blog
+dedicated to command line tools!), tracking work and todos, and reading email. There
+are arguably better tools out there for specific tasks, but I view the benefit of having
+all my tools wrapped up in the same application, sharing the same configuration
+language as more valuable.
+</p>
+
+<p>
+For this blog specifically, I use the <a href="https://protesilaos.com/emacs/denote">denote</a> package to jot down an idea for an article.
+Beyond the basics of simply <i>writing</i> text, the venerable <a href="https://orgmode.org/">org mode</a> is my strusty companion.
+You could think of it like Markdown, but far more fully featured. It allows for headings,
+titles, metadata, footnotes, embedded (and executable!) code snippets, links to other
+files, websites, embedded images, and more. Every bit of code on this blog was written
+in an embedded shell block, and actually executed on my computer, with the results
+automatically inserted into the document.
+</p>
+
+<p>
+This org source blog for instance:
+</p>
+
+<pre class="example" id="org8cd5568">
+#+begin_src sh :exports both :results output :dir ~/Documents/notes :cache yes
+  find . -iname '*_article*_posix*.org'
+#+end_src
+</pre>
+
+<p>
+gets exported as:<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">find . -iname <span style="color: #df9080;">'*_article*_posix*.org'</span>
+</pre>
+</div>
+
+<pre class="example">
+./20231121T100422--xargs__article_blog_posix.org
+</pre>
+
+
+<p>
+Code exporting will be covered in more depth in the <a href="#orgb2a8ae6">Exporting</a> section. But other than that,
+articles are mostly just starndard org files. I can add an image where I want by just adding
+a link to it in the file. Headers, bold, italics, code, and footnotes are all just native
+features of org files, meaning I don't have to think about how to correctly format something
+for html.
+</p>
+
+<p>
+The last piece of the writing experience that I use is another emacs package called <a href="https://melpa.org/#/simple-httpd">simple-httpd</a>.
+This asks for a directory to serve, and starts a local web server exposing the html, css, and
+javascript my export process produces. This gives me a tight feedback loop between writing
+content and seeing the final results in a browser.
+</p>
 </div>
 </div>
 
 <div id="outline-container-orgb2a8ae6" class="outline-2">
 <h2 id="orgb2a8ae6">Exporting</h2>
 <div class="outline-text-2" id="text-orgb2a8ae6">
-<ul class="org-ul">
-<li>org-publish
-<ul class="org-ul">
-<li>org-project-alist</li>
-</ul></li>
-<li>htmlize</li>
-<li>simple.css</li>
-</ul>
-</div>
+<p>
+Exporting the org documents into html and css is made possible by the built-in <a href="https://orgmode.org/manual/Publishing.html">org-publish</a>.
+I need only configure some information about the project, and then run the command <code>org-publish</code>.
+Here is what I have configured for the blog:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #d369af;">(</span><span style="color: #af85ea; font-weight: bold;">setq</span> org-publish-project-alist
+      <span style="color: #35afbf;">(</span>list <span style="color: #af85ea;">(</span>list <span style="color: #df9080;">"blog"</span>
+                  <span style="color: #e580e0; font-weight: bold;">:components</span> <span style="color: #b58a52;">(</span>list <span style="color: #df9080;">"blog-org"</span> <span style="color: #df9080;">"blog-static"</span><span style="color: #b58a52;">)</span><span style="color: #af85ea;">)</span>
+            <span style="color: #af85ea;">(</span>list <span style="color: #df9080;">"blog-org"</span>
+                  <span style="color: #e580e0; font-weight: bold;">:base-directory</span> <span style="color: #df9080;">"~/blog/org"</span>
+                  <span style="color: #e580e0; font-weight: bold;">:publishing-directory</span> <span style="color: #df9080;">"~/blog/public"</span>
+                  <span style="color: #e580e0; font-weight: bold;">:auto-sitemap</span> nil
+                  <span style="color: #e580e0; font-weight: bold;">:recursive</span> t
+                  <span style="color: #e580e0; font-weight: bold;">:with-broken-links</span> t
+                  <span style="color: #e580e0; font-weight: bold;">:with-creator</span> t
+                  <span style="color: #e580e0; font-weight: bold;">:section-numbers</span> nil
+                  <span style="color: #e580e0; font-weight: bold;">:exclude</span> <span style="color: #df9080;">"README"</span>
+                  <span style="color: #e580e0; font-weight: bold;">:export-exclude-tags</span> <span style="color: #b58a52;">(</span>list <span style="color: #df9080;">"draft"</span><span style="color: #b58a52;">)</span>
+                  <span style="color: #e580e0; font-weight: bold;">:with-author</span> <span style="color: #df9080;">"Jon Harder"</span>
+                  <span style="color: #e580e0; font-weight: bold;">:with-toc</span> nil
+                  <span style="color: #e580e0; font-weight: bold;">:html-htmlize-output-type</span> 'inline-css
+                  <span style="color: #e580e0; font-weight: bold;">:html-doctype</span> <span style="color: #df9080;">"html5"</span>
+                  <span style="color: #e580e0; font-weight: bold;">:html-html5-fancy</span> t
+                  <span style="color: #e580e0; font-weight: bold;">:html-preamble</span> nil
+                  <span style="color: #e580e0; font-weight: bold;">:html-postamble</span> nil<span style="color: #af85ea;">)</span>
+            <span style="color: #af85ea;">(</span>list <span style="color: #df9080;">"blog-static"</span>
+                  <span style="color: #e580e0; font-weight: bold;">:base-directory</span> <span style="color: #df9080;">"~/blog/org/"</span>
+                  <span style="color: #e580e0; font-weight: bold;">:base-extension</span> <span style="color: #df9080;">"css</span><span style="color: #29a444;">\\</span><span style="color: #3f95f6;">|</span><span style="color: #df9080;">ico</span><span style="color: #29a444;">\\</span><span style="color: #3f95f6;">|</span><span style="color: #df9080;">png</span><span style="color: #29a444;">\\</span><span style="color: #3f95f6;">|</span><span style="color: #df9080;">jpg</span><span style="color: #29a444;">\\</span><span style="color: #3f95f6;">|</span><span style="color: #df9080;">jpeg</span><span style="color: #29a444;">\\</span><span style="color: #3f95f6;">|</span><span style="color: #df9080;">gif"</span>
+                  <span style="color: #e580e0; font-weight: bold;">:publishing-directory</span> <span style="color: #df9080;">"~/blog/public/"</span>
+                  <span style="color: #e580e0; font-weight: bold;">:recursive</span> t
+                  <span style="color: #e580e0; font-weight: bold;">:publishing-function</span> #'org-publish-attachment<span style="color: #af85ea;">)</span><span style="color: #35afbf;">)</span><span style="color: #d369af;">)</span>
+</pre>
 </div>
 
+<p>
+Going into detail about emacs' exporting and publishing functionality will have to
+be saved for another time, but this is all it takes to turn my org files into html.
+</p>
+
+<p>
+There is one additional convenience emacs package I use called <a href="https://github.com/hniksic/emacs-htmlize">htmlize</a>. It takes the
+native source code syntax highlighting org supports out of the box and generates
+css styling to make the exported code look the same. It even takes into account the user's
+current color theme when generating the stylized source.
+</p>
+
+<p>
+By default, org-publish adds some minimal css to published project, but it's quite
+plain and not very pleasant to look at. Instead of using it, I include <a href="https://simplecss.org/">simple.css</a>
+to take my existing html and turn it into something nice to look at. Its philosophy
+is to stylize the basic html tags rather than develop a system of css classes that
+you have to integrate into your pages. This means I can pretty much just include
+this css into the project and forget about any further styling.
+</p>
+</div>
+</div>
 
 <div id="outline-container-org2da25a8" class="outline-2">
 <h2 id="org2da25a8">Publishing</h2>
 <div class="outline-text-2" id="text-org2da25a8">
-<ul class="org-ul">
-<li>github pages</li>
-</ul>
+<p>
+Lastly, the blog is hosted on GitHub, using their GitHub <a href="https://pages.github.com/">pages</a> feature. It's a pretty
+simple system where you just track your website in git, and any time you push up
+changes to the main branch, it handles pushing out the updated content onto your
+domain. There's not much else to comment on here. My goal in crafting this blog
+was to focus on content as much as possible and have a simple, reproducible build
+system. I am <b>not</b> a css guru, and so I sought to lean on plain html and existing
+css frameworks so I can focus my attention on writing. Org was familiar to me and
+allows me to just write and let it handle formatting.
+</p>
+
+<p>
+Overall I'm quite happy with this setup. However, one major annoyance I've encountered
+is needing to track changes to this project in two separate repositories. One for
+the finished product (html, css), and the other for the original source (the org files).
+GitHub pages helpfully auto-deploys changes to my web repository, but that still leaves
+me running the export command by hand, and then going into the web repo to commit
+and push whatever changes were produced by the export.
+</p>
+
+<p>
+In theory I could set up a GitHub action to run a stripped down version of emacs
+and have it run the publish command on push to the source repo, negating the need
+for a separate web repo. This has the <i>feel</i> of something that is <i>technically</i>
+possible, but fraught with so many little issues and corner cases that it hasn't
+spurred me to try it out.
+</p>
 </div>
 </div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+The results are my notes as captured by the denote emacs package. I will
+likely write a dedicated article on this, however the gist of the <code>find</code> command
+is to search for all notes that have been tagged with both <code>article</code> and <code>posix</code>.
+</p></div></div>
+
+
 </div>
+</div></div>
 </body>
 </html>
