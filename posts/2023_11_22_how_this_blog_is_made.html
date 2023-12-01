@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-11-22 Wed 15:36 -->
+<!-- 2023-12-01 Fri 09:00 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>How This Blog is Made - [[file:../index.org][Terminal Tooling]]</title>
@@ -75,7 +75,7 @@ automatically inserted into the document.
 This org source blog for instance:
 </p>
 
-<pre class="example" id="org8cd5568">
+<pre class="example" id="org9581b2f">
 #+begin_src sh :exports both :results output :dir ~/Documents/notes :cache yes
   find . -iname '*_article*_posix*.org'
 #+end_src
@@ -86,7 +86,7 @@ gets exported as:<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backl
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">find . -iname <span style="color: #df9080;">'*_article*_posix*.org'</span>
+<pre class="src src-sh">find . -iname <span style="color: #6a9fff;">'*_article*_posix*.org'</span>
 </pre>
 </div>
 
@@ -122,32 +122,32 @@ Here is what I have configured for the blog:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #d369af;">(</span><span style="color: #af85ea; font-weight: bold;">setq</span> org-publish-project-alist
-      <span style="color: #35afbf;">(</span>list <span style="color: #af85ea;">(</span>list <span style="color: #df9080;">"blog"</span>
-                  <span style="color: #e580e0; font-weight: bold;">:components</span> <span style="color: #b58a52;">(</span>list <span style="color: #df9080;">"blog-org"</span> <span style="color: #df9080;">"blog-static"</span><span style="color: #b58a52;">)</span><span style="color: #af85ea;">)</span>
-            <span style="color: #af85ea;">(</span>list <span style="color: #df9080;">"blog-org"</span>
-                  <span style="color: #e580e0; font-weight: bold;">:base-directory</span> <span style="color: #df9080;">"~/blog/org"</span>
-                  <span style="color: #e580e0; font-weight: bold;">:publishing-directory</span> <span style="color: #df9080;">"~/blog/public"</span>
-                  <span style="color: #e580e0; font-weight: bold;">:auto-sitemap</span> nil
-                  <span style="color: #e580e0; font-weight: bold;">:recursive</span> t
-                  <span style="color: #e580e0; font-weight: bold;">:with-broken-links</span> t
-                  <span style="color: #e580e0; font-weight: bold;">:with-creator</span> t
-                  <span style="color: #e580e0; font-weight: bold;">:section-numbers</span> nil
-                  <span style="color: #e580e0; font-weight: bold;">:exclude</span> <span style="color: #df9080;">"README"</span>
-                  <span style="color: #e580e0; font-weight: bold;">:export-exclude-tags</span> <span style="color: #b58a52;">(</span>list <span style="color: #df9080;">"draft"</span><span style="color: #b58a52;">)</span>
-                  <span style="color: #e580e0; font-weight: bold;">:with-author</span> <span style="color: #df9080;">"Jon Harder"</span>
-                  <span style="color: #e580e0; font-weight: bold;">:with-toc</span> nil
-                  <span style="color: #e580e0; font-weight: bold;">:html-htmlize-output-type</span> 'inline-css
-                  <span style="color: #e580e0; font-weight: bold;">:html-doctype</span> <span style="color: #df9080;">"html5"</span>
-                  <span style="color: #e580e0; font-weight: bold;">:html-html5-fancy</span> t
-                  <span style="color: #e580e0; font-weight: bold;">:html-preamble</span> nil
-                  <span style="color: #e580e0; font-weight: bold;">:html-postamble</span> nil<span style="color: #af85ea;">)</span>
-            <span style="color: #af85ea;">(</span>list <span style="color: #df9080;">"blog-static"</span>
-                  <span style="color: #e580e0; font-weight: bold;">:base-directory</span> <span style="color: #df9080;">"~/blog/org/"</span>
-                  <span style="color: #e580e0; font-weight: bold;">:base-extension</span> <span style="color: #df9080;">"css</span><span style="color: #29a444;">\\</span><span style="color: #3f95f6;">|</span><span style="color: #df9080;">ico</span><span style="color: #29a444;">\\</span><span style="color: #3f95f6;">|</span><span style="color: #df9080;">png</span><span style="color: #29a444;">\\</span><span style="color: #3f95f6;">|</span><span style="color: #df9080;">jpg</span><span style="color: #29a444;">\\</span><span style="color: #3f95f6;">|</span><span style="color: #df9080;">jpeg</span><span style="color: #29a444;">\\</span><span style="color: #3f95f6;">|</span><span style="color: #df9080;">gif"</span>
-                  <span style="color: #e580e0; font-weight: bold;">:publishing-directory</span> <span style="color: #df9080;">"~/blog/public/"</span>
-                  <span style="color: #e580e0; font-weight: bold;">:recursive</span> t
-                  <span style="color: #e580e0; font-weight: bold;">:publishing-function</span> #'org-publish-attachment<span style="color: #af85ea;">)</span><span style="color: #35afbf;">)</span><span style="color: #d369af;">)</span>
+<pre class="src src-emacs-lisp">(<span style="color: #af85ff; font-weight: bold;">setq</span> org-publish-project-alist
+      (list (list <span style="color: #6a9fff;">"blog"</span>
+                  <span style="color: #d369af; font-weight: bold;">:components</span> (list <span style="color: #6a9fff;">"blog-org"</span> <span style="color: #6a9fff;">"blog-static"</span>))
+            (list <span style="color: #6a9fff;">"blog-org"</span>
+                  <span style="color: #d369af; font-weight: bold;">:base-directory</span> <span style="color: #6a9fff;">"~/blog/org"</span>
+                  <span style="color: #d369af; font-weight: bold;">:publishing-directory</span> <span style="color: #6a9fff;">"~/blog/public"</span>
+                  <span style="color: #d369af; font-weight: bold;">:auto-sitemap</span> nil
+                  <span style="color: #d369af; font-weight: bold;">:recursive</span> t
+                  <span style="color: #d369af; font-weight: bold;">:with-broken-links</span> t
+                  <span style="color: #d369af; font-weight: bold;">:with-creator</span> t
+                  <span style="color: #d369af; font-weight: bold;">:section-numbers</span> nil
+                  <span style="color: #d369af; font-weight: bold;">:exclude</span> <span style="color: #6a9fff;">"README"</span>
+                  <span style="color: #d369af; font-weight: bold;">:export-exclude-tags</span> (list <span style="color: #6a9fff;">"draft"</span>)
+                  <span style="color: #d369af; font-weight: bold;">:with-author</span> <span style="color: #6a9fff;">"Jon Harder"</span>
+                  <span style="color: #d369af; font-weight: bold;">:with-toc</span> nil
+                  <span style="color: #d369af; font-weight: bold;">:html-htmlize-output-type</span> 'inline-css
+                  <span style="color: #d369af; font-weight: bold;">:html-doctype</span> <span style="color: #6a9fff;">"html5"</span>
+                  <span style="color: #d369af; font-weight: bold;">:html-html5-fancy</span> t
+                  <span style="color: #d369af; font-weight: bold;">:html-preamble</span> nil
+                  <span style="color: #d369af; font-weight: bold;">:html-postamble</span> nil)
+            (list <span style="color: #6a9fff;">"blog-static"</span>
+                  <span style="color: #d369af; font-weight: bold;">:base-directory</span> <span style="color: #6a9fff;">"~/blog/org/"</span>
+                  <span style="color: #d369af; font-weight: bold;">:base-extension</span> <span style="color: #6a9fff;">"css</span><span style="color: #6aad0f;">\\</span><span style="color: #ef6560;">|</span><span style="color: #6a9fff;">ico</span><span style="color: #6aad0f;">\\</span><span style="color: #ef6560;">|</span><span style="color: #6a9fff;">png</span><span style="color: #6aad0f;">\\</span><span style="color: #ef6560;">|</span><span style="color: #6a9fff;">jpg</span><span style="color: #6aad0f;">\\</span><span style="color: #ef6560;">|</span><span style="color: #6a9fff;">jpeg</span><span style="color: #6aad0f;">\\</span><span style="color: #ef6560;">|</span><span style="color: #6a9fff;">gif"</span>
+                  <span style="color: #d369af; font-weight: bold;">:publishing-directory</span> <span style="color: #6a9fff;">"~/blog/public/"</span>
+                  <span style="color: #d369af; font-weight: bold;">:recursive</span> t
+                  <span style="color: #d369af; font-weight: bold;">:publishing-function</span> #'org-publish-attachment)))
 </pre>
 </div>
 

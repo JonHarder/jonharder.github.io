@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2023-12-01 Fri 09:00 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nb - Terminal Tooling</title>
+<meta name="author" content="Jonathan Harder" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="../css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+</head>
+<body>
+<div id="content" class="content">
+<header>
+<h1 class="title">Nb - Terminal Tooling</h1>
+</header>
+<div id="outline-container-orgf673ab7" class="outline-2">
+<h2 id="orgf673ab7">Overview&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cli">cli</span>&#xa0;<span class="notes">notes</span></span></h2>
+<div class="outline-text-2" id="text-orgf673ab7">
+<p>
+<a href="https://xwmx.github.io/nb">nb</a> is a swiss army knife of a note taking tool operated entirely<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>
+in within the command line.
+</p>
+
+<p>
+The <code>nb</code> command is your launch pad for everything note related. Without
+arguments <code>nb</code> shows you an overview of your existing notes or a quick
+cheat sheet of common actions if there are no notes.
+</p>
+
+
+<figure id="org0fc07d0">
+<img src="../images/posts/2023_12_01_nb/overview_empty.png" alt="overview_empty.png" width="1000px">
+
+</figure>
+
+<p>
+Once you've created a few notes, <code>nb</code> (without arguments) instead displays
+all the notes in your current notebook (more on <a href="#orge0d46f6">notebooks</a> later)
+</p>
+
+
+<figure id="orgf13baed">
+<img src="../images/posts/2023_12_01_nb/overview_with_notes.png" alt="overview_with_notes.png" width="900px">
+
+</figure>
+
+<p>
+<code>nb</code> allows for quick jotting down of notes, tasks, bookmarks. In addition,
+it provides the means of organizing your notes so you don't end up
+with a jumbled mess of random thoughts.
+</p>
+
+<p>
+What follows will be a whirlwind tour of the major features mention
+with some practical examples.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0e7977f" class="outline-2">
+<h2 id="org0e7977f">Notes</h2>
+<div class="outline-text-2" id="text-org0e7977f">
+<p>
+The note. The foundational concept of any note taking system. A good
+system allows for quickly jotting down thoughts, organizing those
+thoughts into some system that aids in note retrieval, and (in my
+opinion) is flexible enough to be adapted to the user's individual
+preferences in format and structure.
+</p>
+</div>
+
+<div id="outline-container-orga095f9a" class="outline-3">
+<h3 id="orga095f9a">Creating</h3>
+<div class="outline-text-3" id="text-orga095f9a">
+<p>
+<code>nb</code> hits these marks fairly well. For creating notes, <code>nb</code> is spectacular.
+<code>nb add</code> (or <code>nb a</code>) creates a new note. If ran interactively, it will open
+up your editor of choice (configurable through <code>nb set editor</code>) with a
+blank note, ready to capture whatever thought you have. Ran
+non-interactively, <code>nb</code> will simply create a new note.
+</p>
+
+<p>
+<code>nb add "here is my great idea"</code> will create a new note, and add the
+content you provide (either through positional arguments, or through
+standard input: <code>echo hello world | nb add</code>) without ever opening up
+an editor. This allows for extremely quick note entry, meaning it
+hardly intrudes on whatever you were doing when you had your thought.
+</p>
+
+<p>
+Starting with an empty notebook, here's the results of the various
+forms of note entry:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">nb add
+</pre>
+</div>
+
+<pre class="example">
+Added: [1] 20231129110012.org
+</pre>
+
+
+<p>
+Viewing the current notes with <code>nb</code> now gives us this:
+</p>
+
+
+<figure id="org8037bd4">
+<img src="../images/posts/2023_12_01_nb/add_1.png" alt="add_1.png" width="900px">
+
+</figure>
+
+<p>
+Creating a note with content from provided arguments looks like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">nb add <span style="color: #6a9fff;">"A new note"</span>
+</pre>
+</div>
+
+<pre class="example">
+Added: [2] 20231129110836.org
+</pre>
+
+
+<p>
+And the result:
+</p>
+
+
+<figure id="orged23603">
+<img src="../images/posts/2023_12_01_nb/add_2.png" alt="add_2.png" width="900px">
+
+</figure>
+
+<p>
+And just to show you that it's possible, I'll create a note through a
+pipeline:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #d369af; font-weight: bold;">echo</span> hello from a pipeline | nb add
+</pre>
+</div>
+
+<pre class="example">
+Added: [3] 20231129111327.org
+</pre>
+
+
+
+<figure id="orgce3c6e9">
+<img src="../images/posts/2023_12_01_nb/add_3.png" alt="add_3.png" width="900px">
+
+</figure>
+</div>
+</div>
+
+<div id="outline-container-org2702d2c" class="outline-3">
+<h3 id="org2702d2c">Titles</h3>
+<div class="outline-text-3" id="text-org2702d2c">
+<p>
+The notes created so far do not have a title, so <code>nb</code> has just been naming
+the note files with a timestamp and displaying the first line of content
+to help provide context about the note.
+</p>
+
+<p>
+<code>nb</code> provides support for note titles, using the <code>--title</code> flag when creating
+the note.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">nb add <span style="color: #6a9fff;">"This is the content of the note"</span> --title <span style="color: #6a9fff;">"A Note With a Title"</span>
+</pre>
+</div>
+
+<pre class="example">
+Added: [4] a_note_with_a_title.org "A Note With a Title"
+</pre>
+
+
+<p>
+You will notice the note now has a descriptive file name, and when viewed
+in the notes list, the title is displayed instead of the file name.
+</p>
+
+
+<figure id="org12d0b97">
+<img src="../images/posts/2023_12_01_nb/add_with_title.png" alt="add_with_title.png" width="900px">
+
+</figure>
+</div>
+</div>
+
+<div id="outline-container-orgeac5e3d" class="outline-3">
+<h3 id="orgeac5e3d">Tags</h3>
+<div class="outline-text-3" id="text-orgeac5e3d">
+<p>
+<a href="https://xwmx.github.io/nb/#-tagging">Tags</a> can be added to notes on creation time with the <code>--tags</code> flag.
+</p>
+
+
+<figure id="orga3be2bd">
+<img src="../images/posts/2023_12_01_nb/tags_1.png" alt="tags_1.png" width="900px">
+
+</figure>
+
+<p>
+This will create a file with two tags in it: <code>#notes</code> and <code>#example</code>.
+</p>
+
+
+<figure id="org3906fd3">
+<img src="../images/posts/2023_12_01_nb/tags_2.png" alt="tags_2.png" width="900px">
+
+</figure>
+
+<p>
+You can view all the tags you've added to notes in your notebook by just
+passing the <code>--tags</code> flag to <code>nb</code>.
+</p>
+
+
+<figure id="orgbad58f2">
+<img src="../images/posts/2023_12_01_nb/tags_3.png" alt="tags_3.png" width="900px">
+
+</figure>
+
+
+<p>
+Tags are a great way of organizing your thoughts, as they provide
+a way to search for notes using boolean logic (i.e. find my notes
+with <code>this</code> tag but <b>not</b> <code>that</code> tag). You'll see more of them in the
+seciton on <a href="#orga773bbe">searching</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org462dd2c" class="outline-3">
+<h3 id="org462dd2c">Viewing</h3>
+<div class="outline-text-3" id="text-org462dd2c">
+<p>
+Creating notes is great, but viewing notes is arguable the only other
+mission critical feature of a note taking system.
+</p>
+
+<p>
+<code>nb</code> has multiple ways of viewing notes, depending on your use case.
+</p>
+
+<p>
+To simply see the contents of a note, you can use <code>peek</code> or <code>show</code>, and
+the name or id of the note.
+</p>
+
+
+<figure id="org19362e2">
+<img src="../images/posts/2023_12_01_nb/show_0.png" alt="show_0.png" width="900px">
+
+</figure>
+
+<p>
+After hitting enter, a command line content viewer opens up.
+</p>
+
+
+<figure id="orgf716368">
+<img src="../images/posts/2023_12_01_nb/show_1.png" alt="show_1.png" width="900px">
+
+</figure>
+
+<p>
+This opens up a read only view of the note (using <a target="_blank" href="http://man.he.net/?topic=less&section=all">less</a> by default).
+</p>
+
+<p>
+To have the note just printed to stdout, you can add the <code>--print</code> flag.
+</p>
+
+
+<figure id="org770a045">
+<img src="../images/posts/2023_12_01_nb/show_2.png" alt="show_2.png" width="900px">
+
+</figure>
+
+<p>
+If you have the <a href="https://github.com/sharkdp/bat">bat</a> command, it will be used instead of <a target="_blank" href="http://man.he.net/?topic=cat&section=all">cat</a> to print
+the contents of your note. This can be more easily seen when viewing
+a note with a title:
+</p>
+
+
+<figure id="orga8761ba">
+<img src="../images/posts/2023_12_01_nb/show_3.png" alt="show_3.png" width="900px">
+
+</figure>
+
+<p>
+<code>nb</code> does this sort of progressive enhancement in many ways. It will use
+the basic posix tools available on every system by default, but will
+enhance its functionality when a more modern alternative is available.<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>
+</p>
+
+<p>
+Lastly for purely viewing purposes, there exists the <code>--excerpt</code> flag on the
+<code>list/ls</code> command. By default when no arguments are given to <code>nb</code>, it implicitly
+run the <code>list</code> command. You can give <code>list</code> any <a href="https://xwmx.github.io/nb/#-selectors">selector</a> and it will only show
+items which match that selector. When the <code>--excerpt|-e</code> flag is given, it
+will show the first few lines of the item.
+</p>
+
+
+<figure id="org758c9bc">
+<img src="../images/posts/2023_12_01_nb/excerpt.png" alt="excerpt.png" width="900px">
+
+</figure>
+
+<p>
+<code>nb</code> supports two commands for opening up the note in order to be interacted
+with. <code>edit</code> does what you should expect, opening up the note in your editor.
+<code>open</code> is almost identical, except when opening a bookmark, the bookmarked
+url will be opened in your web browser (more on that in <a href="#org8b194c3">bookmarks</a>).
+</p>
+
+
+<figure id="orgc9fe691">
+<img src="../images/posts/2023_12_01_nb/edit_1.png" alt="edit_1.png" width="900px">
+
+</figure>
+
+<p>
+This will open up the file in the configured editor (in my case, emacsclient).
+Once you're done editing, simply save and close the file.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4558e38" class="outline-3">
+<h3 id="org4558e38">Browse</h3>
+<div class="outline-text-3" id="text-org4558e38">
+<p>
+Lastly, <code>nb</code> supports a terminal note browser (and also a local browser server
+to view and edit your notes in a web browser). It is started with <code>nb browse</code>
+or <code>nb b</code> for short.
+</p>
+
+
+<figure id="org64a3c2a">
+<img src="../images/posts/2023_12_01_nb/browser_1.png" alt="browser_1.png" width="700px">
+
+</figure>
+
+<p>
+You can <a href="#orga773bbe">search</a> from here as well as select notes to view and even edit.
+If <code>browse</code> is ran with the <code>--gui</code> (or <code>-g</code> for short) flag, it starts a
+local webserver so you can view your notes in a web browser.
+</p>
+
+
+<figure id="org06b3434">
+<img src="../images/posts/2023_12_01_nb/browser_2.png" alt="browser_2.png" width="900px">
+
+</figure>
+
+
+<p>
+I won't go into much further detail on the browser, but if this interests you, you can
+check it out yourself <a href="https://xwmx.github.io/nb/#-browsing">here</a>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org78ddba0" class="outline-2">
+<h2 id="org78ddba0">Todos</h2>
+<div class="outline-text-2" id="text-org78ddba0">
+<p>
+<code>nb</code> excels in storing and retrieving notes, but it can handle todo items as
+well. For this, <code>nb</code> differentiates <code>todos</code> from <code>tasks</code>. A <code>todo</code> is a overall
+body of work to be done. In <code>nb</code>, a todo is stored in its own file and is
+visible from the <code>list</code> command.
+</p>
+
+<p>
+To create a todo, you can use the <code>todos</code> sub command with the <code>add</code> argument.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">nb todos add <span style="color: #6a9fff;">'Finish this article'</span>
+</pre>
+</div>
+
+<pre class="example">
+Added: [5] ✔️  20231129140921.todo.md "[ ] Finish this article"
+</pre>
+
+
+
+<figure id="org856dcd7">
+<img src="../images/posts/2023_12_01_nb/todo_1.png" alt="todo_1.png" width="900px">
+
+</figure>
+
+<p>
+Calling <code>nb todos</code> without any arguments will list only the items of type
+todo.
+</p>
+
+
+<figure id="org7298cda">
+<img src="../images/posts/2023_12_01_nb/todo_2.png" alt="todo_2.png" width="900px">
+
+</figure>
+
+<p>
+A <code>task</code> is a single component of a <code>todo</code>. A <code>todo</code> can have many <code>tasks</code>. You
+can add tasks to a todo at creation time with the <code>--task</code> flag if you
+know what they will be up front.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">nb todos add <span style="color: #6a9fff;">'Learn about todos and tasks'</span> --task <span style="color: #6a9fff;">'learn about todos'</span> --task <span style="color: #6a9fff;">'learn about tasks'</span> --task <span style="color: #6a9fff;">'learn how to complete todos'</span>
+</pre>
+</div>
+
+<pre class="example">
+Added: [6] ✔️  20231129141554.todo.md "[ ] Learn about todos and tasks"
+</pre>
+
+
+
+<figure id="orgd33f316">
+<img src="../images/posts/2023_12_01_nb/todo_3.png" alt="todo_3.png" width="900px">
+
+</figure>
+
+<p>
+As you can see, only the top level <code>todo</code> is display in the <code>list</code> view.
+Using the <code>tasks</code> command will show us each todo and its associated
+tasks if it has any.
+</p>
+
+
+<figure id="org2041945">
+<img src="../images/posts/2023_12_01_nb/todo_4.png" alt="todo_4.png" width="900px">
+
+</figure>
+
+<p>
+Todos can be checked off using <code>nb todos do</code> or <code>nb do</code> for an
+even shorter method.
+</p>
+
+
+<figure id="org71681bc">
+<img src="../images/posts/2023_12_01_nb/todo_5.png" alt="todo_5.png" width="900px">
+
+</figure>
+
+<p>
+Tasks can be checked off is the same way using the selector as it's
+displayed in the <code>tasks</code> view.
+</p>
+
+
+<figure id="org089be48">
+<img src="../images/posts/2023_12_01_nb/todo_6.png" alt="todo_6.png" width="900px">
+
+</figure>
+
+<p>
+Unchecking a task is done with <code>undo</code>.
+</p>
+
+
+<figure id="org0638da7">
+<img src="../images/posts/2023_12_01_nb/todo_7.png" alt="todo_7.png" width="900px">
+
+</figure>
+
+<p>
+Internally, todos (and tasks) are just markdown files <code>nb</code> manages
+for you. You can look at them directly and even edit them by hand
+if you want. This can be helpful if you want to put more context
+into the todo.
+</p>
+
+
+<figure id="org7deb57b">
+<img src="../images/posts/2023_12_01_nb/todo_8.png" alt="todo_8.png" width="900px">
+
+</figure>
+
+<p>
+And when running <code>nb edit 6</code>:<sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup>
+</p>
+
+
+<figure id="org5d24475">
+<img src="../images/posts/2023_12_01_nb/todo_9.png" alt="todo_9.png" width="900px">
+
+</figure>
+</div>
+</div>
+
+<div id="outline-container-org8b194c3" class="outline-2">
+<h2 id="org8b194c3">Bookmarks</h2>
+<div class="outline-text-2" id="text-org8b194c3">
+<p>
+Bookmarks are one more type of note-adjacent item you can store in <code>nb</code>.
+They are created by providing <code>nb</code> with a url. <code>nb</code> will store the url and
+scrape the website for its title and convert the content into markdow
+to store along with the link.
+</p>
+
+<p>
+This is a great way both to keep track of a url for later, but also for
+distraction free, offline viewing of the site at some future date.
+</p>
+
+<p width="900px">
+<img src="../images/posts/2023_12_01_nb/bk_1.png" alt="bk_1.png" width="900px">
+Technically the <code>bookmark</code> part of the above command is optional. When you give
+an argument that looks like a url to <code>nb</code>, it is aware and creates a bookmark
+for you. e.g. <code>nb https://google.com</code> would bookmark google.
+</p>
+
+
+<figure id="org70f5fba">
+<img src="../images/posts/2023_12_01_nb/bk_2.png" alt="bk_2.png" width="900px">
+
+</figure>
+
+<p>
+As you can see, <code>nb</code> parsed the title of the website, and stored the url
+provided. If you tell nb to open the item (<code>nb open 7</code>), it will open the
+stored link in your web browser. <code>show</code> will open the parsed contents of
+the page in <code>less</code>, and <code>edit</code> allows you to, you guessed it, edit the
+contents of the converted page contents. Lastly, giving no additional
+arguments to the <code>bookmarks</code> command (<code>bk</code> for short) will show you only
+the bookmark items you have saved.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge0d46f6" class="outline-2">
+<h2 id="orge0d46f6">Notebooks</h2>
+<div class="outline-text-2" id="text-orge0d46f6">
+<p>
+Notebooks are an organizational structure to silo some notes from
+others. When listing notes (or todos, bookmarks, etc.), only notes
+from the current notebook are displayed.
+</p>
+
+<p>
+The screenshots you've seen so far crop out the notebook ui from
+the top center of its output.
+</p>
+
+
+<figure id="orgebc31bc">
+<img src="../images/posts/2023_12_01_nb/notebook_1.png" alt="notebook_1.png">
+
+</figure>
+
+<p>
+Notebooks can be created with the <code>notebook</code> subcommand. <code>nb notebook add sample</code>
+would create a new notebook called <code>sample</code>. <code>nb notebook delete sample</code> would
+delete it.
+</p>
+
+<p>
+The highlighted <code>work</code> indicates it is the current notebook, meaning
+all commands will function only on the items within this notebook.
+You can switch to a different notebook using the <code>use</code> command, but
+if you just want to run a one off search, view, or edit command,
+you can prefix the selector with the notebook name and a <code>:</code>.
+</p>
+
+
+<figure id="org7993fe0">
+<img src="../images/posts/2023_12_01_nb/notebook_2.png" alt="notebook_2.png">
+
+</figure>
+
+<p>
+In my understanding, notebooks make sense if you keep multiple logically
+unrelated corpora of notes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0031300" class="outline-2">
+<h2 id="org0031300">Folders</h2>
+<div class="outline-text-2" id="text-org0031300">
+<p>
+<code>nb</code> also supports folders which act exactly as you would expect
+a folder to. Folders can be used to organize or hierarchically
+order your notes. In <code>nb</code>, they help to reduce clutter of your
+notes because any note inside a folder is not displayed by
+default.
+</p>
+
+
+<figure id="org19afae7">
+<img src="../images/posts/2023_12_01_nb/folder_1.png" alt="folder_1.png">
+
+</figure>
+
+<p>
+Folders (unlike notebooks) will be created on the fly as needed
+given the path of the note you want to create. In this case,
+the folder <code>my_folder</code> was created dynamically in order to create
+the note.
+</p>
+
+
+<figure id="org768cf00">
+<img src="../images/posts/2023_12_01_nb/folder_2.png" alt="folder_2.png">
+
+</figure>
+
+<p>
+You can view the contents of a folder by issuing the folder name
+and a <code>/</code>.
+</p>
+
+
+<figure id="orgd7a4ba8">
+<img src="../images/posts/2023_12_01_nb/folder_3.png" alt="folder_3.png">
+
+</figure>
+
+<p>
+Pretty much every command can be prefixed with a selector, meaning
+you can put your bookmark in a different notebook, a todo inside a
+folder, a note inside a different notebook's nested folder, etc.
+</p>
+
+
+<figure id="org21a4b19">
+<img src="../images/posts/2023_12_01_nb/folder_4.png" alt="folder_4.png">
+
+</figure>
+</div>
+</div>
+
+<div id="outline-container-orga773bbe" class="outline-2">
+<h2 id="orga773bbe">Search</h2>
+<div class="outline-text-2" id="text-orga773bbe">
+<p>
+<code>nb</code> has intuitive and powerful search functionality, allowing you to search
+for strings, regexes, tags (covered briefly in this article, but you should
+check <a href="https://xwmx.github.io/nb/#-tagging">them</a> out in full), types of notes, and combine all of the above with
+Boolean operators: <code>--and</code> and <code>--or</code>. The sub-command to search is <code>search</code> or <code>q</code>
+for short.
+</p>
+
+<p>
+Searches are performed in the current notebook by default, but like any other
+nb command, can target any notebook and/or folder if desired.
+</p>
+
+<p>
+Searches can be made across <i>all</i> of your notes using the <code>-a</code> flag.
+</p>
+
+<p>
+I won't go much deeper into <code>nb</code>'s search functionality, so you can check it
+out yourself if you're interested. It's very easy to figure out and follows
+intuitive conventions if you've used any searching tool before.
+</p>
+
+<p>
+To get a feel for how searches work, here are a few examples taken from
+the docs:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #cf9f8f; font-style: italic;"># </span><span style="color: #cf9f8f; font-style: italic;">search current notebook for "example query"</span>
+nb search <span style="color: #6a9fff;">"example query"</span>
+
+<span style="color: #cf9f8f; font-style: italic;"># </span><span style="color: #cf9f8f; font-style: italic;">search the notebook "example" for "example query"</span>
+nb search example: <span style="color: #6a9fff;">"example query"</span>
+
+<span style="color: #cf9f8f; font-style: italic;"># </span><span style="color: #cf9f8f; font-style: italic;">search all unarchived notebooks for "example query" and list matching items</span>
+nb search <span style="color: #6a9fff;">"example query"</span> --all --list
+
+<span style="color: #cf9f8f; font-style: italic;"># </span><span style="color: #cf9f8f; font-style: italic;">search for "example" AND "demo"</span>
+nb search <span style="color: #6a9fff;">"example"</span> <span style="color: #6a9fff;">"demo"</span>
+
+<span style="color: #cf9f8f; font-style: italic;"># </span><span style="color: #cf9f8f; font-style: italic;">search for "example" AND "demo"</span>
+nb search <span style="color: #6a9fff;">"example"</span> --and <span style="color: #6a9fff;">"demo"</span>
+
+<span style="color: #cf9f8f; font-style: italic;"># </span><span style="color: #cf9f8f; font-style: italic;">search with regular expression</span>
+nb search <span style="color: #6a9fff;">"\d\d\d-\d\d\d\d"</span>
+
+<span style="color: #cf9f8f; font-style: italic;"># </span><span style="color: #cf9f8f; font-style: italic;">search for items tagged with "#tag1"</span>
+nb search --tags tag1
+
+<span style="color: #cf9f8f; font-style: italic;"># </span><span style="color: #cf9f8f; font-style: italic;">search for items tagged with "#tag1" (short version)</span>
+nb q -t tag1
+
+<span style="color: #cf9f8f; font-style: italic;"># </span><span style="color: #cf9f8f; font-style: italic;">search for items tagged with "#tag1" (even shorter version)</span>
+nb q <span style="color: #6a9fff;">"#tag1"</span>
+
+<span style="color: #cf9f8f; font-style: italic;"># </span><span style="color: #cf9f8f; font-style: italic;">search in the "example" notebook for "example"</span>
+nb example:q <span style="color: #6a9fff;">"example"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org10c7b17" class="outline-2">
+<h2 id="org10c7b17">Conclusion</h2>
+<div class="outline-text-2" id="text-org10c7b17">
+<p>
+<code>nb</code> is busting at the seams with functionality. This article has covered maybe
+a quarter of all the things it can do. Their <a href="https://xwmx.github.io/nb/#overview">documentation</a> is fantastic and
+covers everything I didn't have time to. Additionally the built in help is also
+comprehensive (<code>nb help</code>, or just throw a <code>--help</code> onto any command you're trying
+to work with). It also supports linking notes to each other (see <a href="https://xwmx.github.io/nb/#-linking">docs</a>), syncing
+notes automatically using a git repository, color themes, a robust plugin system,
+images, videos (<code>nb import</code>, <a href="https://xwmx.github.io/nb/#%EF%B8%8F-import--export">docs</a>), and more.
+</p>
+
+<p>
+Despite the overwhelming breadth of features, I've found working with <code>nb</code> very
+pleasant to explore incrementally. Commands are well documented, arguments are
+flexible, meaning you don't have to memorize the exact order or name of every
+command; even if you're close, <code>nb</code> will likely understand what you were trying
+to do, and will do it for you.
+</p>
+
+<p>
+I especially that you can specify your preferred file format; <code>nb</code> doesn't
+force you to use whichever format they decided is best; you get to choose.<sup><a id="fnr.4" class="footref" href="#fn.4" role="doc-backlink">4</a></sup>
+</p>
+
+<p>
+I also greatly appreciate that all your notes are stored on your filesystem,
+in a simple folder structure stored in <code>~/.nb</code>.
+</p>
+
+<p>
+<img src="../images/posts/2023_12_01_nb/filesystem.png" alt="filesystem.png">
+In a world of cloud only, proprietary solutions, I find myself looking for
+simple solutions using existing and well known technologies with a preference
+for offline first. I want to be able to zip my notes and copy them to another
+computer, or better yet, utilize Dropbox or git to track and transfer changes.
+<code>nb</code> manages syncing behind the scenes for you using git if you provide a remote
+repository for it to sync with. This is the simplest solution to sync I have
+seen. If you're interested in more of the details of <code>nb</code>'s sync functionality,
+see their <a href="https://xwmx.github.io/nb/#-git-sync">docs</a> on the concept.
+</p>
+
+<p>
+Even refreshing note taking tools like <a href="https://obsidian.md/">obsidian</a> which store your notes in plain
+markdown on your machine require a paid subscription for access to their sync
+functionality, while other tools silently migrate useful features from their
+free plans into their paid ones.
+</p>
+
+<p>
+<code>nb</code> strikes a balance between the do-it-yourself freedom of note organization and
+the power that comes from enforcing a known format (todos, bookmarks, notebooks,
+etc.). The only "missing" feature I noticed was a lack of mobile support, but that
+hardly feels fair to fault a terminal note taking tool for missing. If that's a
+deal breaker, perhaps <code>nb</code> won't be the perfect tool for you.
+</p>
+
+<p>
+It was easy enough to get started with <code>nb</code> and because the files are any
+format you like, stored on your computer, you risk nothing if you don't end up
+liking it, so I'd recommend just giving it a shot.
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+This isn't quite true, as there is a fairly well supported note
+browser that can be started from the <code>nb</code> binary with <code>nb browse --gui</code>.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://xwmx.github.io/nb/#optional">https://xwmx.github.io/nb/#optional</a> 
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+This opened a buffer in my emacs session with the given file.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+This holds true for notes, but bookmarks and todos are markdown files. Always. 
+</p></div></div>
+
+
+</div>
+</div></div>
+</body>
+</html>
