@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2023-12-08 Fri 12:28 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>jq - Terminal Tooling</title>
+<meta name="author" content="Jonathan Harder" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="../css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+</head>
+<body>
+<div id="content" class="content">
+<header>
+<h1 class="title">jq - Terminal Tooling</h1>
+</header><p>
+<a href="../index.html">posts</a>
+</p>
+
+
+<div id="outline-container-org04ddf77" class="outline-2">
+<h2 id="org04ddf77">Overview&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cli">cli</span></span></h2>
+<div class="outline-text-2" id="text-org04ddf77">
+<p>
+<a href="https://jqlang.github.io/jq/">jq</a> is a utility to search through, filter, and modify <code>json</code> content.<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>
+You can use it to find a value in a deeply nested object, filter to
+only objects which contain a field, map the inner contents of arbitrary
+data into a flat list, and much much more.
+</p>
+
+<p>
+On mac, it can be installed through homebrew:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">brew install jq
+</pre>
+</div>
+
+<p>
+As an introductory example, say you have the following json input:<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">'{"Instances": [{"InstanceId": "sdb3871osdhv89044", "Name": "server0",</span>
+<span style="color: #df9080;">"CreationDate": "2021-06-20T03:50:34"},{"InstanceId": "abc123eassa12874", "Name": "server1",</span>
+<span style="color: #df9080;">"CreationDate": "2023-11-01T15:13:06"}, {"InstanceId": "aes54iasg41226c",</span>
+<span style="color: #df9080;">"Name": "server2", "CreationDate": "2023-11-02T12:07:54"}, {"InstanceId":</span>
+<span style="color: #df9080;">"flng45799saooh987", "Name": "server3", "CreationDate": "2023-11-06T21:45:27"}], "ResponseCode": 200}'</span> | tee ~/test.json
+</pre>
+</div>
+
+<pre class="example">
+{"Instances": [{"InstanceId": "sdb3871osdhv89044", "Name": "server0",
+"CreationDate": "2021-06-20T03:50:34"},{"InstanceId": "abc123eassa12874", "Name": "server1",
+"CreationDate": "2023-11-01T15:13:06"}, {"InstanceId": "aes54iasg41226c",
+"Name": "server2", "CreationDate": "2023-11-02T12:07:54"}, {"InstanceId":
+"flng45799saooh987", "Name": "server3", "CreationDate": "2023-11-06T21:45:27"}], "ResponseCode": 200}
+</pre>
+
+
+
+<p>
+Jq with no additional arguments will parse, format, and highlight incoming json:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat ~/test.json | jq
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"Instances"</span>: <span style="color: #35afbf;">[</span>
+    <span style="color: #af85ea;">{</span>
+      <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"sdb3871osdhv89044"</span>,
+      <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server0"</span>,
+      <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>
+    <span style="color: #af85ea;">}</span>,
+    <span style="color: #af85ea;">{</span>
+      <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"abc123eassa12874"</span>,
+      <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server1"</span>,
+      <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>
+    <span style="color: #af85ea;">}</span>,
+    <span style="color: #af85ea;">{</span>
+      <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"aes54iasg41226c"</span>,
+      <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server2"</span>,
+      <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>
+    <span style="color: #af85ea;">}</span>,
+    <span style="color: #af85ea;">{</span>
+      <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
+      <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
+      <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>
+    <span style="color: #af85ea;">}</span>
+  <span style="color: #35afbf;">]</span>,
+  <span style="color: #af85ea; font-weight: bold;">"ResponseCode"</span>: <span style="color: #d369af;">200</span>
+<span style="color: #d369af;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfb871d2" class="outline-2">
+<h2 id="orgfb871d2">Filters</h2>
+<div class="outline-text-2" id="text-orgfb871d2">
+</div>
+<div id="outline-container-orgf88788e" class="outline-3">
+<h3 id="orgf88788e">Basic filters</h3>
+<div class="outline-text-3" id="text-orgf88788e">
+<p>
+Basic filters can be applied in order to grab specific fields from your input:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #d369af;">[</span>
+  <span style="color: #35afbf;">{</span>
+    <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"sdb3871osdhv89044"</span>,
+    <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server0"</span>,
+    <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>
+  <span style="color: #35afbf;">}</span>,
+  <span style="color: #35afbf;">{</span>
+    <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"abc123eassa12874"</span>,
+    <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server1"</span>,
+    <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>
+  <span style="color: #35afbf;">}</span>,
+  <span style="color: #35afbf;">{</span>
+    <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"aes54iasg41226c"</span>,
+    <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server2"</span>,
+    <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>
+  <span style="color: #35afbf;">}</span>,
+  <span style="color: #35afbf;">{</span>
+    <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
+    <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
+    <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>
+  <span style="color: #35afbf;">}</span>
+<span style="color: #d369af;">]</span>
+</pre>
+</div>
+
+<p>
+You can nest filters to retrieve deeply nested data from your input too:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[1].Name'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #df9080;">"server1"</span>
+</pre>
+</div>
+
+<p>
+Array access works as expected with zero-based integer indexing. In addition to
+simply getting date from input, you can create arbitrary new objects by wrapping
+your filters in an object:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'{"ServerName": .Instances[1].Name, "Created": .Instances[1].CreationDate }'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server1"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>
+<span style="color: #d369af;">}</span>
+</pre>
+</div>
+
+
+<p>
+You can link multiple filters and transformations through the pipe <code>|</code> operator.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[1] | { "ServerName": .Name, "Created": .CreationDate }'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server1"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>
+<span style="color: #d369af;">}</span>
+</pre>
+</div>
+
+<p>
+Instead of selecting only an individual record in <code>Instances</code>, you can execute a filter
+over <i>all</i> instances by omitting the offset to the array access.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[] | { "ServerName": .Name, "Created": .CreationDate }'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server0"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server1"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server2"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server3"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>
+<span style="color: #d369af;">}</span>
+</pre>
+</div>
+
+<p>
+The results of our filters are streamed one at a time through each pipelined
+expression. You can see this by looking at the output; each object is the result
+of the second filter (which creates a new object). Further filters in a subsequent
+pipeline would work with the new object we created (with keys: <code>ServerName</code> and <code>Created</code>).
+</p>
+
+<p>
+We can collect the results of all the expressions in the stream by just wrapping it in
+an array, similar to how we created the object above.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'[ .Instances[] | { "ServerName": .Name, "Created": .CreationDate } ]'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #d369af;">[</span>
+  <span style="color: #35afbf;">{</span>
+    <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server0"</span>,
+    <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>
+  <span style="color: #35afbf;">}</span>,
+  <span style="color: #35afbf;">{</span>
+    <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server1"</span>,
+    <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>
+  <span style="color: #35afbf;">}</span>,
+  <span style="color: #35afbf;">{</span>
+    <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server2"</span>,
+    <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>
+  <span style="color: #35afbf;">}</span>,
+  <span style="color: #35afbf;">{</span>
+    <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server3"</span>,
+    <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>
+  <span style="color: #35afbf;">}</span>
+<span style="color: #d369af;">]</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3c833ad" class="outline-3">
+<h3 id="org3c833ad">Selection</h3>
+<div class="outline-text-3" id="text-org3c833ad">
+<p>
+Often you want to restrict the results not (only) to certain fields of some
+json object, but to fields matching some criteria. The jq filter <code>select</code>
+accomplishes this task. Say we wanted to filter instances to only those which
+were created on or after November third:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[] | select(.CreationDate &gt; "2023-11-03")'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>
+<span style="color: #d369af;">}</span>
+</pre>
+</div>
+
+<p>
+This can be useful as well on simpler data as well. If given a list of numbers,
+you can filter them using <code>select</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">'[1, 2, 3, 4]'</span> | jq <span style="color: #df9080;">'map(select(. &gt; 2))'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #d369af;">[</span>
+  <span style="color: #d369af;">3</span>,
+  <span style="color: #d369af;">4</span>
+<span style="color: #d369af;">]</span>
+
+</pre>
+</div>
+
+<p>
+<i>NOTE</i>: <code>map</code> is just another way to execute a filter on every element of a list,
+you've already seen this presented anonter way: <code>[ .[] | select(. &gt; 2) ]</code> (e.g.
+create an array <code>[</code> from the generated stream of items <code>.[]</code> from which <code>|</code> only elements
+that are <code>select(</code> greater than 2 <code>. &gt; 2</code> are retained)
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org38b03d0" class="outline-2">
+<h2 id="org38b03d0">Modifying objects</h2>
+<div class="outline-text-2" id="text-org38b03d0">
+<p>
+If there's a need to transform your data by adding fields, <code>+</code> is more than up
+to the task. In this case I don't want to filter which instances are deemed "old",
+instead, I just want a field to indicate <i>if</i> it is old.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[] | . + { IsSuperOld: (.CreationDate &lt; "2022-01-01") }'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"sdb3871osdhv89044"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server0"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"abc123eassa12874"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server1"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">false</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"aes54iasg41226c"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server2"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">false</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">false</span>
+<span style="color: #d369af;">}</span>
+</pre>
+</div>
+
+<p>
+The above creates a stream of each object in the field <code>Instances</code>, and for each,
+adds to it the field <code>IsSuperOld</code>, setting it to true or false depending on
+if the <code>CreationDate</code> of that instance is older than January 1st, 2022.
+</p>
+
+<p>
+Assignment in jq is very powerful; in this case, we added the new field individually
+onto each element in the stream, but <code>+</code> (along with the other assignment operators)
+can assign values onto a path wich points to <i>multiple</i> locations. As an example,
+we can actually simplify the above query like so:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[] + { IsSuperOld: (.CreationDate &lt; "2022-01-01") }'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"sdb3871osdhv89044"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server0"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"abc123eassa12874"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server1"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"aes54iasg41226c"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server2"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
+<span style="color: #d369af;">}</span>
+</pre>
+</div>
+
+<p>
+This is even more powerful when combined with a reducing filter like select:<sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[] | select(.InstanceId | startswith("a") ) |= . + { IsSuperOld: (.CreationDate &lt; "2022-01-01") }'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"sdb3871osdhv89044"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server0"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"abc123eassa12874"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server1"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">false</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"aes54iasg41226c"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server2"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">false</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>
+<span style="color: #d369af;">}</span>
+</pre>
+</div>
+
+<p>
+Granted these examples are becoming more and more contrived, but let's break down what's
+happening. We want a stream of <code>Instances</code>, and for elements selected by the filter
+<code>.InstanceId | startswith("a")</code>, add the field <code>IsSuperOld</code> which is set to true if the <code>CreationDate</code>
+is before <code>2022-01-01</code>.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orge39d3c9" class="outline-2">
+<h2 id="orge39d3c9">Custom functions</h2>
+<div class="outline-text-2" id="text-orge39d3c9">
+<p>
+If you find yourself reusing a particular filter often, it can be helpful reduce repitition
+by storing that filter in one central place. Jq allows this with named filters, which is calls
+<a href="https://jqlang.github.io/jq/manual/#defining-functions">functions</a>. In the examples above, we could name our "super old" filter to avoid repeating
+ourselves.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'def isold: .CreationDate &lt; "2022-01-01"; .Instances[] + { IsSuperOld: isold }'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-json"><span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"sdb3871osdhv89044"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server0"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"abc123eassa12874"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server1"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"aes54iasg41226c"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server2"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
+<span style="color: #d369af;">}</span>
+<span style="color: #d369af;">{</span>
+  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>,
+  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
+<span style="color: #d369af;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8604e68" class="outline-2">
+<h2 id="org8604e68">Conclusion</h2>
+<div class="outline-text-2" id="text-org8604e68">
+<p>
+Like usual, we've only scratched the surface of what jq can do. If their extensive
+<a href="https://jqlang.github.io/jq/manual/">docs</a> with included examples can't help you, chances are there's a stack overflow
+post from somebody asking how to do what you're trying to do.
+</p>
+
+<p>
+I've personally found it very useful when hacking scripts together which utilize the
+aws cli. Because the result its queries are json, the two make a great team.<sup><a id="fnr.4" class="footref" href="#fn.4" role="doc-backlink">4</a></sup>
+</p>
+
+<p>
+Jq does one small job, filter and transform json. Toward this end, it's been extremely
+helpful for putting together small bash scripts without having to reach for something
+heavier like python and the <code>json</code> module. It falls into the category of: if you need it,
+you'll know.
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Many of these examples are taken from jq's <a href="https://jqlang.github.io/jq/tutorial/">tutorial</a>. It's fairly short, I recommend you read it. 
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a target="_blank" href="http://man.he.net/?topic=tee&section=all">tee</a> is used to print to stdout as well as send to the provided file. 
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+This example uses the update assignment operator <a href="https://jqlang.github.io/jq/manual/#update-assignment">|=</a> which runs its input through the filter
+on the right, and returns the updated result. This differs from plain assignment, <a href="https://jqlang.github.io/jq/manual/#plain-assignment">=</a>, which overwrites
+its input with the result of the expression on the right. This is important in this case since I
+still wanted all the instances, not just those selected by the <code>startswith</code> filter.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+The AWS cli supports the <code>--query</code> flag, which accepts a json query syntax similar
+to, but not quite exactly compatible with jq called <a href="https://jmespath.org">jmespath</a>. This could be a great
+option for you, but I am already familiar with jq and didn't want to learn <i>another</i> json
+query syntax, so I just pipe the results of my aws calls to jq.
+</p></div></div>
+
+
+</div>
+</div></div>
+</body>
+</html>
