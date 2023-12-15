@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2023-12-15 Fri 14:44 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>fzf - Terminal Tooling</title>
+<meta name="author" content="Jonathan Harder" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="../css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+</head>
+<body>
+<div id="content" class="content">
+<header>
+<h1 class="title">fzf - Terminal Tooling</h1>
+</header><p>
+<a href="../index.html">posts</a>
+</p>
+
+<div id="outline-container-org5b10cee" class="outline-2">
+<h2 id="org5b10cee">Overview&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cli">cli</span></span></h2>
+<div class="outline-text-2" id="text-org5b10cee">
+<p>
+Without any arguments or data piped from standard input <a href="https://github.com/junegunn/fzf">fzf</a> acts as
+a sort of interactive <a target="_blank" href="http://man.he.net/?topic=find&section=all">find</a> by listing every file in the current and
+all sub-directories.
+</p>
+
+
+<figure id="org2993325">
+<img src="../images/posts/2023_12_14_fzf/1_fzf_overview.gif" alt="1_fzf_overview.gif">
+
+</figure>
+
+<p>
+As you can see, the options are filtered live as you type. Spaces
+start a new search term which can match any part of the file
+regardless of the order you type them in. You can use <code>!</code> to negate
+a search term and filter out items which match that term.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4689bb8" class="outline-2">
+<h2 id="org4689bb8">Finding files</h2>
+<div class="outline-text-2" id="text-org4689bb8">
+<p>
+As you saw from above, the default behavior of fzf is already very
+powerful, but it can do much more. Some of the power comes from its
+ability to be composed with other shell commands.
+</p>
+
+<p>
+Say you wanted to view the first handful of lines from a file. The kubernetes
+file specification states the <code>kind</code> field must state what kind of resource
+the configuration represents. Using <a target="_blank" href="http://man.he.net/?topic=head&section=all">head</a> and a <a href="https://tldp.org/LDP/abs/html/subshells.html">sub-shell</a> running fzf,
+we can combine the action of finding the file with the effect of getting
+the <code>head</code> of it.
+</p>
+
+<p>
+<i>NOTE: in these examples I am using <a href="https://fishshell.com">fish</a> shell, so sub-shells are written</i>
+<i>with <code>(command)</code>, rather than the posix standard method of <code>$(command)</code>.</i>
+</p>
+
+
+<figure id="orgfa1240b">
+<img src="../images/posts/2023_12_14_fzf/2_head.gif" alt="2_head.gif">
+
+</figure>
+
+<p>
+You can also see in this example that you can move the selection up and
+down. Whichever item is selected when entered is pressed is printed
+to standard out.
+</p>
+
+<p>
+Another useful combination of commands is opening the selected file
+in your editor of choice.
+</p>
+
+
+<figure id="org4de1779">
+<img src="../images/posts/2023_12_14_fzf/3_edit.gif" alt="3_edit.gif">
+
+</figure>
+</div>
+</div>
+
+<div id="outline-container-org906d0e2" class="outline-2">
+<h2 id="org906d0e2">Fuzzy finding standard input</h2>
+<div class="outline-text-2" id="text-org906d0e2">
+<p>
+By itself fzf runs <a href="2023_11_03_find.html">find</a> internally and presents the results to filter.
+If provided with input through standard input, fzf then becomes a
+general purpose fuzzy filter.
+</p>
+
+
+<figure id="orgf76b42e">
+<img src="../images/posts/2023_12_14_fzf/4_git_branch.gif" alt="4_git_branch.gif">
+
+</figure>
+
+<p>
+As you can see, the content of the <code>git branch</code> command was used as input
+which we can filter. Providing some additional flags to the git command
+will give us more context to filter on:
+</p>
+
+
+<figure id="org92dd503">
+<img src="../images/posts/2023_12_14_fzf/5_git_branch_v.gif" alt="5_git_branch_v.gif">
+
+</figure>
+
+<p>
+This can be supercharged by taking the branch selection and running
+<code>git checkout</code> on the branch<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">fbr</span> <span style="color: #d369af;">{</span>
+  local branches branch
+  <span style="color: #6a9fff;">branches</span>=$<span style="color: #35afbf;">(</span>git --no-pager branch -vv<span style="color: #35afbf;">)</span>
+  <span style="color: #6a9fff;">branch</span>=$<span style="color: #35afbf;">(</span><span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">branches</span> | fzf<span style="color: #35afbf;">)</span>
+  git checkout <span style="color: #df9080;">"$(echo $branch | awk '{print $1}' | sed 's/.* //')"</span>
+<span style="color: #d369af;">}</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-sh">
+</pre>
+</div>
+
+<p>
+This function grabs the list of git branches (with the additional
+context provided by <code>-vv</code>), selects one with fzf, and then plucks
+the branch name out of the selection (and then removing the <code>*</code> using <a href="2023_11_10_sed.html">sed</a>).
+With the branch name isolated, we run <code>git checkout</code>.
+</p>
+
+<p>
+Using this, you have an interactive branch selection tool which gives you
+move information about the branches context.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9ce76be" class="outline-2">
+<h2 id="org9ce76be">Making a Better <code>cd</code></h2>
+<div class="outline-text-2" id="text-org9ce76be">
+<p>
+If you know your way around <a href="2023_11_03_find.html">find</a>, you can supercharge other commands as well.
+Let's take a look at how we can improve the ergonomics of <a target="_blank" href="http://man.he.net/?topic=cd&section=all">cd</a>.
+</p>
+
+<p>
+When at the root of a project with many nested folders, it can be a bit of a
+pain to cd into a folder deep in the project. You can either do it iteratively,
+running cd, inspecting the contents of the new directory, find the next folder,
+and run cd again. A slightly faster approach uses tab <a href="https://www.gnu.org/software/gnuastro/manual/html_node/Bash-TAB-completion-tutorial.html">completion</a> in order to drill
+into the target destination and only running cd once.
+</p>
+
+<p>
+We can do better. Using find we can list all of the directories, recursively:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">find . -type d ! <span style="color: #df9080;">\(</span> -path <span style="color: #df9080;">'*/.git/*'</span> -or -path <span style="color: #df9080;">'*/node_modules/*'</span> <span style="color: #df9080;">\)</span>
+</pre>
+</div>
+
+<pre class="example">
+.
+./frontend
+./frontend/dist
+./frontend/node_modules
+./backend
+./files
+./.git
+./kubernetes
+./.idea
+</pre>
+
+
+<p>
+Using <code>cd</code> and a sub-shell running find piped to fzf gives you an interactive
+cd command that can directly jump you to an arbitrarily deep folder by typing
+the minimum necessary key to find it:<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>
+</p>
+
+
+<figure id="org7bde213">
+<img src="../images/posts/2023_12_14_fzf/6_cd.gif" alt="6_cd.gif">
+
+</figure>
+</div>
+</div>
+
+<div id="outline-container-org2af25ca" class="outline-2">
+<h2 id="org2af25ca">Preview</h2>
+<div class="outline-text-2" id="text-org2af25ca">
+<p>
+Another super power of fzf is the ability to preview your selection.
+With the default behavior of listing all files, you can preview those
+files with any command you want. The intuitive option would be <a target="_blank" href="http://man.he.net/?topic=cat&section=all">cat</a>,
+but if you have it available on your system, <a href="https://github.com/sharkdp/bat">bat</a> is even cooler:
+</p>
+
+
+<figure id="org70ec4ae">
+<img src="../images/posts/2023_12_14_fzf/7_preview.gif" alt="7_preview.gif">
+
+</figure>
+</div>
+</div>
+
+<div id="outline-container-org0ad6563" class="outline-2">
+<h2 id="org0ad6563">Multiple selection</h2>
+<div class="outline-text-2" id="text-org0ad6563">
+<p>
+Fzf supports selecting multiple inputs and prints all selected items
+to standard out.
+</p>
+
+
+<figure id="org27488e5">
+<img src="../images/posts/2023_12_14_fzf/8_multi.gif" alt="8_multi.gif">
+
+</figure>
+
+<p>
+You can take this in a lot of directions.
+</p>
+
+<p>
+For instance, you can install Homebrew packages via an interactive
+list of all available brew packages:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">(F)zf (B)rew (I)nstall</span>
+<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">Takes input as a filter for brew search,</span>
+<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">and installs all packages selected in a</span>
+<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">loop.</span>
+<span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">fbi</span> <span style="color: #d369af;">{</span>
+    local <span style="color: #6a9fff;">packages</span>=$<span style="color: #35afbf;">(</span>brew search <span style="color: #df9080;">"$@"</span> | fzf -m<span style="color: #35afbf;">)</span>
+    <span style="color: #af85ea; font-weight: bold;">if</span> <span style="color: #35afbf;">[</span><span style="color: #af85ea;">[</span> $<span style="color: #6a9fff;">packages</span> <span style="color: #af85ea;">]</span><span style="color: #35afbf;">]</span>; <span style="color: #af85ea; font-weight: bold;">then</span>
+        <span style="color: #af85ea; font-weight: bold;">for</span> $<span style="color: #6a9fff;">package</span><span style="color: #af85ea; font-weight: bold;"> in</span> $<span style="color: #35afbf;">(</span><span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">packages</span><span style="color: #35afbf;">)</span>; <span style="color: #af85ea; font-weight: bold;">do</span>
+            brew install $<span style="color: #6a9fff;">package</span>
+        <span style="color: #af85ea; font-weight: bold;">done</span>
+    <span style="color: #af85ea; font-weight: bold;">fi</span>
+<span style="color: #d369af;">}</span>
+</pre>
+</div>
+
+
+<figure id="org6d9de24">
+<img src="../images/posts/2023_12_14_fzf/9_brew_multi.gif" alt="9_brew_multi.gif">
+
+</figure>
+</div>
+</div>
+
+<div id="outline-container-orgd5f7fd0" class="outline-2">
+<h2 id="orgd5f7fd0">Shell integration</h2>
+<div class="outline-text-2" id="text-orgd5f7fd0">
+<p>
+Fzf also comes with nice shell <a href="https://github.com/junegunn/fzf#fuzzy-completion-for-bash-and-zsh">integration</a>. When enabled, it hooks into
+zsh and bash completion engines (think of hitting tab and the list of files
+shows up). This means you get fzf wired into many common commands for free
+without the overhead of thinking about how to invoke it correctly.
+</p>
+
+<p>
+<i>NOTE</i>: I'm running the following example in zsh because I couldn't get the
+shell integration to work in my normal shell (in case you were wondering
+why the prompt looks different).
+</p>
+
+
+<figure id="org662e89a">
+<img src="../images/posts/2023_12_14_fzf/10_shell_integration.gif" alt="10_shell_integration.gif">
+
+</figure>
+</div>
+</div>
+
+<div id="outline-container-orgfb7141f" class="outline-2">
+<h2 id="orgfb7141f">But wait, there's more</h2>
+<div class="outline-text-2" id="text-orgfb7141f">
+<p>
+And how much more there is! You can set custom headers, prompts, keybindings
+to run arbitrary code when pressing that key, switching which command feeds
+input to fzf on the fly. I don't have nearly enough time to go into it,
+but to see a taste of what it's capable take a look at this <a href="https://www.youtube.com/watch?v=WFy6JXBRSJc">video</a>.
+</p>
+
+<p>
+I would also recommend crawling through the fzf <a href="https://github.com/junegunn/fzf/wiki/Examples">wiki</a> which has numerous
+examples of supercharging many applications.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org98f3270" class="outline-2">
+<h2 id="org98f3270">Conclusion</h2>
+<div class="outline-text-2" id="text-org98f3270">
+<p>
+Fzf is hard to not love. It feels like the sort of tool whose power is
+only limited by my imagination. Once you start recognizing cases where
+you need to pick out a single item from a list (killing a process from <code>ps</code>,
+updating an OS service using <code>systemctl</code>, etc.) fzf steps up and makes
+it interactive.
+</p>
+
+<p>
+Give it a shot, let your imagination go wild. Filter on, friends.
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+This example is taken from the fzf <a href="https://github.com/junegunn/fzf/wiki/Examples#git">wiki</a>. There are a lot
+of examples here, both for git and many other tools. It's a
+treasure trove of ideas and cool goodies.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+In case you want to copy and paste, the command was:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #e580e0; font-weight: bold;">cd</span> <span style="color: #d369af;">(</span>find . -type d ! <span style="color: #df9080;">\(</span> -path <span style="color: #df9080;">'*/.git/*'</span> -or -path <span style="color: #df9080;">'*/.node_modules/*'</span> <span style="color: #df9080;">\)</span> | fzf<span style="color: #d369af;">)</span>
+</pre>
+</div>
+
+<p class="footpara">
+If you wanted, you could remove the path filtering from the find command and just
+filter them out using fzf (<code>!node !git</code>), but this method reduces the noise you
+have to look at when first running the command.
+</p></div></div>
+
+
+</div>
+</div></div>
+</body>
+</html>
