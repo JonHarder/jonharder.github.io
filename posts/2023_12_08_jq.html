@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-12-22 Fri 15:55 -->
+<!-- 2023-12-22 Fri 15:58 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>jq - Terminal Tooling</title>
@@ -44,11 +44,11 @@ As an introductory example, say you have the following json input:<sup><a id="fn
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">'{"Instances": [{"InstanceId": "sdb3871osdhv89044", "Name": "server0",</span>
-<span style="color: #df9080;">"CreationDate": "2021-06-20T03:50:34"},{"InstanceId": "abc123eassa12874", "Name": "server1",</span>
-<span style="color: #df9080;">"CreationDate": "2023-11-01T15:13:06"}, {"InstanceId": "aes54iasg41226c",</span>
-<span style="color: #df9080;">"Name": "server2", "CreationDate": "2023-11-02T12:07:54"}, {"InstanceId":</span>
-<span style="color: #df9080;">"flng45799saooh987", "Name": "server3", "CreationDate": "2023-11-06T21:45:27"}], "ResponseCode": 200}'</span> | tee ~/test.json
+<pre class="src src-sh"><span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">'{"Instances": [{"InstanceId": "sdb3871osdhv89044", "Name": "server0",</span>
+<span style="color: #ffa21f;">"CreationDate": "2021-06-20T03:50:34"},{"InstanceId": "abc123eassa12874", "Name": "server1",</span>
+<span style="color: #ffa21f;">"CreationDate": "2023-11-01T15:13:06"}, {"InstanceId": "aes54iasg41226c",</span>
+<span style="color: #ffa21f;">"Name": "server2", "CreationDate": "2023-11-02T12:07:54"}, {"InstanceId":</span>
+<span style="color: #ffa21f;">"flng45799saooh987", "Name": "server3", "CreationDate": "2023-11-06T21:45:27"}], "ResponseCode": 200}'</span> | tee ~/test.json
 </pre>
 </div>
 
@@ -114,7 +114,7 @@ Basic filters can be applied in order to grab specific fields from your input:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances'</span>
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #ffa21f;">'.Instances'</span>
 </pre>
 </div>
 
@@ -149,7 +149,7 @@ You can nest filters to retrieve deeply nested data from your input too:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[1].Name'</span>
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #ffa21f;">'.Instances[1].Name'</span>
 </pre>
 </div>
 
@@ -165,7 +165,7 @@ your filters in an object:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'{"ServerName": .Instances[1].Name, "Created": .Instances[1].CreationDate }'</span>
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #ffa21f;">'{"ServerName": .Instances[1].Name, "Created": .Instances[1].CreationDate }'</span>
 </pre>
 </div>
 
@@ -183,7 +183,7 @@ You can link multiple filters and transformations through the pipe <code>|</code
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[1] | { "ServerName": .Name, "Created": .CreationDate }'</span>
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #ffa21f;">'.Instances[1] | { "ServerName": .Name, "Created": .CreationDate }'</span>
 </pre>
 </div>
 
@@ -201,7 +201,7 @@ over <i>all</i> instances by omitting the offset to the array access.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[] | { "ServerName": .Name, "Created": .CreationDate }'</span>
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #ffa21f;">'.Instances[] | { "ServerName": .Name, "Created": .CreationDate }'</span>
 </pre>
 </div>
 
@@ -238,7 +238,7 @@ an array, similar to how we created the object above.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'[ .Instances[] | { "ServerName": .Name, "Created": .CreationDate } ]'</span>
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #ffa21f;">'[ .Instances[] | { "ServerName": .Name, "Created": .CreationDate } ]'</span>
 </pre>
 </div>
 
@@ -277,7 +277,7 @@ were created on or after November third:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[] | select(.CreationDate &gt; "2023-11-03")'</span>
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #ffa21f;">'.Instances[] | select(.CreationDate &gt; "2023-11-03")'</span>
 </pre>
 </div>
 
@@ -296,7 +296,7 @@ you can filter them using <code>select</code>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">'[1, 2, 3, 4]'</span> | jq <span style="color: #df9080;">'map(select(. &gt; 2))'</span>
+<pre class="src src-sh"><span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">'[1, 2, 3, 4]'</span> | jq <span style="color: #ffa21f;">'map(select(. &gt; 2))'</span>
 </pre>
 </div>
 
@@ -329,7 +329,7 @@ instead, I just want a field to indicate <i>if</i> it is old.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[] | . + { IsSuperOld: (.CreationDate &lt; "2022-01-01") }'</span>
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #ffa21f;">'.Instances[] | . + { IsSuperOld: (.CreationDate &lt; "2022-01-01") }'</span>
 </pre>
 </div>
 
@@ -375,7 +375,7 @@ we can actually simplify the above query like so:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[] + { IsSuperOld: (.CreationDate &lt; "2022-01-01") }'</span>
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #ffa21f;">'.Instances[] + { IsSuperOld: (.CreationDate &lt; "2022-01-01") }'</span>
 </pre>
 </div>
 
@@ -412,7 +412,7 @@ This is even more powerful when combined with a reducing filter like select:<sup
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'.Instances[] | select(.InstanceId | startswith("a") ) |= . + { IsSuperOld: (.CreationDate &lt; "2022-01-01") }'</span>
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #ffa21f;">'.Instances[] | select(.InstanceId | startswith("a") ) |= . + { IsSuperOld: (.CreationDate &lt; "2022-01-01") }'</span>
 </pre>
 </div>
 
@@ -463,7 +463,7 @@ ourselves.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">cat ~/test.json | jq <span style="color: #df9080;">'def isold: .CreationDate &lt; "2022-01-01"; .Instances[] + { IsSuperOld: isold }'</span>
+<pre class="src src-sh">cat ~/test.json | jq <span style="color: #ffa21f;">'def isold: .CreationDate &lt; "2022-01-01"; .Instances[] + { IsSuperOld: isold }'</span>
 </pre>
 </div>
 

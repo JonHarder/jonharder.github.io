@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-12-22 Fri 15:55 -->
+<!-- 2023-12-22 Fri 15:58 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Nb - Terminal Tooling</title>
@@ -31,7 +31,7 @@ cheat sheet of common actions if there are no notes.
 </p>
 
 
-<figure id="org998475c">
+<figure id="org18a5776">
 <img src="../images/posts/2023_12_01_nb/overview_empty.png" alt="overview_empty.png" width="1000px">
 
 </figure>
@@ -42,7 +42,7 @@ all the notes in your current notebook (more on <a href="#orge0d46f6">notebooks<
 </p>
 
 
-<figure id="org391cdc5">
+<figure id="org14633fe">
 <img src="../images/posts/2023_12_01_nb/overview_with_notes.png" alt="overview_with_notes.png" width="900px">
 
 </figure>
@@ -111,7 +111,7 @@ Viewing the current notes with <code>nb</code> now gives us this:
 </p>
 
 
-<figure id="orga635f05">
+<figure id="org1926708">
 <img src="../images/posts/2023_12_01_nb/add_1.png" alt="add_1.png" width="900px">
 
 </figure>
@@ -121,7 +121,7 @@ Creating a note with content from provided arguments looks like this:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">nb add <span style="color: #df9080;">"A new note"</span>
+<pre class="src src-sh">nb add <span style="color: #ffa21f;">"A new note"</span>
 </pre>
 </div>
 
@@ -135,7 +135,7 @@ And the result:
 </p>
 
 
-<figure id="orgd047490">
+<figure id="orgde0b1f9">
 <img src="../images/posts/2023_12_01_nb/add_2.png" alt="add_2.png" width="900px">
 
 </figure>
@@ -146,7 +146,7 @@ pipeline:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #e580e0; font-weight: bold;">echo</span> hello from a pipeline | nb add
+<pre class="src src-sh"><span style="color: #e7a06f; font-weight: bold;">echo</span> hello from a pipeline | nb add
 </pre>
 </div>
 
@@ -156,7 +156,7 @@ Added: [3] 20231129111327.org
 
 
 
-<figure id="org86af4e5">
+<figure id="org1f85fc1">
 <img src="../images/posts/2023_12_01_nb/add_3.png" alt="add_3.png" width="900px">
 
 </figure>
@@ -178,7 +178,7 @@ the note.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">nb add <span style="color: #df9080;">"This is the content of the note"</span> --title <span style="color: #df9080;">"A Note With a Title"</span>
+<pre class="src src-sh">nb add <span style="color: #ffa21f;">"This is the content of the note"</span> --title <span style="color: #ffa21f;">"A Note With a Title"</span>
 </pre>
 </div>
 
@@ -193,7 +193,7 @@ in the notes list, the title is displayed instead of the file name.
 </p>
 
 
-<figure id="orgd3ba095">
+<figure id="org0d5baab">
 <img src="../images/posts/2023_12_01_nb/add_with_title.png" alt="add_with_title.png" width="900px">
 
 </figure>
@@ -208,7 +208,7 @@ in the notes list, the title is displayed instead of the file name.
 </p>
 
 
-<figure id="orgd9b8033">
+<figure id="org6320bc2">
 <img src="../images/posts/2023_12_01_nb/tags_1.png" alt="tags_1.png" width="900px">
 
 </figure>
@@ -218,7 +218,7 @@ This will create a file with two tags in it: <code>#notes</code> and <code>#exam
 </p>
 
 
-<figure id="org52f3b8a">
+<figure id="org009b289">
 <img src="../images/posts/2023_12_01_nb/tags_2.png" alt="tags_2.png" width="900px">
 
 </figure>
@@ -229,7 +229,7 @@ passing the <code>--tags</code> flag to <code>nb</code>.
 </p>
 
 
-<figure id="org0051e4a">
+<figure id="orgc0fc5e3">
 <img src="../images/posts/2023_12_01_nb/tags_3.png" alt="tags_3.png" width="900px">
 
 </figure>
@@ -262,7 +262,7 @@ the name or id of the note.
 </p>
 
 
-<figure id="org78ccf1c">
+<figure id="orge53deb5">
 <img src="../images/posts/2023_12_01_nb/show_0.png" alt="show_0.png" width="900px">
 
 </figure>
@@ -272,7 +272,7 @@ After hitting enter, a command line content viewer opens up.
 </p>
 
 
-<figure id="orgccb0c3d">
+<figure id="orga6ac626">
 <img src="../images/posts/2023_12_01_nb/show_1.png" alt="show_1.png" width="900px">
 
 </figure>
@@ -286,7 +286,7 @@ To have the note just printed to stdout, you can add the <code>--print</code> fl
 </p>
 
 
-<figure id="org258b46c">
+<figure id="org90509c3">
 <img src="../images/posts/2023_12_01_nb/show_2.png" alt="show_2.png" width="900px">
 
 </figure>
@@ -298,7 +298,7 @@ a note with a title:
 </p>
 
 
-<figure id="org7484ba2">
+<figure id="org96af67c">
 <img src="../images/posts/2023_12_01_nb/show_3.png" alt="show_3.png" width="900px">
 
 </figure>
@@ -318,7 +318,7 @@ will show the first few lines of the item.
 </p>
 
 
-<figure id="org796d7cd">
+<figure id="orgaaf4d91">
 <img src="../images/posts/2023_12_01_nb/excerpt.png" alt="excerpt.png" width="900px">
 
 </figure>
@@ -331,7 +331,7 @@ url will be opened in your web browser (more on that in <a href="#org8b194c3">bo
 </p>
 
 
-<figure id="org3f7dcbb">
+<figure id="org44d5939">
 <img src="../images/posts/2023_12_01_nb/edit_1.png" alt="edit_1.png" width="900px">
 
 </figure>
@@ -353,7 +353,7 @@ or <code>nb b</code> for short.
 </p>
 
 
-<figure id="org9396938">
+<figure id="orgb539088">
 <img src="../images/posts/2023_12_01_nb/browser_1.png" alt="browser_1.png" width="700px">
 
 </figure>
@@ -365,7 +365,7 @@ local webserver so you can view your notes in a web browser.
 </p>
 
 
-<figure id="org997596c">
+<figure id="org4d95052">
 <img src="../images/posts/2023_12_01_nb/browser_2.png" alt="browser_2.png" width="900px">
 
 </figure>
@@ -394,7 +394,7 @@ To create a todo, you can use the <code>todos</code> sub command with the <code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">nb todos add <span style="color: #df9080;">'Finish this article'</span>
+<pre class="src src-sh">nb todos add <span style="color: #ffa21f;">'Finish this article'</span>
 </pre>
 </div>
 
@@ -404,7 +404,7 @@ Added: [5] ✔️  20231129140921.todo.md "[ ] Finish this article"
 
 
 
-<figure id="org0b6dfe1">
+<figure id="org660e2ab">
 <img src="../images/posts/2023_12_01_nb/todo_1.png" alt="todo_1.png" width="900px">
 
 </figure>
@@ -415,7 +415,7 @@ todo.
 </p>
 
 
-<figure id="orged95321">
+<figure id="org90249f5">
 <img src="../images/posts/2023_12_01_nb/todo_2.png" alt="todo_2.png" width="900px">
 
 </figure>
@@ -427,7 +427,7 @@ know what they will be up front.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">nb todos add <span style="color: #df9080;">'Learn about todos and tasks'</span> --task <span style="color: #df9080;">'learn about todos'</span> --task <span style="color: #df9080;">'learn about tasks'</span> --task <span style="color: #df9080;">'learn how to complete todos'</span>
+<pre class="src src-sh">nb todos add <span style="color: #ffa21f;">'Learn about todos and tasks'</span> --task <span style="color: #ffa21f;">'learn about todos'</span> --task <span style="color: #ffa21f;">'learn about tasks'</span> --task <span style="color: #ffa21f;">'learn how to complete todos'</span>
 </pre>
 </div>
 
@@ -437,7 +437,7 @@ Added: [6] ✔️  20231129141554.todo.md "[ ] Learn about todos and tasks"
 
 
 
-<figure id="org4fa685b">
+<figure id="org4a585db">
 <img src="../images/posts/2023_12_01_nb/todo_3.png" alt="todo_3.png" width="900px">
 
 </figure>
@@ -449,7 +449,7 @@ tasks if it has any.
 </p>
 
 
-<figure id="orgbb0709f">
+<figure id="orgdced68b">
 <img src="../images/posts/2023_12_01_nb/todo_4.png" alt="todo_4.png" width="900px">
 
 </figure>
@@ -460,7 +460,7 @@ even shorter method.
 </p>
 
 
-<figure id="org6f81c31">
+<figure id="org58fa29a">
 <img src="../images/posts/2023_12_01_nb/todo_5.png" alt="todo_5.png" width="900px">
 
 </figure>
@@ -471,7 +471,7 @@ displayed in the <code>tasks</code> view.
 </p>
 
 
-<figure id="org5ffc00f">
+<figure id="orgd15fff9">
 <img src="../images/posts/2023_12_01_nb/todo_6.png" alt="todo_6.png" width="900px">
 
 </figure>
@@ -481,7 +481,7 @@ Unchecking a task is done with <code>undo</code>.
 </p>
 
 
-<figure id="org749e0d3">
+<figure id="org087825c">
 <img src="../images/posts/2023_12_01_nb/todo_7.png" alt="todo_7.png" width="900px">
 
 </figure>
@@ -494,7 +494,7 @@ into the todo.
 </p>
 
 
-<figure id="org2548bf0">
+<figure id="org75c9a3a">
 <img src="../images/posts/2023_12_01_nb/todo_8.png" alt="todo_8.png" width="900px">
 
 </figure>
@@ -504,7 +504,7 @@ And when running <code>nb edit 6</code>:<sup><a id="fnr.3" class="footref" href=
 </p>
 
 
-<figure id="org799e8e1">
+<figure id="orgf89f91b">
 <img src="../images/posts/2023_12_01_nb/todo_9.png" alt="todo_9.png" width="900px">
 
 </figure>
@@ -534,7 +534,7 @@ for you. e.g. <code>nb https://google.com</code> would bookmark google.
 </p>
 
 
-<figure id="org9bacfff">
+<figure id="orgbe5e8ce">
 <img src="../images/posts/2023_12_01_nb/bk_2.png" alt="bk_2.png" width="900px">
 
 </figure>
@@ -566,7 +566,7 @@ the top center of its output.
 </p>
 
 
-<figure id="org943a1c8">
+<figure id="orgefb37e2">
 <img src="../images/posts/2023_12_01_nb/notebook_1.png" alt="notebook_1.png">
 
 </figure>
@@ -586,7 +586,7 @@ you can prefix the selector with the notebook name and a <code>:</code>.
 </p>
 
 
-<figure id="org6734f26">
+<figure id="orge873511">
 <img src="../images/posts/2023_12_01_nb/notebook_2.png" alt="notebook_2.png">
 
 </figure>
@@ -610,7 +610,7 @@ default.
 </p>
 
 
-<figure id="org7d67993">
+<figure id="org64a3d2b">
 <img src="../images/posts/2023_12_01_nb/folder_1.png" alt="folder_1.png">
 
 </figure>
@@ -623,7 +623,7 @@ the note.
 </p>
 
 
-<figure id="org68f818a">
+<figure id="orgfdeaf1a">
 <img src="../images/posts/2023_12_01_nb/folder_2.png" alt="folder_2.png">
 
 </figure>
@@ -634,7 +634,7 @@ and a <code>/</code>.
 </p>
 
 
-<figure id="org5eff8aa">
+<figure id="orgaeb2cb9">
 <img src="../images/posts/2023_12_01_nb/folder_3.png" alt="folder_3.png">
 
 </figure>
@@ -646,7 +646,7 @@ folder, a note inside a different notebook's nested folder, etc.
 </p>
 
 
-<figure id="org95472c7">
+<figure id="orgf319d86">
 <img src="../images/posts/2023_12_01_nb/folder_4.png" alt="folder_4.png">
 
 </figure>
@@ -685,35 +685,35 @@ the docs:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">search current notebook for "example query"</span>
-nb search <span style="color: #df9080;">"example query"</span>
+<pre class="src src-sh"><span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">search current notebook for "example query"</span>
+nb search <span style="color: #ffa21f;">"example query"</span>
 
-<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">search the notebook "example" for "example query"</span>
-nb search example: <span style="color: #df9080;">"example query"</span>
+<span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">search the notebook "example" for "example query"</span>
+nb search example: <span style="color: #ffa21f;">"example query"</span>
 
-<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">search all unarchived notebooks for "example query" and list matching items</span>
-nb search <span style="color: #df9080;">"example query"</span> --all --list
+<span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">search all unarchived notebooks for "example query" and list matching items</span>
+nb search <span style="color: #ffa21f;">"example query"</span> --all --list
 
-<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">search for "example" AND "demo"</span>
-nb search <span style="color: #df9080;">"example"</span> <span style="color: #df9080;">"demo"</span>
+<span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">search for "example" AND "demo"</span>
+nb search <span style="color: #ffa21f;">"example"</span> <span style="color: #ffa21f;">"demo"</span>
 
-<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">search for "example" AND "demo"</span>
-nb search <span style="color: #df9080;">"example"</span> --and <span style="color: #df9080;">"demo"</span>
+<span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">search for "example" AND "demo"</span>
+nb search <span style="color: #ffa21f;">"example"</span> --and <span style="color: #ffa21f;">"demo"</span>
 
-<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">search with regular expression</span>
-nb search <span style="color: #df9080;">"\d\d\d-\d\d\d\d"</span>
+<span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">search with regular expression</span>
+nb search <span style="color: #ffa21f;">"\d\d\d-\d\d\d\d"</span>
 
-<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">search for items tagged with "#tag1"</span>
+<span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">search for items tagged with "#tag1"</span>
 nb search --tags tag1
 
-<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">search for items tagged with "#tag1" (short version)</span>
+<span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">search for items tagged with "#tag1" (short version)</span>
 nb q -t tag1
 
-<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">search for items tagged with "#tag1" (even shorter version)</span>
-nb q <span style="color: #df9080;">"#tag1"</span>
+<span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">search for items tagged with "#tag1" (even shorter version)</span>
+nb q <span style="color: #ffa21f;">"#tag1"</span>
 
-<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">search in the "example" notebook for "example"</span>
-nb example:q <span style="color: #df9080;">"example"</span>
+<span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">search in the "example" notebook for "example"</span>
+nb example:q <span style="color: #ffa21f;">"example"</span>
 </pre>
 </div>
 </div>

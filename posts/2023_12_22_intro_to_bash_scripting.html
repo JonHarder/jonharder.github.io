@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-12-22 Fri 15:55 -->
+<!-- 2023-12-22 Fri 15:58 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Intro to bash scripting - Terminal Tooling</title>
@@ -104,10 +104,10 @@ features depending on provided conditions.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> true
-<span style="color: #af85ea; font-weight: bold;">then</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> truthy
-<span style="color: #af85ea; font-weight: bold;">fi</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">if</span> true
+<span style="color: #e4b53f; font-weight: bold;">then</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> truthy
+<span style="color: #e4b53f; font-weight: bold;">fi</span>
 </pre>
 </div>
 
@@ -124,12 +124,12 @@ zero results in if following the <code>else</code> branch if one is given.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> false
-<span style="color: #af85ea; font-weight: bold;">then</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> truthy
-<span style="color: #af85ea; font-weight: bold;">else</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> falesy
-<span style="color: #af85ea; font-weight: bold;">fi</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">if</span> false
+<span style="color: #e4b53f; font-weight: bold;">then</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> truthy
+<span style="color: #e4b53f; font-weight: bold;">else</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> falesy
+<span style="color: #e4b53f; font-weight: bold;">fi</span>
 </pre>
 </div>
 
@@ -147,10 +147,10 @@ variable <code>$?</code>.
 
 <div class="org-src-container">
 <pre class="src src-bash">true
-<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">?</span>
+<span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">?</span>
 
 false
-<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">?</span>
+<span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">?</span>
 </pre>
 </div>
 
@@ -166,12 +166,12 @@ branch based on the success or failure of any command.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> grep <span style="color: #df9080;">"foo"</span> ~/Code/k8s-app/backend/main.go
-<span style="color: #af85ea; font-weight: bold;">then</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"found foo"</span>
-<span style="color: #af85ea; font-weight: bold;">else</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"couldn't find foo"</span>
-<span style="color: #af85ea; font-weight: bold;">fi</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">if</span> grep <span style="color: #ffa21f;">"foo"</span> ~/Code/k8s-app/backend/main.go
+<span style="color: #e4b53f; font-weight: bold;">then</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"found foo"</span>
+<span style="color: #e4b53f; font-weight: bold;">else</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"couldn't find foo"</span>
+<span style="color: #e4b53f; font-weight: bold;">fi</span>
 </pre>
 </div>
 
@@ -187,12 +187,12 @@ probably what you're expecting.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> grep <span style="color: #df9080;">"http"</span> ~/Code/k8s-app/backend/main.go
-<span style="color: #af85ea; font-weight: bold;">then</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Found it!"</span>
-<span style="color: #af85ea; font-weight: bold;">else</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Couldn't find it."</span>
-<span style="color: #af85ea; font-weight: bold;">fi</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">if</span> grep <span style="color: #ffa21f;">"http"</span> ~/Code/k8s-app/backend/main.go
+<span style="color: #e4b53f; font-weight: bold;">then</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"Found it!"</span>
+<span style="color: #e4b53f; font-weight: bold;">else</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"Couldn't find it."</span>
+<span style="color: #e4b53f; font-weight: bold;">fi</span>
 </pre>
 </div>
 
@@ -221,6 +221,7 @@ Sometimes this could be what you want, but often it's not.
 What we need to do here is to test the exit status only, but not print
 anything that the command itself would otherwise output. This can be
 accomplished by redirecting grep's output to a black hole, <a href="https://www.digitalocean.com/community/tutorials/dev-null-in-linux">/dev/null</a>.
+This will be covered later on when we cover <a href="#orge011cfa">output redirection</a>
 </p>
 </div>
 </div>
@@ -234,10 +235,10 @@ use the keyword <code>do</code> before the loop body, and <code>done</code> to c
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">for</span> x<span style="color: #af85ea; font-weight: bold;"> in</span> 1 2 3 4
-<span style="color: #af85ea; font-weight: bold;">do</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">x</span>
-<span style="color: #af85ea; font-weight: bold;">done</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">for</span> x<span style="color: #e4b53f; font-weight: bold;"> in</span> 1 2 3 4
+<span style="color: #e4b53f; font-weight: bold;">do</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">x</span>
+<span style="color: #e4b53f; font-weight: bold;">done</span>
 </pre>
 </div>
 
@@ -250,10 +251,10 @@ use the keyword <code>do</code> before the loop body, and <code>done</code> to c
 
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">for</span> file<span style="color: #af85ea; font-weight: bold;"> in</span> ~/Code/k8s-app/backend/*.go
-<span style="color: #af85ea; font-weight: bold;">do</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">file</span>
-<span style="color: #af85ea; font-weight: bold;">done</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">for</span> file<span style="color: #e4b53f; font-weight: bold;"> in</span> ~/Code/k8s-app/backend/*.go
+<span style="color: #e4b53f; font-weight: bold;">do</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">file</span>
+<span style="color: #e4b53f; font-weight: bold;">done</span>
 </pre>
 </div>
 
@@ -273,12 +274,12 @@ doing:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #6a9fff;">x</span>=5
-<span style="color: #af85ea; font-weight: bold;">while</span> [ $<span style="color: #6a9fff;">x</span> -gt 0 ]
-<span style="color: #af85ea; font-weight: bold;">do</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">x</span>
-    <span style="color: #6a9fff;">x</span>=$(( $<span style="color: #6a9fff;">x</span> - 1 ))
-<span style="color: #af85ea; font-weight: bold;">done</span>
+<pre class="src src-bash"><span style="color: #6fcad0;">x</span>=5
+<span style="color: #e4b53f; font-weight: bold;">while</span> [ $<span style="color: #6fcad0;">x</span> -gt 0 ]
+<span style="color: #e4b53f; font-weight: bold;">do</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">x</span>
+    <span style="color: #6fcad0;">x</span>=$(( $<span style="color: #6fcad0;">x</span> - 1 ))
+<span style="color: #e4b53f; font-weight: bold;">done</span>
 </pre>
 </div>
 
@@ -302,18 +303,18 @@ concepts of most switch statements.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #6a9fff;">x</span>=5
-<span style="color: #af85ea; font-weight: bold;">case</span> $<span style="color: #6a9fff;">x</span><span style="color: #af85ea; font-weight: bold;"> in</span>
+<pre class="src src-bash"><span style="color: #6fcad0;">x</span>=5
+<span style="color: #e4b53f; font-weight: bold;">case</span> $<span style="color: #6fcad0;">x</span><span style="color: #e4b53f; font-weight: bold;"> in</span>
 1)
-  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"$x = 1"</span>
+  <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"$x = 1"</span>
   ;;
 2 | 3 | 4 | 5)
-  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"$x is between 2 and 5"</span>
+  <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"$x is between 2 and 5"</span>
   ;;
 *)
-  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"$x is something else"</span>
+  <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"$x is something else"</span>
   ;;
-<span style="color: #af85ea; font-weight: bold;">esac</span>
+<span style="color: #e4b53f; font-weight: bold;">esac</span>
 
 </pre>
 </div>
@@ -344,12 +345,12 @@ so in this case the results grep prints are never shown.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> grep <span style="color: #df9080;">"http"</span> ~/Code/k8s-app/backend/main.go &gt; /dev/null
-<span style="color: #af85ea; font-weight: bold;">then</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"found it"</span>
-<span style="color: #af85ea; font-weight: bold;">else</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"couldn't find it"</span>
-<span style="color: #af85ea; font-weight: bold;">fi</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">if</span> grep <span style="color: #ffa21f;">"http"</span> ~/Code/k8s-app/backend/main.go &gt; /dev/null
+<span style="color: #e4b53f; font-weight: bold;">then</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"found it"</span>
+<span style="color: #e4b53f; font-weight: bold;">else</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"couldn't find it"</span>
+<span style="color: #e4b53f; font-weight: bold;">fi</span>
 </pre>
 </div>
 
@@ -376,12 +377,12 @@ supports <code>-eq</code>, <code>-ne</code>, <code>-gt</code>, <code>-ge</code>,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if </span><span style="color: #e580e0; font-weight: bold;">test</span> 4 -gt 3
-<span style="color: #af85ea; font-weight: bold;">then</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Four is greater than three"</span>
-<span style="color: #af85ea; font-weight: bold;">else</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Four is NOT greater than three"</span>
-<span style="color: #af85ea; font-weight: bold;">fi</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">if </span><span style="color: #e7a06f; font-weight: bold;">test</span> 4 -gt 3
+<span style="color: #e4b53f; font-weight: bold;">then</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"Four is greater than three"</span>
+<span style="color: #e4b53f; font-weight: bold;">else</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"Four is NOT greater than three"</span>
+<span style="color: #e4b53f; font-weight: bold;">fi</span>
 </pre>
 </div>
 
@@ -396,12 +397,12 @@ To make things a little nicer to look at, bash provides an alias of
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> [ 4 -gt 3 ]
-<span style="color: #af85ea; font-weight: bold;">then</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Four is greater than three"</span>
-<span style="color: #af85ea; font-weight: bold;">else</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Four is NOT greater than three"</span>
-<span style="color: #af85ea; font-weight: bold;">fi</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">if</span> [ 4 -gt 3 ]
+<span style="color: #e4b53f; font-weight: bold;">then</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"Four is greater than three"</span>
+<span style="color: #e4b53f; font-weight: bold;">else</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"Four is NOT greater than three"</span>
+<span style="color: #e4b53f; font-weight: bold;">fi</span>
 </pre>
 </div>
 
@@ -424,12 +425,12 @@ You can test for different file system conditions using test as well.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> [ -e ~/Code/k8s-app/backend/main.go ]
-<span style="color: #af85ea; font-weight: bold;">then</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"file exists!"</span>
-<span style="color: #af85ea; font-weight: bold;">else</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"File not found"</span>
-<span style="color: #af85ea; font-weight: bold;">fi</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">if</span> [ -e ~/Code/k8s-app/backend/main.go ]
+<span style="color: #e4b53f; font-weight: bold;">then</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"file exists!"</span>
+<span style="color: #e4b53f; font-weight: bold;">else</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"File not found"</span>
+<span style="color: #e4b53f; font-weight: bold;">fi</span>
 </pre>
 </div>
 
@@ -439,12 +440,12 @@ file exists!
 
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> [ -d ~/Code/k8s-app/backend/ ]
-<span style="color: #af85ea; font-weight: bold;">then</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"file exists, and it's a directory"</span>
-<span style="color: #af85ea; font-weight: bold;">else</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"either the file doesn't exist, or it does, but it's not a directory"</span>
-<span style="color: #af85ea; font-weight: bold;">fi</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">if</span> [ -d ~/Code/k8s-app/backend/ ]
+<span style="color: #e4b53f; font-weight: bold;">then</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"file exists, and it's a directory"</span>
+<span style="color: #e4b53f; font-weight: bold;">else</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"either the file doesn't exist, or it does, but it's not a directory"</span>
+<span style="color: #e4b53f; font-weight: bold;">fi</span>
 </pre>
 </div>
 
@@ -454,12 +455,12 @@ file exists, and it's a directory
 
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> [ -r ~/Code/k8s-app/backend/main.go ]
-<span style="color: #af85ea; font-weight: bold;">then</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"file exists and it has read permissions"</span>
-<span style="color: #af85ea; font-weight: bold;">else</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"file may or may not exists, but if it does, it can't be read"</span>
-<span style="color: #af85ea; font-weight: bold;">fi</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">if</span> [ -r ~/Code/k8s-app/backend/main.go ]
+<span style="color: #e4b53f; font-weight: bold;">then</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"file exists and it has read permissions"</span>
+<span style="color: #e4b53f; font-weight: bold;">else</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"file may or may not exists, but if it does, it can't be read"</span>
+<span style="color: #e4b53f; font-weight: bold;">fi</span>
 </pre>
 </div>
 
@@ -483,8 +484,8 @@ to retrieve it, you must reference the variable with the <code>$</code> symbol.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #6a9fff;">my_var</span>=5
-<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">my_var</span>
+<pre class="src src-bash"><span style="color: #6fcad0;">my_var</span>=5
+<span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">my_var</span>
 </pre>
 </div>
 
@@ -499,8 +500,8 @@ compute the result.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #6a9fff;">my_var</span>=$(ls -l ~/Code/k8s-app/backend | tail -n1)
-<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">my_var</span>
+<pre class="src src-bash"><span style="color: #6fcad0;">my_var</span>=$(ls -l ~/Code/k8s-app/backend | tail -n1)
+<span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">my_var</span>
 </pre>
 </div>
 
@@ -515,8 +516,8 @@ interpolation.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #6a9fff;">my_name</span>=<span style="color: #df9080;">"Jon"</span>
-<span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Hello, $my_name"</span>
+<pre class="src src-bash"><span style="color: #6fcad0;">my_name</span>=<span style="color: #ffa21f;">"Jon"</span>
+<span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"Hello, $my_name"</span>
 </pre>
 </div>
 
@@ -531,8 +532,8 @@ need to use <code>${...}</code> instead of <code>$</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #6a9fff;">animal</span>=cat
-<span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"I like ${animal}s"</span>
+<pre class="src src-bash"><span style="color: #6fcad0;">animal</span>=cat
+<span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"I like ${animal}s"</span>
 </pre>
 </div>
 
@@ -548,8 +549,8 @@ perform arithmetic operations by itself.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #6a9fff;">a</span>=4+8
-<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">a</span>
+<pre class="src src-bash"><span style="color: #6fcad0;">a</span>=4+8
+<span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">a</span>
 </pre>
 </div>
 
@@ -572,8 +573,8 @@ Bash also supports arrays.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #6a9fff;">numbers</span>=(5 2 6 7)
-<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">numbers</span>
+<pre class="src src-bash"><span style="color: #6fcad0;">numbers</span>=(5 2 6 7)
+<span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">numbers</span>
 </pre>
 </div>
 
@@ -594,9 +595,9 @@ access all the elements by using <code>@</code> as the array index.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #6a9fff;">numbers</span>=(5 2 6 7)
-<span style="color: #e580e0; font-weight: bold;">echo</span> ${<span style="color: #6a9fff;">numbers</span>[2]}
-<span style="color: #e580e0; font-weight: bold;">echo</span> ${<span style="color: #6a9fff;">numbers</span>[@]}
+<pre class="src src-bash"><span style="color: #6fcad0;">numbers</span>=(5 2 6 7)
+<span style="color: #e7a06f; font-weight: bold;">echo</span> ${<span style="color: #6fcad0;">numbers</span>[2]}
+<span style="color: #e7a06f; font-weight: bold;">echo</span> ${<span style="color: #6fcad0;">numbers</span>[@]}
 </pre>
 </div>
 
@@ -611,10 +612,10 @@ The latter can be used in a for loop to handle every element.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #6a9fff;">my_array</span>=(thing1 thing2 <span style="color: #df9080;">"thing three"</span>)
-<span style="color: #af85ea; font-weight: bold;">for</span> x<span style="color: #af85ea; font-weight: bold;"> in</span> <span style="color: #df9080;">"${my_array[@]}"</span>; <span style="color: #af85ea; font-weight: bold;">do</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"x = $x"</span>
-<span style="color: #af85ea; font-weight: bold;">done</span>
+<pre class="src src-bash"><span style="color: #6fcad0;">my_array</span>=(thing1 thing2 <span style="color: #ffa21f;">"thing three"</span>)
+<span style="color: #e4b53f; font-weight: bold;">for</span> x<span style="color: #e4b53f; font-weight: bold;"> in</span> <span style="color: #ffa21f;">"${my_array[@]}"</span>; <span style="color: #e4b53f; font-weight: bold;">do</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"x = $x"</span>
+<span style="color: #e4b53f; font-weight: bold;">done</span>
 </pre>
 </div>
 
@@ -638,13 +639,13 @@ what happens.
 <h2 id="org7485e15">Shell arithmetic</h2>
 <div class="outline-text-2" id="text-org7485e15">
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #6a9fff;">a</span>=$((4+8))
-<span style="color: #6a9fff;">b</span>=$((4&lt;3))
-<span style="color: #6a9fff;">c</span>=$((4&gt;3))
+<pre class="src src-bash"><span style="color: #6fcad0;">a</span>=$((4+8))
+<span style="color: #6fcad0;">b</span>=$((4&lt;3))
+<span style="color: #6fcad0;">c</span>=$((4&gt;3))
 
-<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">a</span>
-<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">b</span>
-<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">c</span>
+<span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">a</span>
+<span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">b</span>
+<span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">c</span>
 </pre>
 </div>
 
@@ -661,10 +662,10 @@ want.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #6a9fff;">x</span>=6
+<pre class="src src-bash"><span style="color: #6fcad0;">x</span>=6
 
-<span style="color: #e580e0; font-weight: bold;">echo</span> $((x*8))
-<span style="color: #e580e0; font-weight: bold;">echo</span> $((4&gt;3))
+<span style="color: #e7a06f; font-weight: bold;">echo</span> $((x*8))
+<span style="color: #e7a06f; font-weight: bold;">echo</span> $((4&gt;3))
 </pre>
 </div>
 
@@ -679,12 +680,12 @@ You can combine this with <code>if</code> for more concise conditions&#x2026;
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> $((4&gt;3))
-<span style="color: #af85ea; font-weight: bold;">then</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"four is greater than three"</span>
-<span style="color: #af85ea; font-weight: bold;">else</span>
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"four is not greater than three"</span>
-<span style="color: #af85ea; font-weight: bold;">fi</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">if</span> $((4&gt;3))
+<span style="color: #e4b53f; font-weight: bold;">then</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"four is greater than three"</span>
+<span style="color: #e4b53f; font-weight: bold;">else</span>
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"four is not greater than three"</span>
+<span style="color: #e4b53f; font-weight: bold;">fi</span>
 </pre>
 </div>
 
@@ -700,12 +701,12 @@ your shell.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> [ $((4&gt;3)) ]
-<span style="color: #af85ea; font-weight: bold;">then</span>
-     <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"four is greater than three"</span>
-<span style="color: #af85ea; font-weight: bold;">else</span>
-     <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"four is not greater than three"</span>
-<span style="color: #af85ea; font-weight: bold;">fi</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">if</span> [ $((4&gt;3)) ]
+<span style="color: #e4b53f; font-weight: bold;">then</span>
+     <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"four is greater than three"</span>
+<span style="color: #e4b53f; font-weight: bold;">else</span>
+     <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"four is not greater than three"</span>
+<span style="color: #e4b53f; font-weight: bold;">fi</span>
 </pre>
 </div>
 
@@ -728,8 +729,8 @@ oddities.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">my_fun</span>() {
-  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"hi"</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">function</span> <span style="color: #6fd560;">my_fun</span>() {
+  <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"hi"</span>
 }
 
 my_fun
@@ -751,9 +752,9 @@ to define parameters to your function. And you'd be wrong.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">THIS DOES NOT COMPILE!!!</span>
-<span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">my_fun</span>(a, b) {
-  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"$a $b"</span>
+<pre class="src src-bash"><span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">THIS DOES NOT COMPILE!!!</span>
+<span style="color: #e4b53f; font-weight: bold;">function</span> <span style="color: #6fd560;">my_fun</span>(a, b) {
+  <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"$a $b"</span>
 }
 </pre>
 </div>
@@ -763,9 +764,9 @@ Instead, you need to refer to the arguments by their positional index: <code>$1<
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">my_fun</span>() {
-  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"arg 1 = $1"</span>
-  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"arg 2 = $2"</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">function</span> <span style="color: #6fd560;">my_fun</span>() {
+  <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"arg 1 = $1"</span>
+  <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"arg 2 = $2"</span>
 }
 
 my_fun 1 2
@@ -788,17 +789,17 @@ using the keyword <code>local</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #6a9fff;">x</span>=3
-<span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"before my_fun, x=$x"</span>
+<pre class="src src-bash"><span style="color: #6fcad0;">x</span>=3
+<span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"before my_fun, x=$x"</span>
 
-<span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">my_fun</span>() {
-  local <span style="color: #6a9fff;">x</span>=5
-  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"in my_fun, x=$x"</span>
+<span style="color: #e4b53f; font-weight: bold;">function</span> <span style="color: #6fd560;">my_fun</span>() {
+  local <span style="color: #6fcad0;">x</span>=5
+  <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"in my_fun, x=$x"</span>
 }
 
 my_fun
 
-<span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"after my_fun, x=$x"</span>
+<span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"after my_fun, x=$x"</span>
 </pre>
 </div>
 
@@ -820,12 +821,12 @@ else, you can use standard output and capture that value in a subshell.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">my_fun</span>() {
-    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"$1 times $2 is $(($1 * $2))"</span>
+<pre class="src src-bash"><span style="color: #e4b53f; font-weight: bold;">function</span> <span style="color: #6fd560;">my_fun</span>() {
+    <span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"$1 times $2 is $(($1 * $2))"</span>
 }
 
-<span style="color: #6a9fff;">result</span>=$(my_fun 3 6)
-<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">result</span>
+<span style="color: #6fcad0;">result</span>=$(my_fun 3 6)
+<span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">result</span>
 </pre>
 </div>
 

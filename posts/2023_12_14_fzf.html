@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-12-22 Fri 15:55 -->
+<!-- 2023-12-22 Fri 15:58 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>fzf - Terminal Tooling</title>
@@ -29,7 +29,7 @@ all sub-directories.
 </p>
 
 
-<figure id="orgbfea3e4">
+<figure id="orgcc17b0c">
 <img src="../images/posts/2023_12_14_fzf/1_fzf_overview.gif" alt="1_fzf_overview.gif">
 
 </figure>
@@ -66,7 +66,7 @@ the <code>head</code> of it.
 </p>
 
 
-<figure id="org3a2952a">
+<figure id="org143a7fd">
 <img src="../images/posts/2023_12_14_fzf/2_head.gif" alt="2_head.gif">
 
 </figure>
@@ -83,7 +83,7 @@ in your editor of choice.
 </p>
 
 
-<figure id="org5ad6cb0">
+<figure id="org7c8d3d1">
 <img src="../images/posts/2023_12_14_fzf/3_edit.gif" alt="3_edit.gif">
 
 </figure>
@@ -100,7 +100,7 @@ general purpose fuzzy filter.
 </p>
 
 
-<figure id="org76903e4">
+<figure id="org959b665">
 <img src="../images/posts/2023_12_14_fzf/4_git_branch.gif" alt="4_git_branch.gif">
 
 </figure>
@@ -112,7 +112,7 @@ will give us more context to filter on:
 </p>
 
 
-<figure id="org3f239fd">
+<figure id="org1a0c7be">
 <img src="../images/posts/2023_12_14_fzf/5_git_branch_v.gif" alt="5_git_branch_v.gif">
 
 </figure>
@@ -123,11 +123,11 @@ This can be supercharged by taking the branch selection and running
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">fbr</span> {
+<pre class="src src-sh"><span style="color: #e4b53f; font-weight: bold;">function</span> <span style="color: #6fd560;">fbr</span> {
   local branches branch
-  <span style="color: #6a9fff;">branches</span>=$(git --no-pager branch -vv)
-  <span style="color: #6a9fff;">branch</span>=$(<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">branches</span> | fzf)
-  git checkout <span style="color: #df9080;">"$(echo $branch | awk '{print $1}' | sed 's/.* //')"</span>
+  <span style="color: #6fcad0;">branches</span>=$(git --no-pager branch -vv)
+  <span style="color: #6fcad0;">branch</span>=$(<span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">branches</span> | fzf)
+  git checkout <span style="color: #ffa21f;">"$(echo $branch | awk '{print $1}' | sed 's/.* //')"</span>
 }
 </pre>
 </div>
@@ -172,7 +172,7 @@ We can do better. Using find we can list all of the directories, recursively:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">find . -type d ! <span style="color: #df9080;">\(</span> -path <span style="color: #df9080;">'*/.git/*'</span> -or -path <span style="color: #df9080;">'*/node_modules/*'</span> <span style="color: #df9080;">\)</span>
+<pre class="src src-sh">find . -type d ! <span style="color: #ffa21f;">\(</span> -path <span style="color: #ffa21f;">'*/.git/*'</span> -or -path <span style="color: #ffa21f;">'*/node_modules/*'</span> <span style="color: #ffa21f;">\)</span>
 </pre>
 </div>
 
@@ -196,7 +196,7 @@ the minimum necessary key to find it:<sup><a id="fnr.2" class="footref" href="#f
 </p>
 
 
-<figure id="orge5e92af">
+<figure id="org9debd60">
 <img src="../images/posts/2023_12_14_fzf/6_cd.gif" alt="6_cd.gif">
 
 </figure>
@@ -214,7 +214,7 @@ but if you have it available on your system, <a href="https://github.com/sharkdp
 </p>
 
 
-<figure id="org8d4af7f">
+<figure id="org9d22805">
 <img src="../images/posts/2023_12_14_fzf/7_preview.gif" alt="7_preview.gif">
 
 </figure>
@@ -230,7 +230,7 @@ to standard out.
 </p>
 
 
-<figure id="orgb51be54">
+<figure id="org2cdf814">
 <img src="../images/posts/2023_12_14_fzf/8_multi.gif" alt="8_multi.gif">
 
 </figure>
@@ -245,23 +245,23 @@ list of all available brew packages:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">(F)zf (B)rew (I)nstall</span>
-<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">Takes input as a filter for brew search,</span>
-<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">and installs all packages selected in a</span>
-<span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">loop.</span>
-<span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">fbi</span> {
-    local <span style="color: #6a9fff;">packages</span>=$(brew search <span style="color: #df9080;">"$@"</span> | fzf -m)
-    <span style="color: #af85ea; font-weight: bold;">if</span> [[ $<span style="color: #6a9fff;">packages</span> ]]; <span style="color: #af85ea; font-weight: bold;">then</span>
-        <span style="color: #af85ea; font-weight: bold;">for</span> $<span style="color: #6a9fff;">package</span><span style="color: #af85ea; font-weight: bold;"> in</span> $(<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">packages</span>); <span style="color: #af85ea; font-weight: bold;">do</span>
-            brew install $<span style="color: #6a9fff;">package</span>
-        <span style="color: #af85ea; font-weight: bold;">done</span>
-    <span style="color: #af85ea; font-weight: bold;">fi</span>
+<pre class="src src-sh"><span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">(F)zf (B)rew (I)nstall</span>
+<span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">Takes input as a filter for brew search,</span>
+<span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">and installs all packages selected in a</span>
+<span style="color: #eac29f; font-style: italic;"># </span><span style="color: #eac29f; font-style: italic;">loop.</span>
+<span style="color: #e4b53f; font-weight: bold;">function</span> <span style="color: #6fd560;">fbi</span> {
+    local <span style="color: #6fcad0;">packages</span>=$(brew search <span style="color: #ffa21f;">"$@"</span> | fzf -m)
+    <span style="color: #e4b53f; font-weight: bold;">if</span> [[ $<span style="color: #6fcad0;">packages</span> ]]; <span style="color: #e4b53f; font-weight: bold;">then</span>
+        <span style="color: #e4b53f; font-weight: bold;">for</span> $<span style="color: #6fcad0;">package</span><span style="color: #e4b53f; font-weight: bold;"> in</span> $(<span style="color: #e7a06f; font-weight: bold;">echo</span> $<span style="color: #6fcad0;">packages</span>); <span style="color: #e4b53f; font-weight: bold;">do</span>
+            brew install $<span style="color: #6fcad0;">package</span>
+        <span style="color: #e4b53f; font-weight: bold;">done</span>
+    <span style="color: #e4b53f; font-weight: bold;">fi</span>
 }
 </pre>
 </div>
 
 
-<figure id="org9e9ac2e">
+<figure id="org93696a5">
 <img src="../images/posts/2023_12_14_fzf/9_brew_multi.gif" alt="9_brew_multi.gif">
 
 </figure>
@@ -285,7 +285,7 @@ why the prompt looks different).
 </p>
 
 
-<figure id="org3c2d3ea">
+<figure id="org131f2a6">
 <img src="../images/posts/2023_12_14_fzf/10_shell_integration.gif" alt="10_shell_integration.gif">
 
 </figure>
@@ -339,7 +339,7 @@ treasure trove of ideas and cool goodies.
 In case you want to copy and paste, the command was:
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #e580e0; font-weight: bold;">cd</span> (find . -type d ! <span style="color: #df9080;">\(</span> -path <span style="color: #df9080;">'*/.git/*'</span> -or -path <span style="color: #df9080;">'*/.node_modules/*'</span> <span style="color: #df9080;">\)</span> | fzf)
+<pre class="src src-sh"><span style="color: #e7a06f; font-weight: bold;">cd</span> (find . -type d ! <span style="color: #ffa21f;">\(</span> -path <span style="color: #ffa21f;">'*/.git/*'</span> -or -path <span style="color: #ffa21f;">'*/.node_modules/*'</span> <span style="color: #ffa21f;">\)</span> | fzf)
 </pre>
 </div>
 
