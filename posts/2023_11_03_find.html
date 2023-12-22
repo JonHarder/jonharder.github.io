@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-12-15 Fri 14:44 -->
+<!-- 2023-12-22 Fri 15:52 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>find - [[file:../index.org][Terminal Tooling]]</title>
@@ -304,7 +304,7 @@ find when your exec command ends and the next primary begins.</li>
 </ol>
 
 <div class="org-src-container">
-<pre class="src src-sh">find . -type f -name <span style="color: #df9080;">'*.md'</span> -exec echo <span style="color: #d369af;">{}</span> <span style="color: #df9080;">\;</span>
+<pre class="src src-sh">find . -type f -name <span style="color: #df9080;">'*.md'</span> -exec echo {} <span style="color: #df9080;">\;</span>
 </pre>
 </div>
 
@@ -323,7 +323,7 @@ to delete a handful of files but wanted to confirm before they get deleted
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">find . -empty -ok rm <span style="color: #d369af;">{}</span> <span style="color: #df9080;">\;</span>
+<pre class="src src-sh">find . -empty -ok rm {} <span style="color: #df9080;">\;</span>
 </pre>
 </div>
 

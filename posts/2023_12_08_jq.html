@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-12-15 Fri 14:44 -->
+<!-- 2023-12-22 Fri 15:52 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>jq - Terminal Tooling</title>
@@ -72,31 +72,31 @@ Jq with no additional arguments will parse, format, and highlight incoming json:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"Instances"</span>: <span style="color: #35afbf;">[</span>
-    <span style="color: #af85ea;">{</span>
-      <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"sdb3871osdhv89044"</span>,
-      <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server0"</span>,
-      <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>
-    <span style="color: #af85ea;">}</span>,
-    <span style="color: #af85ea;">{</span>
-      <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"abc123eassa12874"</span>,
-      <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server1"</span>,
-      <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>
-    <span style="color: #af85ea;">}</span>,
-    <span style="color: #af85ea;">{</span>
-      <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"aes54iasg41226c"</span>,
-      <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server2"</span>,
-      <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>
-    <span style="color: #af85ea;">}</span>,
-    <span style="color: #af85ea;">{</span>
-      <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
-      <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
-      <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>
-    <span style="color: #af85ea;">}</span>
-  <span style="color: #35afbf;">]</span>,
-  <span style="color: #af85ea; font-weight: bold;">"ResponseCode"</span>: <span style="color: #d369af;">200</span>
-<span style="color: #d369af;">}</span>
+<pre class="src src-json">{
+  "Instances": [
+    {
+      "InstanceId": "sdb3871osdhv89044",
+      "Name": "server0",
+      "CreationDate": "2021-06-20T03:50:34"
+    },
+    {
+      "InstanceId": "abc123eassa12874",
+      "Name": "server1",
+      "CreationDate": "2023-11-01T15:13:06"
+    },
+    {
+      "InstanceId": "aes54iasg41226c",
+      "Name": "server2",
+      "CreationDate": "2023-11-02T12:07:54"
+    },
+    {
+      "InstanceId": "flng45799saooh987",
+      "Name": "server3",
+      "CreationDate": "2023-11-06T21:45:27"
+    }
+  ],
+  "ResponseCode": 200
+}
 </pre>
 </div>
 </div>
@@ -119,28 +119,28 @@ Basic filters can be applied in order to grab specific fields from your input:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #d369af;">[</span>
-  <span style="color: #35afbf;">{</span>
-    <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"sdb3871osdhv89044"</span>,
-    <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server0"</span>,
-    <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>
-  <span style="color: #35afbf;">}</span>,
-  <span style="color: #35afbf;">{</span>
-    <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"abc123eassa12874"</span>,
-    <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server1"</span>,
-    <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>
-  <span style="color: #35afbf;">}</span>,
-  <span style="color: #35afbf;">{</span>
-    <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"aes54iasg41226c"</span>,
-    <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server2"</span>,
-    <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>
-  <span style="color: #35afbf;">}</span>,
-  <span style="color: #35afbf;">{</span>
-    <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
-    <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
-    <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>
-  <span style="color: #35afbf;">}</span>
-<span style="color: #d369af;">]</span>
+<pre class="src src-json">[
+  {
+    "InstanceId": "sdb3871osdhv89044",
+    "Name": "server0",
+    "CreationDate": "2021-06-20T03:50:34"
+  },
+  {
+    "InstanceId": "abc123eassa12874",
+    "Name": "server1",
+    "CreationDate": "2023-11-01T15:13:06"
+  },
+  {
+    "InstanceId": "aes54iasg41226c",
+    "Name": "server2",
+    "CreationDate": "2023-11-02T12:07:54"
+  },
+  {
+    "InstanceId": "flng45799saooh987",
+    "Name": "server3",
+    "CreationDate": "2023-11-06T21:45:27"
+  }
+]
 </pre>
 </div>
 
@@ -154,7 +154,7 @@ You can nest filters to retrieve deeply nested data from your input too:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #df9080;">"server1"</span>
+<pre class="src src-json">"server1"
 </pre>
 </div>
 
@@ -170,10 +170,10 @@ your filters in an object:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server1"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>
-<span style="color: #d369af;">}</span>
+<pre class="src src-json">{
+  "ServerName": "server1",
+  "Created": "2023-11-01T15:13:06"
+}
 </pre>
 </div>
 
@@ -188,10 +188,10 @@ You can link multiple filters and transformations through the pipe <code>|</code
 </div>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server1"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>
-<span style="color: #d369af;">}</span>
+<pre class="src src-json">{
+  "ServerName": "server1",
+  "Created": "2023-11-01T15:13:06"
+}
 </pre>
 </div>
 
@@ -206,22 +206,22 @@ over <i>all</i> instances by omitting the offset to the array access.
 </div>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server0"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server1"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server2"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server3"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>
-<span style="color: #d369af;">}</span>
+<pre class="src src-json">{
+  "ServerName": "server0",
+  "Created": "2021-06-20T03:50:34"
+}
+{
+  "ServerName": "server1",
+  "Created": "2023-11-01T15:13:06"
+}
+{
+  "ServerName": "server2",
+  "Created": "2023-11-02T12:07:54"
+}
+{
+  "ServerName": "server3",
+  "Created": "2023-11-06T21:45:27"
+}
 </pre>
 </div>
 
@@ -243,24 +243,24 @@ an array, similar to how we created the object above.
 </div>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #d369af;">[</span>
-  <span style="color: #35afbf;">{</span>
-    <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server0"</span>,
-    <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>
-  <span style="color: #35afbf;">}</span>,
-  <span style="color: #35afbf;">{</span>
-    <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server1"</span>,
-    <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>
-  <span style="color: #35afbf;">}</span>,
-  <span style="color: #35afbf;">{</span>
-    <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server2"</span>,
-    <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>
-  <span style="color: #35afbf;">}</span>,
-  <span style="color: #35afbf;">{</span>
-    <span style="color: #af85ea; font-weight: bold;">"ServerName"</span>: <span style="color: #df9080;">"server3"</span>,
-    <span style="color: #af85ea; font-weight: bold;">"Created"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>
-  <span style="color: #35afbf;">}</span>
-<span style="color: #d369af;">]</span>
+<pre class="src src-json">[
+  {
+    "ServerName": "server0",
+    "Created": "2021-06-20T03:50:34"
+  },
+  {
+    "ServerName": "server1",
+    "Created": "2023-11-01T15:13:06"
+  },
+  {
+    "ServerName": "server2",
+    "Created": "2023-11-02T12:07:54"
+  },
+  {
+    "ServerName": "server3",
+    "Created": "2023-11-06T21:45:27"
+  }
+]
 </pre>
 </div>
 </div>
@@ -282,11 +282,11 @@ were created on or after November third:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>
-<span style="color: #d369af;">}</span>
+<pre class="src src-json">{
+  "InstanceId": "flng45799saooh987",
+  "Name": "server3",
+  "CreationDate": "2023-11-06T21:45:27"
+}
 </pre>
 </div>
 
@@ -301,10 +301,10 @@ you can filter them using <code>select</code>:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #d369af;">[</span>
-  <span style="color: #d369af;">3</span>,
-  <span style="color: #d369af;">4</span>
-<span style="color: #d369af;">]</span>
+<pre class="src src-json">[
+  3,
+  4
+]
 
 </pre>
 </div>
@@ -334,30 +334,30 @@ instead, I just want a field to indicate <i>if</i> it is old.
 </div>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"sdb3871osdhv89044"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server0"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"abc123eassa12874"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server1"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">false</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"aes54iasg41226c"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server2"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">false</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">false</span>
-<span style="color: #d369af;">}</span>
+<pre class="src src-json">{
+  "InstanceId": "sdb3871osdhv89044",
+  "Name": "server0",
+  "CreationDate": "2021-06-20T03:50:34",
+  "IsSuperOld": true
+}
+{
+  "InstanceId": "abc123eassa12874",
+  "Name": "server1",
+  "CreationDate": "2023-11-01T15:13:06",
+  "IsSuperOld": false
+}
+{
+  "InstanceId": "aes54iasg41226c",
+  "Name": "server2",
+  "CreationDate": "2023-11-02T12:07:54",
+  "IsSuperOld": false
+}
+{
+  "InstanceId": "flng45799saooh987",
+  "Name": "server3",
+  "CreationDate": "2023-11-06T21:45:27",
+  "IsSuperOld": false
+}
 </pre>
 </div>
 
@@ -380,30 +380,30 @@ we can actually simplify the above query like so:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"sdb3871osdhv89044"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server0"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"abc123eassa12874"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server1"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"aes54iasg41226c"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server2"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
-<span style="color: #d369af;">}</span>
+<pre class="src src-json">{
+  "InstanceId": "sdb3871osdhv89044",
+  "Name": "server0",
+  "CreationDate": "2021-06-20T03:50:34",
+  "IsSuperOld": true
+}
+{
+  "InstanceId": "abc123eassa12874",
+  "Name": "server1",
+  "CreationDate": "2023-11-01T15:13:06",
+  "IsSuperOld": true
+}
+{
+  "InstanceId": "aes54iasg41226c",
+  "Name": "server2",
+  "CreationDate": "2023-11-02T12:07:54",
+  "IsSuperOld": true
+}
+{
+  "InstanceId": "flng45799saooh987",
+  "Name": "server3",
+  "CreationDate": "2023-11-06T21:45:27",
+  "IsSuperOld": true
+}
 </pre>
 </div>
 
@@ -417,28 +417,28 @@ This is even more powerful when combined with a reducing filter like select:<sup
 </div>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"sdb3871osdhv89044"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server0"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"abc123eassa12874"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server1"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">false</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"aes54iasg41226c"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server2"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">false</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>
-<span style="color: #d369af;">}</span>
+<pre class="src src-json">{
+  "InstanceId": "sdb3871osdhv89044",
+  "Name": "server0",
+  "CreationDate": "2021-06-20T03:50:34"
+}
+{
+  "InstanceId": "abc123eassa12874",
+  "Name": "server1",
+  "CreationDate": "2023-11-01T15:13:06",
+  "IsSuperOld": false
+}
+{
+  "InstanceId": "aes54iasg41226c",
+  "Name": "server2",
+  "CreationDate": "2023-11-02T12:07:54",
+  "IsSuperOld": false
+}
+{
+  "InstanceId": "flng45799saooh987",
+  "Name": "server3",
+  "CreationDate": "2023-11-06T21:45:27"
+}
 </pre>
 </div>
 
@@ -468,30 +468,30 @@ ourselves.
 </div>
 
 <div class="org-src-container">
-<pre class="src src-json"><span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"sdb3871osdhv89044"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server0"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2021-06-20T03:50:34"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"abc123eassa12874"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server1"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-01T15:13:06"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"aes54iasg41226c"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server2"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-02T12:07:54"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
-<span style="color: #d369af;">}</span>
-<span style="color: #d369af;">{</span>
-  <span style="color: #af85ea; font-weight: bold;">"InstanceId"</span>: <span style="color: #df9080;">"flng45799saooh987"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"Name"</span>: <span style="color: #df9080;">"server3"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"CreationDate"</span>: <span style="color: #df9080;">"2023-11-06T21:45:27"</span>,
-  <span style="color: #af85ea; font-weight: bold;">"IsSuperOld"</span>: <span style="color: #d369af;">true</span>
-<span style="color: #d369af;">}</span>
+<pre class="src src-json">{
+  "InstanceId": "sdb3871osdhv89044",
+  "Name": "server0",
+  "CreationDate": "2021-06-20T03:50:34",
+  "IsSuperOld": true
+}
+{
+  "InstanceId": "abc123eassa12874",
+  "Name": "server1",
+  "CreationDate": "2023-11-01T15:13:06",
+  "IsSuperOld": true
+}
+{
+  "InstanceId": "aes54iasg41226c",
+  "Name": "server2",
+  "CreationDate": "2023-11-02T12:07:54",
+  "IsSuperOld": true
+}
+{
+  "InstanceId": "flng45799saooh987",
+  "Name": "server3",
+  "CreationDate": "2023-11-06T21:45:27",
+  "IsSuperOld": true
+}
 </pre>
 </div>
 </div>

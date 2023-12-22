@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2023-12-22 Fri 15:52 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Intro to bash scripting - Terminal Tooling</title>
+<meta name="author" content="Jonathan Harder" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="../css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+</head>
+<body>
+<div id="content" class="content">
+<header>
+<h1 class="title">Intro to bash scripting - Terminal Tooling</h1>
+</header><p>
+<a href="index.html">posts</a>
+</p>
+
+<div id="outline-container-org7912380" class="outline-2">
+<h2 id="org7912380">Table of contents&#xa0;&#xa0;&#xa0;<span class="tag"><span class="TOC">TOC</span></span></h2>
+<div class="outline-text-2" id="text-org7912380">
+<ul class="org-ul">
+<li></li>
+<li><ul class="org-ul">
+<li></li>
+<li></li>
+<li></li>
+</ul></li>
+<li></li>
+<li></li>
+<li><ul class="org-ul">
+<li></li>
+<li></li>
+</ul></li>
+<li></li>
+<li><ul class="org-ul">
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul></li>
+<li></li>
+<li></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1289b20" class="outline-2">
+<h2 id="org1289b20">Overview&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cli">cli</span>&#xa0;<span class="posix">posix</span></span></h2>
+<div class="outline-text-2" id="text-org1289b20">
+<p>
+Bash is a (perhaps <i>the</i> ubiquitous) shell. As a member of the POSIX
+interface, bash provides a consistent access point to applications
+on your operating system.
+</p>
+
+<p>
+Because it is all but guaranteed to be installed on any server and
+environment, learning this one interface will ensure you can be
+comfortable interacting with any computer.
+</p>
+
+<p>
+Before we begin, it will be helpful to clear up a few ambiguous
+terms related to command line tools that often come up together.
+A <i>terminal</i> is a desktop application you start which presents you
+with a <i>command line</i> interface, running your chosen <i>shell</i>.
+</p>
+
+<p>
+The terminal is the user interface to interact with your computers
+files, devices, and hardware.
+</p>
+
+<p>
+The command line is a method of interacting with your computer where
+you input a command, the computer processes the command, computes
+the result, and prints it out.
+</p>
+
+<p>
+The shell is the software that is responsible for the actual processing
+of your requests and returning the results to the user.
+</p>
+
+<p>
+So in this case, we are interested in a <i>shell</i>, <a target="_blank" href="http://man.he.net/?topic=bash&section=all">bash</a>. Bash was written
+as a open source replacement to the <a href="https://en.wikipedia.org/wiki/Bourne_shell">bourne</a> shell. First released in
+1989, it's been a staple for decades, only recently being overtaken
+by <a href="https://en.wikipedia.org/wiki/Z_shell">zsh</a> as the default shell on Mac OS among other systems.
+</p>
+
+<p>
+Bash can be used to simply execute programs installed on your computer:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">ls ~/Code/k8s-app
+</pre>
+</div>
+
+<pre class="example">
+backend
+docker-compose.yml
+files
+frontend
+kubernetes
+testing.yml
+</pre>
+
+
+<p>
+But it can do much more. Bash introduced control flow mechanisms allowing
+you to create reusable scripts along the lines of something you would
+expect from a python script.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbe50d17" class="outline-2">
+<h2 id="orgbe50d17">Control flow</h2>
+<div class="outline-text-2" id="text-orgbe50d17">
+</div>
+<div id="outline-container-org4666972" class="outline-3">
+<h3 id="org4666972">if, else, etc.</h3>
+<div class="outline-text-3" id="text-org4666972">
+<p>
+Like any scriptable, programable environment, bash supports branching
+features depending on provided conditions.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> true
+<span style="color: #af85ea; font-weight: bold;">then</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> truthy
+<span style="color: #af85ea; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<pre class="example">
+truthy
+</pre>
+
+
+<p>
+If checks (perhaps confusingly if you're coming from a software development
+backgroud) if the condition evaluates to 0. If it does, the <code>then</code> branch is
+executed. Also note an <code>if</code> block is terminated with <code>fi</code> (if, backwards). Non
+zero results in if following the <code>else</code> branch if one is given.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> false
+<span style="color: #af85ea; font-weight: bold;">then</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> truthy
+<span style="color: #af85ea; font-weight: bold;">else</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> falesy
+<span style="color: #af85ea; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<pre class="example">
+falesy
+</pre>
+
+
+<p>
+If checks the <a href="https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html">exit status</a> of it's condition in order to determine which branch
+to take. the <a target="_blank" href="http://man.he.net/?topic=true&section=all">true</a> command simply sets its exit status to 0 (truthy). <a target="_blank" href="http://man.he.net/?topic=false&section=all">false</a> does
+the inverse. You can check the exit status of the previous command with the
+variable <code>$?</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">true
+<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">?</span>
+
+false
+<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">?</span>
+</pre>
+</div>
+
+<pre class="example">
+0
+1
+</pre>
+
+
+<p>
+Every command ran in the shell sets an exit command, so you can use this to
+branch based on the success or failure of any command.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> grep <span style="color: #df9080;">"foo"</span> ~/Code/k8s-app/backend/main.go
+<span style="color: #af85ea; font-weight: bold;">then</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"found foo"</span>
+<span style="color: #af85ea; font-weight: bold;">else</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"couldn't find foo"</span>
+<span style="color: #af85ea; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<pre class="example">
+couldn't find foo
+</pre>
+
+
+<p>
+In the above example, we can tell if the <a href="2023_10_27_grep.html">grep</a> command failed or not, but
+if we look at another example where grep does succeed, the results aren't
+probably what you're expecting.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> grep <span style="color: #df9080;">"http"</span> ~/Code/k8s-app/backend/main.go
+<span style="color: #af85ea; font-weight: bold;">then</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Found it!"</span>
+<span style="color: #af85ea; font-weight: bold;">else</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Couldn't find it."</span>
+<span style="color: #af85ea; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<pre class="example" id="org7d28f72">
+	"net/http"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+func indexHandler(app *App) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+func recipeHandler(app *App) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+	handler func(app *App) http.HandlerFunc
+func initServer(app *App) *http.ServeMux {
+	mux := http.NewServeMux()
+		otelHandler := otelhttp.NewHandler(http.HandlerFunc(route.handler(app)), route.route)
+	log.Fatal(http.ListenAndServe(":8080", mux))
+Found it!
+</pre>
+
+<p>
+In this example, grep succeeded and because grep prints the lines that
+match its search term, those results showed up in the output as well.
+Sometimes this could be what you want, but often it's not.
+</p>
+
+<p>
+What we need to do here is to test the exit status only, but not print
+anything that the command itself would otherwise output. This can be
+accomplished by redirecting grep's output to a black hole, <a href="https://www.digitalocean.com/community/tutorials/dev-null-in-linux">/dev/null</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgda9f1f9" class="outline-3">
+<h3 id="orgda9f1f9">while, for</h3>
+<div class="outline-text-3" id="text-orgda9f1f9">
+<p>
+Bash also supports while and for loops. Notice that <code>for</code> and <code>while</code>
+use the keyword <code>do</code> before the loop body, and <code>done</code> to close it.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">for</span> x<span style="color: #af85ea; font-weight: bold;"> in</span> 1 2 3 4
+<span style="color: #af85ea; font-weight: bold;">do</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">x</span>
+<span style="color: #af85ea; font-weight: bold;">done</span>
+</pre>
+</div>
+
+<pre class="example">
+1
+2
+3
+4
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">for</span> file<span style="color: #af85ea; font-weight: bold;"> in</span> ~/Code/k8s-app/backend/*.go
+<span style="color: #af85ea; font-weight: bold;">do</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">file</span>
+<span style="color: #af85ea; font-weight: bold;">done</span>
+</pre>
+</div>
+
+<pre class="example">
+/Users/jharder/Code/k8s-app/backend/app.go
+/Users/jharder/Code/k8s-app/backend/db.go
+/Users/jharder/Code/k8s-app/backend/main.go
+/Users/jharder/Code/k8s-app/backend/tracing.go
+/Users/jharder/Code/k8s-app/backend/tracing_test.go
+</pre>
+
+
+<p>
+Some of this wont make perfect sense yet until we cover <a href="#org75a9bf1">varbiables</a>
+and <a href="#org7485e15">shell arithmetic</a>, but hopefully you can get a sense of what it's
+doing:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #6a9fff;">x</span>=5
+<span style="color: #af85ea; font-weight: bold;">while</span> [ $<span style="color: #6a9fff;">x</span> -gt 0 ]
+<span style="color: #af85ea; font-weight: bold;">do</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">x</span>
+    <span style="color: #6a9fff;">x</span>=$(( $<span style="color: #6a9fff;">x</span> - 1 ))
+<span style="color: #af85ea; font-weight: bold;">done</span>
+</pre>
+</div>
+
+<pre class="example">
+5
+4
+3
+2
+1
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org1e1ebb8" class="outline-3">
+<h3 id="org1e1ebb8">Case statements</h3>
+<div class="outline-text-3" id="text-org1e1ebb8">
+<p>
+Bash also supports case (also referred to as <code>switch</code> statements. The syntax
+may look a little foreign to our 21st century eyes, but it is handles the key
+concepts of most switch statements.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #6a9fff;">x</span>=5
+<span style="color: #af85ea; font-weight: bold;">case</span> $<span style="color: #6a9fff;">x</span><span style="color: #af85ea; font-weight: bold;"> in</span>
+1)
+  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"$x = 1"</span>
+  ;;
+2 | 3 | 4 | 5)
+  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"$x is between 2 and 5"</span>
+  ;;
+*)
+  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"$x is something else"</span>
+  ;;
+<span style="color: #af85ea; font-weight: bold;">esac</span>
+
+</pre>
+</div>
+
+<pre class="example">
+5 is between 2 and 5
+</pre>
+
+
+<p>
+Each arm of the case statement can be a raw value, or a pattern. Cases patterns
+end with <code>)</code>, and multiple patterns can be provided separated with <code>|</code>. Case
+blocks end with <code>;;</code>. Lastly like <code>if</code>, case statements end with their keyword
+reversed, <code>esac</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge011cfa" class="outline-2">
+<h2 id="orge011cfa">Output redirection</h2>
+<div class="outline-text-2" id="text-orge011cfa">
+<p>
+The output of a command can be redirected (from standard output) to
+another location. This could be a different stream (like standard out),
+a file, or a virtual device. <code>/dev/null</code> gobbles up all data sent to it
+so in this case the results grep prints are never shown.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> grep <span style="color: #df9080;">"http"</span> ~/Code/k8s-app/backend/main.go &gt; /dev/null
+<span style="color: #af85ea; font-weight: bold;">then</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"found it"</span>
+<span style="color: #af85ea; font-weight: bold;">else</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"couldn't find it"</span>
+<span style="color: #af85ea; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<pre class="example">
+found it
+</pre>
+
+
+<p>
+Sometimes there is no command which exists to check the condition you
+want. In these scenarios, you can use the command <a target="_blank" href="http://man.he.net/?topic=test&section=all">test</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2b2e2e7" class="outline-2">
+<h2 id="org2b2e2e7">test</h2>
+<div class="outline-text-2" id="text-org2b2e2e7">
+<p>
+The man page for test is very informative. It supports a number of flags
+which execute a number of different conditional checks. For integers it
+supports <code>-eq</code>, <code>-ne</code>, <code>-gt</code>, <code>-ge</code>, <code>-lt</code>, and <code>-le</code>, or <code>==</code>, <code>!=</code>,
+<code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, and <code>&lt;=</code> expressed in a more familiar syntax.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if </span><span style="color: #e580e0; font-weight: bold;">test</span> 4 -gt 3
+<span style="color: #af85ea; font-weight: bold;">then</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Four is greater than three"</span>
+<span style="color: #af85ea; font-weight: bold;">else</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Four is NOT greater than three"</span>
+<span style="color: #af85ea; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<pre class="example">
+Four is greater than three
+</pre>
+
+
+<p>
+To make things a little nicer to look at, bash provides an alias of
+<code>test</code> called <code>[</code>.<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> [ 4 -gt 3 ]
+<span style="color: #af85ea; font-weight: bold;">then</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Four is greater than three"</span>
+<span style="color: #af85ea; font-weight: bold;">else</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Four is NOT greater than three"</span>
+<span style="color: #af85ea; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<pre class="example">
+Four is greater than three
+</pre>
+
+
+<p>
+<i>NOTE</i>: because <code>[</code> is a bash command just like <code>test</code>
+or <code>true</code>, you <b>must</b> have a space after it. It's tempting to say
+<code>if [condition]</code> or even <code>if[condition]</code>, but since <code>[</code> is just
+an alias of <code>test</code> which is a regular command, this is illegal
+as it would be equivelant to <code>if testcondition</code> or <code>iftestcondition</code>
+respectively.
+</p>
+
+<p>
+You can test for different file system conditions using test as well.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> [ -e ~/Code/k8s-app/backend/main.go ]
+<span style="color: #af85ea; font-weight: bold;">then</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"file exists!"</span>
+<span style="color: #af85ea; font-weight: bold;">else</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"File not found"</span>
+<span style="color: #af85ea; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<pre class="example">
+file exists!
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> [ -d ~/Code/k8s-app/backend/ ]
+<span style="color: #af85ea; font-weight: bold;">then</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"file exists, and it's a directory"</span>
+<span style="color: #af85ea; font-weight: bold;">else</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"either the file doesn't exist, or it does, but it's not a directory"</span>
+<span style="color: #af85ea; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<pre class="example">
+file exists, and it's a directory
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> [ -r ~/Code/k8s-app/backend/main.go ]
+<span style="color: #af85ea; font-weight: bold;">then</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"file exists and it has read permissions"</span>
+<span style="color: #af85ea; font-weight: bold;">else</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"file may or may not exists, but if it does, it can't be read"</span>
+<span style="color: #af85ea; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<pre class="example">
+file exists and it has read permissions
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org75a9bf1" class="outline-2">
+<h2 id="org75a9bf1">Variables</h2>
+<div class="outline-text-2" id="text-org75a9bf1">
+</div>
+<div id="outline-container-org08c476d" class="outline-3">
+<h3 id="org08c476d">Simple variables</h3>
+<div class="outline-text-3" id="text-org08c476d">
+<p>
+Bash also supports variable, which are set using <code>var=value</code> syntax. To set
+a variable you do not provide the <code>$</code> symbol in front of the variable, but
+to retrieve it, you must reference the variable with the <code>$</code> symbol.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #6a9fff;">my_var</span>=5
+<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">my_var</span>
+</pre>
+</div>
+
+<pre class="example">
+5
+</pre>
+
+
+<p>
+Variables can be set to the result of commands if you use a sub-shell to
+compute the result.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #6a9fff;">my_var</span>=$(ls -l ~/Code/k8s-app/backend | tail -n1)
+<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">my_var</span>
+</pre>
+</div>
+
+<pre class="example">
+-rw-r--r-- 1 jharder staff 65 Dec 15 13:03 tracing_test.go
+</pre>
+
+
+<p>
+You can also embed variables inside of a string to perform string
+interpolation.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #6a9fff;">my_name</span>=<span style="color: #df9080;">"Jon"</span>
+<span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"Hello, $my_name"</span>
+</pre>
+</div>
+
+<pre class="example">
+Hello, Jon
+</pre>
+
+
+<p>
+If you want to put content directly after your variable, you'll
+need to use <code>${...}</code> instead of <code>$</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #6a9fff;">animal</span>=cat
+<span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"I like ${animal}s"</span>
+</pre>
+</div>
+
+<pre class="example">
+I like cats
+</pre>
+
+
+<p>
+If we want to store arithmetic computations in a variable we will need
+to reach for some additional constructs because sadly, bash will not
+perform arithmetic operations by itself.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #6a9fff;">a</span>=4+8
+<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">a</span>
+</pre>
+</div>
+
+<pre class="example">
+4+8
+</pre>
+
+
+<p>
+To do arithmetic in the shell, you'll need to use&#x2026;.<a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Arithmetic.html">shell arithmetic</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8d13fed" class="outline-3">
+<h3 id="org8d13fed">Arrays</h3>
+<div class="outline-text-3" id="text-org8d13fed">
+<p>
+Bash also supports arrays.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #6a9fff;">numbers</span>=(5 2 6 7)
+<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">numbers</span>
+</pre>
+</div>
+
+<pre class="example">
+5
+</pre>
+
+
+<p>
+Is that what you expected? It sure wasn't what I expected. Referencing
+the variable just gives you the first element in the array, similar to
+C.
+</p>
+
+<p>
+You can access elements of the array using <code>${var[n]}</code> syntax. You can
+access all the elements by using <code>@</code> as the array index.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #6a9fff;">numbers</span>=(5 2 6 7)
+<span style="color: #e580e0; font-weight: bold;">echo</span> ${<span style="color: #6a9fff;">numbers</span>[2]}
+<span style="color: #e580e0; font-weight: bold;">echo</span> ${<span style="color: #6a9fff;">numbers</span>[@]}
+</pre>
+</div>
+
+<pre class="example">
+6
+5 2 6 7
+</pre>
+
+
+<p>
+The latter can be used in a for loop to handle every element.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #6a9fff;">my_array</span>=(thing1 thing2 <span style="color: #df9080;">"thing three"</span>)
+<span style="color: #af85ea; font-weight: bold;">for</span> x<span style="color: #af85ea; font-weight: bold;"> in</span> <span style="color: #df9080;">"${my_array[@]}"</span>; <span style="color: #af85ea; font-weight: bold;">do</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"x = $x"</span>
+<span style="color: #af85ea; font-weight: bold;">done</span>
+</pre>
+</div>
+
+<pre class="example">
+x = thing1
+x = thing2
+x = thing three
+</pre>
+
+
+<p>
+The double quoting around <code>${my_array}</code> is to avoid splitting on
+the space in <code>"thing three"</code>. Try removing the quotes and see
+what happens.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7485e15" class="outline-2">
+<h2 id="org7485e15">Shell arithmetic</h2>
+<div class="outline-text-2" id="text-org7485e15">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #6a9fff;">a</span>=$((4+8))
+<span style="color: #6a9fff;">b</span>=$((4&lt;3))
+<span style="color: #6a9fff;">c</span>=$((4&gt;3))
+
+<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">a</span>
+<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">b</span>
+<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">c</span>
+</pre>
+</div>
+
+<pre class="example">
+12
+0
+1
+</pre>
+
+
+<p>
+You can reference variables inside <code>(( ))</code> without dollar signs if you
+want.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #6a9fff;">x</span>=6
+
+<span style="color: #e580e0; font-weight: bold;">echo</span> $((x*8))
+<span style="color: #e580e0; font-weight: bold;">echo</span> $((4&gt;3))
+</pre>
+</div>
+
+<pre class="example">
+48
+1
+</pre>
+
+
+<p>
+You can combine this with <code>if</code> for more concise conditions&#x2026;
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> $((4&gt;3))
+<span style="color: #af85ea; font-weight: bold;">then</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"four is greater than three"</span>
+<span style="color: #af85ea; font-weight: bold;">else</span>
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"four is not greater than three"</span>
+<span style="color: #af85ea; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<pre class="example">
+four is not greater than three
+</pre>
+
+
+<p>
+however, because shell arithmetic returns the more familiar <code>1</code> for true and
+<code>0</code> for false, you'll need to use <code>test</code> (or <code>[</code>) to mediate between math and
+your shell.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">if</span> [ $((4&gt;3)) ]
+<span style="color: #af85ea; font-weight: bold;">then</span>
+     <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"four is greater than three"</span>
+<span style="color: #af85ea; font-weight: bold;">else</span>
+     <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"four is not greater than three"</span>
+<span style="color: #af85ea; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<pre class="example">
+four is greater than three
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org640e33c" class="outline-2">
+<h2 id="org640e33c">Functions</h2>
+<div class="outline-text-2" id="text-org640e33c">
+</div>
+<div id="outline-container-orgdbc694a" class="outline-3">
+<h3 id="orgdbc694a">Definition</h3>
+<div class="outline-text-3" id="text-orgdbc694a">
+<p>
+Bash also has basic support for defining and using functions, with some
+oddities.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">my_fun</span>() {
+  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"hi"</span>
+}
+
+my_fun
+</pre>
+</div>
+
+<pre class="example">
+hi
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org10428d0" class="outline-3">
+<h3 id="org10428d0">Defining arguments</h3>
+<div class="outline-text-3" id="text-org10428d0">
+<p>
+You would think that adding arguments inside the <code>()</code> would allow you
+to define parameters to your function. And you'd be wrong.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #c0a38a; font-style: italic;"># </span><span style="color: #c0a38a; font-style: italic;">THIS DOES NOT COMPILE!!!</span>
+<span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">my_fun</span>(a, b) {
+  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"$a $b"</span>
+}
+</pre>
+</div>
+
+<p>
+Instead, you need to refer to the arguments by their positional index: <code>$1</code>, <code>$2</code>, &#x2026;, <code>$n</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">my_fun</span>() {
+  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"arg 1 = $1"</span>
+  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"arg 2 = $2"</span>
+}
+
+my_fun 1 2
+</pre>
+</div>
+
+<pre class="example">
+arg 1 = 1
+arg 2 = 2
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org1f22730" class="outline-3">
+<h3 id="org1f22730">Local variables</h3>
+<div class="outline-text-3" id="text-org1f22730">
+<p>
+You can make local variables to the function without polluting the global namespace
+using the keyword <code>local</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #6a9fff;">x</span>=3
+<span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"before my_fun, x=$x"</span>
+
+<span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">my_fun</span>() {
+  local <span style="color: #6a9fff;">x</span>=5
+  <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"in my_fun, x=$x"</span>
+}
+
+my_fun
+
+<span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"after my_fun, x=$x"</span>
+</pre>
+</div>
+
+<pre class="example">
+before my_fun, x=3
+in my_fun, x=5
+after my_fun, x=3
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org8816a72" class="outline-3">
+<h3 id="org8816a72">Returning values</h3>
+<div class="outline-text-3" id="text-org8816a72">
+<p>
+Because functions operate just like any other command you may run in the shell,
+you can only set an exit status, not any arbitrary value. To return anything
+else, you can use standard output and capture that value in a subshell.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #af85ea; font-weight: bold;">function</span> <span style="color: #35afbf;">my_fun</span>() {
+    <span style="color: #e580e0; font-weight: bold;">echo</span> <span style="color: #df9080;">"$1 times $2 is $(($1 * $2))"</span>
+}
+
+<span style="color: #6a9fff;">result</span>=$(my_fun 3 6)
+<span style="color: #e580e0; font-weight: bold;">echo</span> $<span style="color: #6a9fff;">result</span>
+</pre>
+</div>
+
+<pre class="example">
+3 times 6 is 18
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0d83f2b" class="outline-2">
+<h2 id="org0d83f2b">Conclusion</h2>
+<div class="outline-text-2" id="text-org0d83f2b">
+<p>
+Bash as a bit of a quirky programming language, but being a programming language
+that's built right into your shell can be very handy. However, because it lacks
+any higher level language constructs like classes, higher order functions, or
+clear argument or type definitions, bash scripts have a maximum carrying capacity
+in the form of maintainability. When they get too large, it's probably best to
+look for a dedicated programming language.
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Bash also adds <code>[[</code> as an extension on top of the posix <code>[</code>. It functions
+in much the same way but adds some niceties on top of it. Space does not allow
+me to go into detail, but starting <a href="https://superuser.com/a/1533931">here</a> provides a succinct overview of the
+differences.
+</p></div></div>
+
+
+</div>
+</div></div>
+</body>
+</html>
