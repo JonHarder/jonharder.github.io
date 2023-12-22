@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-12-22 Fri 15:52 -->
+<!-- 2023-12-22 Fri 15:55 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>grep - [[file:../index.org][Terminal Tooling]]</title>
@@ -89,7 +89,7 @@ Let's say you're interesting in finding all occurrences of the phrase <code>trac
 </pre>
 </div>
 
-<pre class="example" id="orgbe024ab">
+<pre class="example" id="org93889f9">
 app.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 app.go:func newApp(ctx context.Context, tp *sdktrace.TracerProvider) (*App, error) {
 db.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
@@ -140,7 +140,7 @@ and then feed that as arguments to <code>grep</code>. Let's see the results:<sup
 </pre>
 </div>
 
-<pre class="example" id="org97a8b3e">
+<pre class="example" id="orgdb9e32b">
 app.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 app.go:func newApp(ctx context.Context, tp *sdktrace.TracerProvider) (*App, error) {
 db.go:	sdktrace "go.opentelemetry.io/otel/sdk/trace"
@@ -229,7 +229,7 @@ lines before and after the match will be printed to stdout as well.
 </pre>
 </div>
 
-<pre class="example" id="orga9c901c">
+<pre class="example" id="orgc79a052">
 8-
 9-	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 10-	"go.opentelemetry.io/otel"
@@ -403,7 +403,7 @@ will be used instead
 </pre>
 </div>
 
-<pre class="example" id="orged06778">
+<pre class="example" id="org1e9b902">
 ./frontend/node_modules/@types/express-serve-static-core/index.d.ts:    trace: IRouterMatcher&lt;this&gt;;
 ./frontend/node_modules/@types/express-serve-static-core/index.d.ts:    trace: IRouterHandler&lt;this, Route&gt;;
 ./frontend/node_modules/@types/node/globals.d.ts:     * Optional override for formatting stack traces
@@ -432,7 +432,7 @@ Rather than using <code>--exclude</code>, we can use <code>--exclude-dir</code>
 </pre>
 </div>
 
-<pre class="example" id="org93889f9">
+<pre class="example" id="org5d923b7">
 ./backend/go.mod:	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.14.0
 ./backend/go.mod:	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.14.0
 ./backend/go.mod:	go.opentelemetry.io/otel/trace v1.14.0
