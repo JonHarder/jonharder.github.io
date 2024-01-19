@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-12-22 Fri 15:58 -->
+<!-- 2024-01-19 Fri 14:32 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>sed - [[file:../index.org][Terminal Tooling]]</title>
@@ -45,7 +45,7 @@ You may have seen a command like this before:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"this is line one\nthis is line two"</span> | sed <span style="color: #ffa21f;">'s/line/snake/'</span>
+<pre class="src src-sh"><span style="color: #f78fe7; font-weight: bold;">echo</span> <span style="color: #79a8ff;">"this is line one\nthis is line two"</span> | sed <span style="color: #79a8ff;">'s/line/snake/'</span>
 </pre>
 </div>
 
@@ -104,7 +104,7 @@ four. For lines within that range, the provided function will be ran. For lines 
 range, lines will be left untouched and printed as is.
 </p>
 
-<pre class="example" id="orge5b6b55">
+<pre class="example" id="orgcadaf8b">
 sed '2,4s/line/fish/'
 </pre>
 
@@ -113,7 +113,7 @@ In the next example, <code>$</code> is used as the terminating address to restri
 on.
 </p>
 
-<pre class="example" id="org8c62129">
+<pre class="example" id="org7311948">
 sed '3,$s/foo/bar/'
 </pre>
 
@@ -126,7 +126,7 @@ command replaced.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"line one\nline two\nline two\napple two"</span> | sed <span style="color: #ffa21f;">'/apple/s/two/snake/'</span>
+<pre class="src src-sh"><span style="color: #f78fe7; font-weight: bold;">echo</span> <span style="color: #79a8ff;">"line one\nline two\nline two\napple two"</span> | sed <span style="color: #79a8ff;">'/apple/s/two/snake/'</span>
 </pre>
 </div>
 
@@ -166,11 +166,11 @@ To do that, let's visualize a some of the moving parts of a <code>sed</code> exe
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #e7a06f; font-weight: bold;">echo</span> <span style="color: #ffa21f;">"This is the first line of text.</span>
-<span style="color: #ffa21f;">And this is another line.</span>
-<span style="color: #ffa21f;">Here's another for you.</span>
-<span style="color: #ffa21f;">This is anonther line with the word 'line' in it.</span>
-<span style="color: #ffa21f;">and this is the last line."</span> &gt; example.txt
+<pre class="src src-sh"><span style="color: #f78fe7; font-weight: bold;">echo</span> <span style="color: #79a8ff;">"This is the first line of text.</span>
+<span style="color: #79a8ff;">And this is another line.</span>
+<span style="color: #79a8ff;">Here's another for you.</span>
+<span style="color: #79a8ff;">This is anonther line with the word 'line' in it.</span>
+<span style="color: #79a8ff;">and this is the last line."</span> &gt; example.txt
 </pre>
 </div>
 
@@ -263,7 +263,7 @@ the first instance. This can be changed if you provide the <code>g</code> flag t
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed <span style="color: #ffa21f;">'2,4s/line/REPLACED/'</span> example.txt
+<pre class="src src-sh">sed <span style="color: #79a8ff;">'2,4s/line/REPLACED/'</span> example.txt
 </pre>
 </div>
 
@@ -286,7 +286,7 @@ With all of this, we're now ready to look at the <code>p</code> function again. 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed <span style="color: #ffa21f;">'2,4s/line/REPLACED/p'</span> example.txt
+<pre class="src src-sh">sed <span style="color: #79a8ff;">'2,4s/line/REPLACED/p'</span> example.txt
 </pre>
 </div>
 
@@ -312,7 +312,7 @@ Now let's try it without printing by default.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed -n <span style="color: #ffa21f;">'2,4s/line/REPLACED/p'</span> example.txt
+<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'2,4s/line/REPLACED/p'</span> example.txt
 </pre>
 </div>
 

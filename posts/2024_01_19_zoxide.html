@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2024-01-19 Fri 14:33 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Intro to bash scripting - Terminal Tooling</title>
+<meta name="author" content="Jonathan Harder" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="../css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+</head>
+<body>
+<div id="content" class="content">
+<header>
+<h1 class="title">Intro to bash scripting - Terminal Tooling</h1>
+</header><p>
+<a href="index.html">posts</a>
+</p>
+
+<div id="outline-container-org43d47ac" class="outline-2">
+<h2 id="org43d47ac">Overview&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cli">cli</span></span></h2>
+<div class="outline-text-2" id="text-org43d47ac">
+<p>
+<a href="https://github.com/ajeetdsouza/zoxide">Zoxide</a> is a small and focused command line tool that supercharges the <a target="_blank" href="http://man.he.net/?topic=cd&section=all">cd</a> command. Its goal is
+to reduce repetitively typing out paths to directories you've already visited.
+</p>
+
+<p>
+You can use it as a drop in replacement for cd and use it exactly how you would use cd. Once installed,
+every time you change to a directory with <code>z</code> (the name of the binary zoxide installs into your path) it
+remembers the path for later. Later, it uses this history to parse <code>z</code> paths using arbitrary fragments
+of that path.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4022059" class="outline-2">
+<h2 id="org4022059">Example</h2>
+<div class="outline-text-2" id="text-org4022059">
+<p>
+Say you have a project you often work on in a deeply nested folder structure. Normally you might <code>cd</code> to
+it like so:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #f78fe7; font-weight: bold;">cd</span> ~/path/to/a/very/nested/directory/with/my/project_a
+</pre>
+</div>
+
+<p>
+If instead you ran:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">z ~/path/to/a/very/nested/directory/with/my/project_a
+</pre>
+</div>
+
+<p>
+Zoxide would remember this path. The next time you wanted to get to this path, you could just
+type any portion of it and Zoxide would find the best match of the directories you've changed to.
+</p>
+
+<p>
+For example:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">z proj
+</pre>
+</div>
+
+<p>
+Would send you back to the same directory.
+</p>
+
+<p>
+If you had multiple directories that might match on just that string, you can add multiple parameters
+to refine your search:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">z nest proj
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org2ebb80e" class="outline-2">
+<h2 id="org2ebb80e">Interactive selection</h2>
+<div class="outline-text-2" id="text-org2ebb80e">
+<p>
+Using the <code>z</code> command aims to be a deterministic solution to changing directories. This means if you give it
+<i>any</i> input, it will just pick the option it thinks most closely matches. Most of the time, zoxide is very
+smart and its pick is probably what you want. However, if you can only remember a very generic portion of
+the path, picking whichever path zoxide thought was best may not be what you want.
+</p>
+
+<p>
+In this case, you can use a close sibling, <code>zi</code> which is just like <code>z</code>, but uses <a href="2023_12_14_fzf.html">fzf</a> to allow the user to
+select between the most likely candidates of your search.
+</p>
+
+
+<figure id="org365ef07">
+<img src="../images/posts/2024_01_19_zoxide/Screenshot 2024-01-19 at 14.29.36.png" alt="Screenshot 2024-01-19 at 14.29.36.png">
+
+</figure>
+</div>
+</div>
+
+<div id="outline-container-org4c13054" class="outline-2">
+<h2 id="org4c13054">Conclusion</h2>
+<div class="outline-text-2" id="text-org4c13054">
+<p>
+That's all folks. Zoxide is great, intuative, and simple. Install it. Use it. Enjoy it.
+</p>
+
+<p>
+:wave:
+</p>
+</div>
+</div>
+</div>
+</body>
+</html>
