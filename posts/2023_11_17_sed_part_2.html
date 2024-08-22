@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2024-01-19 Fri 14:32 -->
+<!-- 2024-08-22 Thu 15:43 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>sed (part 2) - [[file:../index.org][Terminal Tooling]]</title>
@@ -58,7 +58,7 @@ The following prints the first 5 lines of a file:<sup><a id="fnr.1" class="footr
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">head -n5 moby_dick.txt
+<pre class="src src-sh"><span style="color: #8fcfd0;">head</span> <span style="color: #80aadf;">-n5</span> moby_dick.txt
 </pre>
 </div>
 
@@ -76,7 +76,7 @@ The same can be done with <code>sed</code> using a numeric address range:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed <span style="color: #79a8ff;">'5q'</span> moby_dick.txt
+<pre class="src src-sh"><span style="color: #8fcfd0;">sed</span> <span style="color: #f3a0a0;">'5q'</span> moby_dick.txt
 </pre>
 </div>
 
@@ -99,7 +99,7 @@ We could achieve the same result inversely by using <code>sed</code>'s <code>p</
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'1,5 p'</span> moby_dick.txt
+<pre class="src src-sh"><span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-n</span> <span style="color: #f3a0a0;">'1,5 p'</span> moby_dick.txt
 </pre>
 </div>
 
@@ -117,7 +117,7 @@ The added benefit of using <code>sed</code> here is you can provide a range that
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'5,9 p'</span> moby_dick.txt
+<pre class="src src-sh"><span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-n</span> <span style="color: #f3a0a0;">'5,9 p'</span> moby_dick.txt
 </pre>
 </div>
 
@@ -140,7 +140,7 @@ Once more. Say you are in the country; in some high land of lakes. Take almost a
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'/whale/ p'</span> moby_dick.txt
+<pre class="src src-sh"><span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-n</span> <span style="color: #f3a0a0;">'/whale/ p'</span> moby_dick.txt
 </pre>
 </div>
 
@@ -156,7 +156,7 @@ It is a bit more complicated but it will help to show a broader range of <code>s
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed -E -n <span style="color: #79a8ff;">'s/^.*(whal(e|ing)).*$/\1/g p'</span> moby_dick.txt
+<pre class="src src-sh"><span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-E</span> <span style="color: #80aadf;">-n</span> <span style="color: #f3a0a0;">'s/^.*(whal(e|ing)).*$/\1/g p'</span> moby_dick.txt
 </pre>
 </div>
 
@@ -197,11 +197,11 @@ the capture group with the argument fed into your script:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #b6a0ff; font-weight: bold;">function</span> <span style="color: #feacd0;">mygrep_o</span><span style="color: #ffffff;">()</span> <span style="color: #ffffff;">{</span>
-    sed -E -n <span style="color: #79a8ff;">'s/^.*('</span>$<span style="color: #00d3d0;">1</span><span style="color: #79a8ff;">').*$/\1/g p'</span> <span style="color: #79a8ff;">"$2"</span>
-<span style="color: #ffffff;">}</span>
+<pre class="src src-sh"><span style="color: #deb07a; font-weight: bold;">function</span> <span style="color: #8fcfd0;">mygrep_o</span><span style="color: #deb07a;">()</span> <span style="color: #deb07a;">{</span>
+    <span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-E</span> <span style="color: #80aadf;">-n</span> <span style="color: #f3a0a0;">'s/^.*('</span><span style="color: #e47980;">$</span>1<span style="color: #f3a0a0;">').*$/\1/g p'</span> <span style="color: #f3a0a0;">"</span><span style="color: #e47980;">$</span><span style="color: #f3a0a0;">2</span><span style="color: #f3a0a0;">"</span>
+<span style="color: #deb07a;">}</span>
 
-mygrep_o <span style="color: #79a8ff;">'whal(e|ing)'</span> moby_dick.txt
+<span style="color: #8fcfd0;">mygrep_o</span> <span style="color: #f3a0a0;">'whal(e|ing)'</span> moby_dick.txt
 </pre>
 </div>
 
@@ -224,11 +224,11 @@ these pretty easily by using the <code>d</code> command which stands for <code>d
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed <span style="color: #79a8ff;">'/^$/ d'</span> moby_dick.txt
+<pre class="src src-sh"><span style="color: #8fcfd0;">sed</span> <span style="color: #f3a0a0;">'/^$/ d'</span> moby_dick.txt
 </pre>
 </div>
 
-<pre class="example" id="org839fe3a">
+<pre class="example" id="org98af437">
 Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.
 There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
 Circumambulate the city of a dreamy Sabbath afternoon. Go from Corlears Hook to Coenties Slip, and from thence, by Whitehall, northward. What do you see?—Posted like silent sentinels all around the town, stand thousands upon thousands of mortal men fixed in ocean reveries. Some leaning against the spiles; some seated upon the pier-heads; some looking over the bulwarks of ships from China; some high aloft in the rigging, as if striving to get a still better seaward peep. But these are all landsmen; of week days pent up in lath and plaster—tied to counters, nailed to benches, clinched to desks. How then is this? Are the green fields gone? What do they here?
@@ -253,10 +253,10 @@ and by golly we're going to use <code>sed</code>!
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'1,6 {</span>
-<span style="color: #79a8ff;">  /^$/ d</span>
-<span style="color: #79a8ff;">  p</span>
-<span style="color: #79a8ff;">}'</span> moby_dick.txt
+<pre class="src src-sh"><span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-n</span> <span style="color: #f3a0a0;">'1,6 {</span>
+<span style="color: #f3a0a0;">  /^$/ d</span>
+<span style="color: #f3a0a0;">  p</span>
+<span style="color: #f3a0a0;">}'</span> moby_dick.txt
 </pre>
 </div>
 
@@ -283,7 +283,7 @@ Question 2 will take a bit more explanation. In the man page, the first function
 following:
 </p>
 
-<pre class="example" id="org0d44572">
+<pre class="example" id="orgda463d4">
 [2addr] function-list
         Execute function-list only when the pattern space is selected.
 </pre>
@@ -300,10 +300,10 @@ So back to our last example:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'1,6 {</span>
-<span style="color: #79a8ff;">  /^$/ d</span>
-<span style="color: #79a8ff;">  p</span>
-<span style="color: #79a8ff;">}'</span> moby_dick.txt
+<pre class="src src-sh"><span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-n</span> <span style="color: #f3a0a0;">'1,6 {</span>
+<span style="color: #f3a0a0;">  /^$/ d</span>
+<span style="color: #f3a0a0;">  p</span>
+<span style="color: #f3a0a0;">}'</span> moby_dick.txt
 </pre>
 </div>
 
@@ -330,9 +330,9 @@ you know what, why not, lets see how we would do that.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'1,6 {</span>
-<span style="color: #79a8ff;">  /./ p</span>
-<span style="color: #79a8ff;">}'</span> moby_dick.txt
+<pre class="src src-sh"><span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-n</span> <span style="color: #f3a0a0;">'1,6 {</span>
+<span style="color: #f3a0a0;">  /./ p</span>
+<span style="color: #f3a0a0;">}'</span> moby_dick.txt
 </pre>
 </div>
 
@@ -354,9 +354,9 @@ This could be expressed in yet another way by using address negation.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed -n <span style="color: #79a8ff;">'1,6 {</span>
-<span style="color: #79a8ff;">  /^$/ !p</span>
-<span style="color: #79a8ff;">}'</span> moby_dick.txt
+<pre class="src src-sh"><span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-n</span> <span style="color: #f3a0a0;">'1,6 {</span>
+<span style="color: #f3a0a0;">  /^$/ !p</span>
+<span style="color: #f3a0a0;">}'</span> moby_dick.txt
 </pre>
 </div>
 
@@ -404,26 +404,26 @@ match. Keeping a memory of lines before seeing a matching line is exactly the so
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed -e <span style="color: #79a8ff;">'/^$/ d'</span> moby_dick.txt | sed -n <span style="color: #79a8ff;">'</span>
-<span style="color: #79a8ff;">/ship/ !{</span>
-<span style="color: #79a8ff;">    x</span>
-<span style="color: #79a8ff;">    d</span>
-<span style="color: #79a8ff;">}</span>
-<span style="color: #79a8ff;">/ship/ {</span>
-<span style="color: #79a8ff;">    x</span>
-<span style="color: #79a8ff;">    p</span>
-<span style="color: #79a8ff;">    x</span>
-<span style="color: #79a8ff;">    p</span>
-<span style="color: #79a8ff;">    n</span>
-<span style="color: #79a8ff;">    p</span>
-<span style="color: #79a8ff;">    a\</span>
-<span style="color: #79a8ff;">---</span>
-<span style="color: #79a8ff;">    x</span>
-<span style="color: #79a8ff;">}'</span>
+<pre class="src src-sh"><span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-e</span> <span style="color: #f3a0a0;">'/^$/ d'</span> moby_dick.txt <span style="font-weight: bold;">|</span> <span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-n</span> <span style="color: #f3a0a0;">'</span>
+<span style="color: #f3a0a0;">/ship/ !{</span>
+<span style="color: #f3a0a0;">    x</span>
+<span style="color: #f3a0a0;">    d</span>
+<span style="color: #f3a0a0;">}</span>
+<span style="color: #f3a0a0;">/ship/ {</span>
+<span style="color: #f3a0a0;">    x</span>
+<span style="color: #f3a0a0;">    p</span>
+<span style="color: #f3a0a0;">    x</span>
+<span style="color: #f3a0a0;">    p</span>
+<span style="color: #f3a0a0;">    n</span>
+<span style="color: #f3a0a0;">    p</span>
+<span style="color: #f3a0a0;">    a\</span>
+<span style="color: #f3a0a0;">---</span>
+<span style="color: #f3a0a0;">    x</span>
+<span style="color: #f3a0a0;">}'</span>
 </pre>
 </div>
 
-<pre class="example" id="orgbf9b6c7">
+<pre class="example" id="org86d2e76">
 
 Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.
 There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
@@ -452,7 +452,7 @@ executed on any line that <b>doesn't</b> match the regex <code>ship</code>. Let'
 functions.
 </p>
 
-<pre class="example" id="org53dc4e8">
+<pre class="example" id="orgf08531d">
 /ship/ !{
   x
   d
@@ -478,7 +478,7 @@ this will always have the line of the previous cycle in memory.
 Next let's tackle the bigger section:
 </p>
 
-<pre class="example" id="org4554250">
+<pre class="example" id="orgad99d20">
 /ship/ {
   x
   p
@@ -528,7 +528,7 @@ newline.<sup><a id="fnr.4" class="footref" href="#fn.4" role="doc-backlink">4</a
 In this instance:
 </p>
 
-<pre class="example" id="org825a90b">
+<pre class="example" id="org5bfbf5e">
    a\
 --- 
 </pre>
@@ -550,26 +550,26 @@ Here's the script again in all its glory:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">sed -e <span style="color: #79a8ff;">'/^$/ d'</span> moby_dick.txt | sed -n <span style="color: #79a8ff;">'</span>
-<span style="color: #79a8ff;">/ship/ !{</span>
-<span style="color: #79a8ff;">    x</span>
-<span style="color: #79a8ff;">    d</span>
-<span style="color: #79a8ff;">}</span>
-<span style="color: #79a8ff;">/ship/ {</span>
-<span style="color: #79a8ff;">    x</span>
-<span style="color: #79a8ff;">    p</span>
-<span style="color: #79a8ff;">    x</span>
-<span style="color: #79a8ff;">    p</span>
-<span style="color: #79a8ff;">    n</span>
-<span style="color: #79a8ff;">    p</span>
-<span style="color: #79a8ff;">    a\</span>
-<span style="color: #79a8ff;">---</span>
-<span style="color: #79a8ff;">    x</span>
-<span style="color: #79a8ff;">}'</span>
+<pre class="src src-sh"><span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-e</span> <span style="color: #f3a0a0;">'/^$/ d'</span> moby_dick.txt <span style="font-weight: bold;">|</span> <span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-n</span> <span style="color: #f3a0a0;">'</span>
+<span style="color: #f3a0a0;">/ship/ !{</span>
+<span style="color: #f3a0a0;">    x</span>
+<span style="color: #f3a0a0;">    d</span>
+<span style="color: #f3a0a0;">}</span>
+<span style="color: #f3a0a0;">/ship/ {</span>
+<span style="color: #f3a0a0;">    x</span>
+<span style="color: #f3a0a0;">    p</span>
+<span style="color: #f3a0a0;">    x</span>
+<span style="color: #f3a0a0;">    p</span>
+<span style="color: #f3a0a0;">    n</span>
+<span style="color: #f3a0a0;">    p</span>
+<span style="color: #f3a0a0;">    a\</span>
+<span style="color: #f3a0a0;">---</span>
+<span style="color: #f3a0a0;">    x</span>
+<span style="color: #f3a0a0;">}'</span>
 </pre>
 </div>
 
-<pre class="example" id="org90df0c5">
+<pre class="example" id="org2584e14">
 
 Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. It is a way I have of driving off the spleen and regulating the circulation. Whenever I find myself growing grim about the mouth; whenever it is a damp, drizzly November in my soul; whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet; and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—then, I account it high time to get to sea as soon as I can. This is my substitute for pistol and ball. With a philosophical flourish Cato throws himself upon his sword; I quietly take to the ship. There is nothing surprising in this. If they but knew it, almost all men in their degree, some time or other, cherish very nearly the same feelings towards the ocean with me.
 There now is your insular city of the Manhattoes, belted round by wharves as Indian isles by coral reefs—commerce surrounds it with her surf. Right and left, the streets take you waterward. Its extreme downtown is the battery, where that noble mole is washed by waves, and cooled by breezes, which a few hours previous were out of sight of land. Look at the crowds of water-gazers there.
@@ -669,9 +669,9 @@ links in all the articles to match the update. Once I figured out what changes
 I needed to make, <code>sed</code> performed all the heavy lifting for me:
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #b6a0ff; font-weight: bold;">for</span> file<span style="color: #b6a0ff; font-weight: bold;"> in</span> *.org; <span style="color: #b6a0ff; font-weight: bold;">do</span>
-    sed -e <span style="color: #79a8ff;">'s#\.\./images#images#'</span> -e <span style="color: #79a8ff;">'s#terminal_tooling/##'</span> -i <span style="color: #79a8ff;">'.bak'</span> <span style="color: #79a8ff;">"$file"</span>
-<span style="color: #b6a0ff; font-weight: bold;">done</span>
+<pre class="src src-sh"><span style="color: #deb07a; font-weight: bold;">for</span> file <span style="color: #deb07a; font-weight: bold;">in</span> *.org<span style="font-weight: bold;">;</span> <span style="color: #deb07a; font-weight: bold;">do</span>
+    <span style="color: #8fcfd0;">sed</span> <span style="color: #80aadf;">-e</span> <span style="color: #f3a0a0;">'s#\.\./images#images#'</span> <span style="color: #80aadf;">-e</span> <span style="color: #f3a0a0;">'s#terminal_tooling/##'</span> <span style="color: #80aadf;">-i</span> <span style="color: #f3a0a0;">'.bak'</span> <span style="color: #f3a0a0;">"</span><span style="color: #e47980;">$</span><span style="color: #f3a0a0;">file</span><span style="color: #f3a0a0;">"</span>
+<span style="color: #deb07a; font-weight: bold;">done</span>
 </pre>
 </div>
 
