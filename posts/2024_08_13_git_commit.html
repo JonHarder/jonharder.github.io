@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2024-08-22 Thu 15:43 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Git - What makes a good commit</title>
+<meta name="author" content="Jonathan Harder" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="../css/stylesheet.css" />
+<link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+</head>
+<body>
+<div id="content" class="content">
+<header>
+<h1 class="title">Git - What makes a good commit</h1>
+</header><p>
+<a href="index.html">posts</a>
+</p>
+
+<div id="outline-container-orge893f35" class="outline-2">
+<h2 id="orge893f35">Introduction</h2>
+<div class="outline-text-2" id="text-orge893f35">
+<p>
+I want to kick off this series of articles on git with the humble
+commit. Commits are the basic unit of change in your codebase. Like an
+atom, you cannot break things down any further than a commit<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>. Git
+automatically keeps track of which files were changed, who changed
+them, and when. It is up to YOU, however, to decide what information is
+added to that commit to give context to others or your future self
+about the changes.
+</p>
+
+<p>
+To expand on this, let's break down the two (user definable)
+attributes of a commit. When we make a commit, we get to say what
+<b>message</b> is attached to it, and what <b>changes</b> to include. We'll start
+with what makes a good commit message, and then move on to considering
+how to structure your changes by deciding which file changes should be
+included in one commit vs another.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdb87ca7" class="outline-2">
+<h2 id="orgdb87ca7">What makes a good commit message</h2>
+<div class="outline-text-2" id="text-orgdb87ca7">
+</div>
+<div id="outline-container-orga47ccd7" class="outline-3">
+<h3 id="orga47ccd7">The message heading</h3>
+<div class="outline-text-3" id="text-orga47ccd7">
+<p>
+Writing a commit message is a time for you to step back and <i>think</i>
+about the changes you've made. What problem were you trying to address
+by making these changes? What is expected outcome in the application
+as a result of those changes? Git can tell you via the diff that you
+<i>made a function called <code>get_latest_foo()</code> in foo_handler.rs</i>, only
+the mind that wrote the function can say <span class="underline">why</span> you wrote
+<code>get_latest_foo()</code>.
+</p>
+
+<p>
+If you've ever tried to debug a problem and walk through the commit
+history to find when a bug was introduced, you may have experienced
+the pain of lousy commit messages. <code>Changed some stuff</code> does not spark
+joy. <code>Updated Controller</code>, though slightly more descriptive, still
+does not help the reader to understand anything about the change
+beyond <i>what</i> was changed.
+</p>
+
+<p>
+It is critical to recognize that commits are more than just a way to
+back up your work onto a remote server (e.g. GitHub). Commits are a
+developer's first and most valuable source of clues as to why the
+application is behaving the way it is. Their efforts can either be
+aided by a helpful commit message like <i>Move foo retrieval logic to
+dedicated handler</i>, or hindered by a message like <i>wip updates</i>.
+</p>
+
+<p>
+The header should be short (~50 characters according to Linus
+Torvolds, the creator of git) though this is not a hard
+requirement. It should be short enough to grok quickly, and state
+in the imperative<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup> mood what was changed.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org701ca96" class="outline-3">
+<h3 id="org701ca96">The message body</h3>
+<div class="outline-text-3" id="text-org701ca96">
+<p>
+If you have a good heading on your commit message, you're good right?
+One could argue this the header (the first line of the commit message)
+is all that is necessary in a commit message, after all, the first
+line is all you would see in the standard git log, but the body of a
+commit provides a great place to describe in full prose the intent of
+your change.
+</p>
+
+<p>
+When adding a body, you are required to have at least (but preferably
+only) one blank line between the header and the body:
+</p>
+
+<pre class="example">
+This is the heading
+
+This is the body of the message. I'm going to put much more content
+here since I have more room here.
+</pre>
+
+<p>
+This is the place for you to provide all the essential context around
+why this change was made. Why was this change necessary? Is this being
+done in preparation for any future changes? What is the practical
+effect on the application/system as a result of this change? If the
+changes you made seem a bit odd at first glance (for example, not
+re-using existing functionality that accomplishes your task but
+instead implementing it from scratch) this is a great place to explain
+why the obvious approach was not suitable and why this approach is
+better.
+</p>
+
+<p>
+You are basically trying to mind read your (or your coworker's) future
+mind when they are looking back at your code. This may seem like an
+impossible task, but with practice as well as seeing examples of great
+commits (and even not-so-great commits) you will get a sense of what
+information is useful.
+</p>
+
+<p>
+Lastly when you have useful commit messages, this information will be
+used by your code review system by pre-populating the review
+message. This saves time by adding the necessary context you would
+have added to the pull request anyway, <i>and</i> has the added benefit of
+persisting beyond the pull request because it lives in your code.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-h:70CFAB16-944B-4EDE-8A88-DF48A44C96D0" class="outline-2">
+<h2 id="h:70CFAB16-944B-4EDE-8A88-DF48A44C96D0">What makes a good commit (content)</h2>
+<div class="outline-text-2" id="text-h:70CFAB16-944B-4EDE-8A88-DF48A44C96D0">
+<p>
+Now that we've covered good commit messages, we'll turn our attention
+to what qualities make for a good commit content. The commit message
+gives the viewer helpful context as to why a change was made, but
+<i>what</i> changes go into a commit are important to consider as well.
+</p>
+
+<p>
+Many of the following qualities are born out of the necessity in
+software development to inspect commits to troubleshoot a bug, mainly
+by reverting the code base back to some previous point in its history
+or to identify when and why a change was introduced. This has
+implications for how to craft both the commit message and the contents
+of the commit. Because commit messages have already been handled
+above, we will focus just on the ways that commit contents affect
+these requirements.
+</p>
+</div>
+
+<div id="outline-container-org246e61d" class="outline-3">
+<h3 id="org246e61d">Logical</h3>
+<div class="outline-text-3" id="text-org246e61d">
+<p>
+Similar to the single responsibility principle<sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup>, commits should
+contain <i>logically</i> related changes. If you are trying to determine if
+a particular commit broke a feature, it can be challenging to test
+when an unrelated change in that commit causes other problems that
+cannot be pulled apart. A commit containing changes to your data model
+should not also contain changes to fix a bug in the UI.<sup><a id="fnr.4" class="footref" href="#fn.4" role="doc-backlink">4</a></sup>
+</p>
+
+<p>
+To get a sense of what this looks like, when reviewing a pull request,
+try to take a look at the commits within the branch (if you use
+branch-based development) one at a time, moving forward through them
+to see how the feature was assembled in each step. If the author was
+disciplined in the creation of their commits, you will get to see
+their "proof of work"<sup><a id="fnr.5" class="footref" href="#fn.5" role="doc-backlink">5</a></sup> in how they added each part of the feature.
+</p>
+
+<p>
+If the author was NOT disciplined (or does not yet know the value of
+commits that follow these principles) you will instead become more
+confused as you try to follow the flow of changes where one commit
+introduces a change, the next commit modifies that change, and a third
+removes the change entirely. In these cases you will be better off
+going back to just looking at the changes made at the branch level
+rather than looking at each commit individually.<sup><a id="fnr.6" class="footref" href="#fn.6" role="doc-backlink">6</a></sup>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org077ca48" class="outline-3">
+<h3 id="org077ca48">Small</h3>
+<div class="outline-text-3" id="text-org077ca48">
+<p>
+Commits should be <i>small</i>. The definition of <i>small</i> can be somewhat
+hard to define, but generally a developer will know a <b>big</b> commit
+when he or she sees one. This comes back to the ultimate goal of
+making commits understandable by someone who is reviewing them. This
+review could be in a formal "code review" sense in the form of a pull
+request, or in a triage sense where someone is trying to find the
+source of a problem in the system by looking at the git log. Our
+brains can only hold so much in working memory at a time, and anything
+beyond it drastically reduces comprehension.
+</p>
+
+<p>
+If you've ever been asked to review a pull request with 50 files
+changed, you have an idea of the difficulty of reviewing big commits.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3465c7f" class="outline-3">
+<h3 id="org3465c7f">Self-contained</h3>
+<div class="outline-text-3" id="text-org3465c7f">
+<p>
+Closely related to the above is the quality of being self-contained. A
+commit should not (baring undiscovered bugs) leave the system in a
+broken or otherwise inoperable state. 
+</p>
+
+<p>
+Note that this is not the same as the notion of being complete. A
+commit which introduces a new function that is never called is self
+contained, even though the feature that will eventually utilize that
+function is not complete. You (hopefully) should not break anything by
+adding a new function to a code base, in fact, it's even deployable! 
+</p>
+
+<p>
+This may feel counter-intuitive, but this quality helps to leave the
+code base in a deployable state at all times. When every commit is
+self contained, you can test your work in smaller chunks, and when you
+can do that, you can pinpoint the exact commit that introduced an
+issue. On top of that, if your commits are also <a href="#org077ca48">small</a> then the work of
+understanding <i>why</i> that commit broke things should leave you
+investigating a very small number of lines.
+</p>
+
+<p>
+As you can see, this quality also entails that your change is
+testable and buildable. But what if you realize part way through
+development that a prior change (commit) did not behave the way you
+thought it would, or if you come to realize you could solve the
+problem in a more efficient way than you initially realized. How then
+would you create a commit that modifies your previous work AND follows
+these aforementioned qualities?
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgea3578b" class="outline-3">
+<h3 id="orgea3578b">Opening Pandora's Box</h3>
+<div class="outline-text-3" id="text-orgea3578b">
+<p>
+Much like bottom posting and trimming in email<sup><a id="fnr.7" class="footref" href="#fn.7" role="doc-backlink">7</a></sup>, the idea of
+editing your commit history seems to be so unused as to be nigh
+forgotten, even though it was a very commonly adopted practice early
+on in each of these technologies' histories.
+</p>
+
+<p>
+In future articles of this git series, we will discuss editing git
+commit history or <code>rebasing</code> as well as when you should make use of
+this feature and even more importantly, when you <b>shouldn't</b> use this
+feature.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd553613" class="outline-2">
+<h2 id="orgd553613">Sources</h2>
+<div class="outline-text-2" id="text-orgd553613">
+<ul class="org-ul">
+<li>Much of what is endorsed here comes from Drew DePonte in this
+<a href="https://drewdeponte.com/blog/how-we-should-be-using-git/">article</a>. His thoughts are themselves a reproduction of the Linux
+Kernel development standards. Linux in maintained by Linus, the
+creator of git, who created git to manage kernel development.</li>
+</ul>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+But also like the atom, this isn't <i>quite</i> true. You can break
+commits apart just like you can break atoms apart into photons,
+electrons, neutrons, etc. However, much like splitting the atom, this
+is not a task undertaken lightly; some caution and experience is
+required if you don't want to end up destroying the universe. We will
+discuss how to do so in a later post when we get to rebases. 
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+The imperative mood indicates a command to be followed. Pretend
+you're talking to a robot minion. If you wanted to give a command to
+your minion, you would phrase it, "Cache the api key lookup in the
+auth controller," not "I am caching the api key lookup," or "The api key
+lookup will be cached," "Can you cache the api key lookup?"
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://en.wikipedia.org/wiki/Single-responsibility_principle">https://en.wikipedia.org/wiki/Single-responsibility_principle</a> 
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+You should definitely fix that bug&#x2026;just put it in a separate
+commit with a message that describes the bug fix.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5" role="doc-backlink">5</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Picture how you work out a complicated math problem one step at
+a time by transforming your initial problem into a state where you can
+ultimately solve it.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6" role="doc-backlink">6</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+But you will perhaps gain a greater appreciation of well
+constructed commits. 
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7" role="doc-backlink">7</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+<a href="https://en.wikipedia.org/wiki/Posting_style">https://en.wikipedia.org/wiki/Posting_style</a>
+</p></div></div>
+
+
+</div>
+</div></div>
+</body>
+</html>
