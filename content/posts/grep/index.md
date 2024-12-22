@@ -2,7 +2,7 @@
 date = '2023-10-27T16:00:00-06:00'
 draft = false
 title = 'Grep'
-tags = ['posix', 'lesson']
+tags = ['posix', 'how-to']
 +++
 
 ## Overview
