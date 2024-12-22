@@ -1,0 +1,13 @@
+baseURL = 'https://jonharder.github.io/'
+languageCode = 'en-us'
+title = 'Terminal Toolist'
+theme = 're-terminal'
+sectionPagesMenu = "main"
+
+[params]
+title = 'Terminal Toolist'
+Toc = true
+
+[languages.en.params.logo]
+logoText = 'Terminal Toolist'
+logoHomeLink = '/'
