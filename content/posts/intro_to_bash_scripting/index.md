@@ -1,6 +1,6 @@
 +++
 date = '2023-12-22T16:00:00-06:00'
-draft = true
+draft = false
 title = 'Intro to Bash Scripting'
 show_reading_time = true
 tags = ['posix', 'how-to']
