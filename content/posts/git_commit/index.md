@@ -28,9 +28,10 @@ deciding which file changes should be included in one commit vs another.
 Writing a commit message is a time for you to step back and _think_ about the
 changes you've made. What problem were you trying to address by making these
 changes? What is expected outcome in the application as a result of those
-changes? Git can tell you via the diff that you _made a function called
-`get_latest_foo()` in foo_handler.rs_, only the mind that wrote the function can
-say _why_ you wrote `get_latest_foo()`.
+changes? Git can tell you via the diff that you
+_`made a function called
+'get_latest_foo()' in foo_handler.rs`_, only the mind
+that wrote the function can say _why_ you wrote `get_latest_foo()`.
 
 If you've ever tried to debug a problem and walk through the commit history to
 find when a bug was introduced, you may have experienced the pain of lousy
@@ -42,10 +43,8 @@ It is critical to recognize that commits are more than just a way to back up
 your work onto a remote server (e.g. GitHub). Commits are a developer's first
 and most valuable source of clues as to why the application is behaving the way
 it is. Their efforts can either be aided by a helpful commit message like
-_`Move
-foo retrieval logic to dedicated handler`_ or hindered by a message like
-_`wip
-updates`_.
+_`Move foo retrieval logic to dedicated handler`_ or hindered by a message like
+_`wip updates`_.
 
 The header should be short (~50 characters according to Linus Torvolds, the
 creator of git) though this is not a hard requirement. It should be short enough
