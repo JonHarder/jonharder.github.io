@@ -10,11 +10,11 @@ tags = ['posix', 'how-to']
 Grep is a fundamental part of the command line toolbelt. True to the
 [Unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy), grep does one
 thing, and does it well. Its job is to search input for a given search pattern
-and print all lines that match. Think of it like `Command-f`{.verbatim} for the
+and print all lines that match. Think of it like `Command-f` for the
 terminal.
 
 Its origins date back to the `ed` text editor. It was a common practice within
-`ed` to execute the command `g/r(egular) e(expression)/p`{.verbatim}, meaning,
+`ed` to execute the command `g/r(egular) e(expression)/p`, meaning,
 `globally` search for lines that match the given `regular expression` and
 `print` them. This functionality was so useful, that the name \"grep\" became
 synonomous with the act of searching files and printing matches, and a
@@ -516,7 +516,7 @@ Notably, this article did not cover any of the variations of grep like `pgrep`,
 [^4]: If you\'re ever unsure of the result of a shell glob, you can run
     [echo](man:echo) or [ls](man:ls) first to see which files will be selected.
 
-[^5]: I\'m using the `-h`{.verbatim} flag for `grep` which surpresses the
+[^5]: I\'m using the `-h` flag for `grep` which surpresses the
     \'filename\' prefix of its output. When grep is used in a pipeline instead
     of the filename, it prefixes every line with \'(standard input):\' which is
     not super helpful.

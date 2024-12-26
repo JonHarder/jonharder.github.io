@@ -38,7 +38,7 @@ brew install ranger
 This is the initial view using ranger. You\'ll notice three vertical columns
 (and three highlighted files/directories). The center of the three is the
 working column, and it\'s on the selected entry in this column that your actions
-will operate (in this example, on the `kubernetes`{.verbatim} directory).
+will operate (in this example, on the `kubernetes` directory).
 
 The left column is the parent directory, and the right directory displays either
 the contents of the current directory if a directory is highlighted, or a
@@ -145,7 +145,7 @@ This only scratches the surface of ranger\'s functionality. Ranger supports
 tabs, bookmarks, macros custom user-defined functionality using python and more.
 Their [documentation](https://github.com/ranger/ranger/wiki/Official-user-guide)
 is extensive and it can do more than I have the time to go over. The
-`:flat`{.verbatim} command is particularly interesting.
+`:flat` command is particularly interesting.
 
 # Alternatives
 

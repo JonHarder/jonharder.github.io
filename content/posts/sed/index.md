@@ -56,7 +56,7 @@ to create a range of lines for `sed` to restrict its operation over.
     3.  a regex, meaning only lines of input which match the regex will
         be passed along to the function
 
-    In this example, we\'re telling `sed`{.verbatim} to execute the
+    In this example, we\'re telling `sed` to execute the
     substitude command only on lines 2 through four. For lines within
     that range, the provided function will be ran. For lines **outside**
     the range, lines will be left untouched and printed as is.
@@ -74,7 +74,7 @@ to create a range of lines for `sed` to restrict its operation over.
 
     In this example, there are two lines with the word `two`.
     If we just did a substitute command without an address, **all**
-    lines with the word `two`{.verbatim} would be changed to
+    lines with the word `two` would be changed to
     `snake`. But because we are providing a regex address
     (restricting to lines containing `apple`), only line four
     (containing the word `apple`) actually has the text in
