@@ -318,7 +318,7 @@ So if we want to view all the commits on our main branch that AREN'T pushed to
 the origin, we can have `git log` them like this:
 
 ```bash
-git log --oenline --decorate HEAD ^origin/main
+git log --oneline --decorate HEAD ^origin/main
 ```
 
 ```bash
@@ -412,12 +412,12 @@ index a36de8e..75bf4f4 100644
  import "fmt"
  
 +func greet(name string) {
-+	fmt.Printf("Hello, %s\n", name)
++	   fmt.Printf("Hello, %s\n", name)
 +}
 +
  func main() {
--	fmt.Printf("hello world\n")
-+	greet("Steve")
+-	   fmt.Printf("hello world\n")
++	   greet("Steve")
  }
 ```
 
@@ -431,15 +431,30 @@ remain logical, self-contained, testable, and deployable. And because we caught
 our mistake before we pushed anything to our remote, there was no risk of
 changing history of code that others have already checked out.
 
-That's all you need to know to get started with using `git reset`. You can stop
-here and go on your merry way resetting your commits.
+However, if you followed along with the steps, you may have noticed we needed to
+re-write the commit message after we reset it because that commit was blown
+away. That's fairly annoying especially if you spent significant effort in
+crafting a [good commit](/posts/git_commit). There is a shorthand way to work
+through the steps of this exact scenario of fixing code changed in the HEAD
+commit using `git commit --amend`. It's less flexible than `git reset`, but if
+that's all you need than it's very slick.
 
-In future posts in this series we'll talk about some other, more powerful options
-to clean up history. If you followed along with the steps, you may have noticed
-we needed to re-write the commit message after we reset it because that commit
-was blown away. That's fairly annoying especially if you spent significant
-effort in crafting a [good commit](/posts/git_commit). In the next post, we'll
-talk about `amend`ing commits which removes this annoyance.
+Rewind our conversation to the point that we realized we needed to remove the
+errant commented out code. Simply make the edit by deleting that line of code,
+then add the change to the index with `git add`. Lastly run `git commit --amend`
+and the previous commit message will be opened up again. You can choose to
+change the wording if you like, but once you save, the HEAD commit will be
+altered with your added change all in one go. No reset required. **NOTE:** This
+method _still_ changes history and the contents of your commit are altered,
+meaning the rules to follow about when it's safe to change history still apply.
+
+If you need to make edits to commits earlier in the tree than the current one
+(the HEAD commit) than this solution (without any modifications) will not help
+you. To deal with that problem, stay tuned for the dedicated articles on
+`amend`, `fixup`, `autosquash`, and `interactive rebase`.
+
+That's all you need to know to get started with using `git reset`. You can go on
+your merry way resetting your commits.
 
 ## Additional posts in this series
 
