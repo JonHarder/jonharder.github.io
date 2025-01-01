@@ -7,6 +7,7 @@ sectionPagesMenu = "main"
 [params]
 title = 'The Terminal Toolbelt'
 Toc = true
+themeColor = 'orange'
 
 [languages.en.params.logo]
 logoText = 'The Terminal Toolbelt'
