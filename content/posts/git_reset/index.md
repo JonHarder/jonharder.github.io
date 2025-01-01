@@ -1,6 +1,6 @@
 +++
 date = '2024-08-26T16:00:00-06:00'
-draft = true
+draft = false
 title = 'Git Reset'
 show_reading_time = true
 tags = ['how-to', 'git']
