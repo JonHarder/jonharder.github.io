@@ -85,8 +85,8 @@ present day, replacing the present day friend with the past one.
 Given a simple repo with two commits:
 
 ```
-8a426ec (HEAD -> main) Updated main.go with greet function
-88b396a Initial main.go with a simple hello world
+8c38345 (HEAD -> main) Add greet method
+88b396a (origin/main) Initial main.go with a simple hello world
 ```
 
 This is the history of changes from the two commits:
@@ -96,22 +96,23 @@ git log --patch --oneline
 ```
 
 ```diff
-8a426ec (HEAD -> main) Updated main.go with greet function
+bd5e9ea Updated main.go with greet function
 diff --git a/main.go b/main.go
-index a36de8e..75bf4f4 100644
+index a36de8e..ba963c4 100644
 --- a/main.go
 +++ b/main.go
-@@ -2,6 +2,10 @@ package main
-
+@@ -2,6 +2,11 @@ package main
+ 
  import "fmt"
-
+ 
 +func greet(name string) {
-+       fmt.Printf("Hello, %s\n", name)
++	   fmt.Printf("Hello, %s\n", name)
 +}
 +
  func main() {
--       fmt.Printf("hello world\n")
-+       greet("Steve")
+-	   fmt.Printf("Hello world\n")
++	   // fmt.Printf("Hello world\n")
++	   greet("Steve")
  }
 88b396a Initial main.go with a simple hello world
 diff --git a/main.go b/main.go
@@ -125,18 +126,18 @@ index 0000000..a36de8e
 +import "fmt"
 +
 +func main() {
-+       fmt.Printf("hello world\n")
++	   fmt.Printf("Hello world\n")
 +}
 ```
 
-Now let's say we want to grab the state of `main.go` as it was in the first commit
-and apply it on top of the current index.
+Now let's say we want to grab the state of `main.go` as it was in the first
+commit and apply it on top of the current index.
 
 ```bash
 git reset 88b396a main.go
 ```
 
-```
+```bash
 Unstaged changes after reset:
 M       main.go
 ```
@@ -147,7 +148,7 @@ Let's see what it did, starting with a simple `git status`
 git status
 ```
 
-```
+```bash
 On branch main
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
@@ -176,12 +177,13 @@ index 75bf4f4..a36de8e 100644
  import "fmt"
 
 -func greet(name string) {
--       fmt.Printf("Hello, %s\n", name)
+-     fmt.Printf("Hello, %s\n", name)
 -}
 -
  func main() {
--       greet("Steve")
-+       fmt.Printf("hello world\n")
+-     greet("Steve")
+-     // fmt.Printf("Hello world\n")
++     fmt.Printf("Hello world\n")
  }
 ```
 
@@ -204,13 +206,14 @@ index a36de8e..75bf4f4 100644
  import "fmt"
 
 +func greet(name string) {
-+       fmt.Printf("Hello, %s\n", name)
++     fmt.Printf("Hello, %s\n", name)
 +}
 +
  func main() {
--       fmt.Printf("hello world\n")
-+       greet("Steve")
- }  
+-     fmt.Printf("hello world\n")
++     // fmt.Printf("Hello world\n")
++     greet("Steve")
+ }
 ```
 
 This diff looks like it would undo the reset. Remember, these are the unstaged
@@ -223,100 +226,104 @@ package main
 import "fmt"
 
 func greet(name string) {
-        fmt.Printf("Hello, %s\n", name)
+    fmt.Printf("Hello, %s\n", name)
 }
 
 func main() {
-        greet("Steve")
+    // fmt.Println("Hello world\n")
+    greet("Steve")
 }
 ```
 
-Ah, so it left the file in the working tree exactly as it should be according
-to the latest commit, it only updated the index. So to keep the revised change
-created by the index, simply revert the unstaged changes with `git restore <file>`.
-But to keep the original copy and throw away the changes created by reset, revert
-the changes in the index using `git restore --staged <file>`.
+Ah, so it left the file in the working tree exactly as it should be according to
+the latest commit, it only updated the index. So to keep the revised change
+created by the index, simply revert the unstaged changes with
+`git restore <file>`. But to keep the original copy and throw away the changes
+created by reset, revert the changes in the index using
+`git restore --staged <file>`.
 
 Resetting files is not the main focus of this article however, so let's move on
 to resetting the working tree.
 
 ### Resetting the working tree
 
-Let's look at an example:
+Let's look at our example again with just the two commits:
 
 ```bash
-git show HEAD
+git log --oneline --patch
 ```
 
-```
-commit edaa773a1f2db10254ed79cf015c40b515fbb92c
-Author: Jon <jharder@kipsu.com>
-Date:   Wed Aug 28 12:08:35 2024 -0500
-
-    Add additional functionality to my-feature in file2
-
-diff --git a/file2 b/file2
-index 73d3ef3..9d24812 100644
---- a/file2
-+++ b/file2
-@@ -1 +1,3 @@
--This is my file.
-\ No newline at end of file
-+This is my file.
+```diff
+bd5e9ea (HEAD -> main) Updated main.go with greet function
+diff --git a/main.go b/main.go
+index a36de8e..ba963c4 100644
+--- a/main.go
++++ b/main.go
+@@ -2,6 +2,11 @@ package main
+ 
+ import "fmt"
+ 
++func greet(name string) {
++	   fmt.Printf("Hello, %s\n", name)
++}
 +
-+Additional line which enhances my-featue.
-\ No newline at end of file
+ func main() {
+-	   fmt.Printf("hello world\n")
++	   // fmt.Printf("hello world\n")
++	   greet("Steve")
+ }
+88b396a (origin/main) Initial main.go with a simple hello world
+diff --git a/main.go b/main.go
+new file mode 100644
+index 0000000..a36de8e
+--- /dev/null
++++ b/main.go
+@@ -0,0 +1,7 @@
++package main
++
++import "fmt"
++
++func main() {
++	   fmt.Printf("hello world\n")
++}
 ```
 
-The sharp-eyed reader may spot the issue with this commit. On the second line of
-the addition to `file2`, we made a typo with `my-featue` instead of
-`my-feature`. We know we want to fix the typo, but how do we do it?
+The sharp-eyed reader may spot a minor annoyance on the HEAD commit. It looks
+like we accidentally added some unused, commented out code in the commit. That
+code shouldn't be there.
 
-One option we have is `git reset`.
+Now we could clean this up by making another commit which removes the commented
+out line of code, but as you've guessed. Git reset can help us clear up this
+problem and leave no trace that this oversight ever happened.
 
-## Git reset
+But first, we need to make sure we don't cause a time paradox. The first and
+most important rule is:
 
-Git reset[^2] allows you to "un-commit" a commit, giving you effectively an
-"undo" if you realize you weren't quite finished with your changes.
+> Changing history that hasn't been pushed anywhere yet is always safe.
 
-Going back to our example from before, this is the state of our working tree:[^3]
+You can tell at a glance from the git log output if a particular commit has been
+pushed to a remote by the content between the `()` on the commit message. In
+this case you can see the first commit _has_ been pushed because it says:
+`(origin/main)`. The second commit however has _not_ been because it lacks any
+reference to the `origin`: `(HEAD -> main)`. This tells us this commit is the
+HEAD commit and it's on the main branch, and it also tells us it hasn't been
+pushed to our origin.
+
+To confirm this via a different method, we could use a more advanced feature of
+`git log` by specifying an exclusion to the set of commits to log. Prefixing a
+revision range with a `^` means: _remove from the range of commits to log all
+commits in this range_.
+
+So if we want to view all the commits on our main branch that AREN'T pushed to
+the origin, we can have `git log` them like this:
 
 ```bash
-git log HEAD ^main
+git log --oenline --decorate HEAD ^origin/main
 ```
-
-```
-commit faa66ffce98ea84be2fa61497799ca72b1f64c85
-Author: Jon <jharder@kipsu.com>
-Date:   Thu Aug 29 12:00:01 2024 -0500
-
-    Add additional functionality to my-feature in file2
-
-commit 5c4472811dca6b57b7cc2aba4460d335c72d444a
-Author: Jon <jharder@kipsu.com>
-Date:   Thu Aug 29 11:58:52 2024 -0500
-
-    Introduce file2 for my-feature
-
-    This adds file2 which allows my-feature to work in a minimally viable state.
-```
-
-These are the two commits on our `my-feature` branch that aren't in the `main`
-branch.
-
-If we try to see what commits in our branch have been deployed to our remote
-(called `origin` in this repo), we can see this branch hasn't been pushed at
-all.[^4]
 
 ```bash
-git log HEAD ^origin/my-feature
+bd5e9ea (HEAD -> main) Updated main.go with greet function
 ```
-
-```
-fatal: bad revision '^origin/my-feature'
-```
-
-This means there is no branch `my-feature` pushed to our remote called `origin`.
 
 So, if we think back to our rules about when you can safely change history, we
 satisfy the first and most important rule: _"Changing history that hasn't been
@@ -350,272 +357,89 @@ but not added to the index:
 git diff
 ```
 
-```
-diff --git a/file2 b/file2
-index 197d1d0..256b425 100644
---- a/file2
-+++ b/file2
-@@ -1 +1,3 @@
- This is my file.
+```diff
+diff --git a/main.go b/main.go
+index a36de8e..ba963c4 100644
+--- a/main.go
++++ b/main.go
+@@ -2,6 +2,11 @@ package main
+ 
+ import "fmt"
+ 
++func greet(name string) {
++	   fmt.Printf("Hello, %s\n", name)
++}
 +
-+Additional line which enhances my-featue.
+ func main() {
+-	   fmt.Printf("hello world\n")
++	   // fmt.Printf("hello world\n")
++	   greet("Steve")
+ }
 ```
 
-It's here that we can see our typo ("my-featue."). Let's fix that.
-
-_type type type..._
+Now our latest commit is undone, but the file changes from it are present and
+unstaged. Let's delete our stray commented code and re-add and commit. _type
+type type..._
 
 ```bash
-git diff
+git add main.go
+git commit
 ```
 
+```bash
+git log --oneline --decorate
 ```
-diff --git a/file2 b/file2
-index 197d1d0..d0adfb9 100644
---- a/file2
-+++ b/file2
-@@ -1 +1,3 @@
- This is my file.
+
+```bash
+8c38345 (HEAD -> main) Add greet method
+88b396a (origin/main) Initial main.go with a simple hello world
+```
+
+And as for the code in our latest commit:
+
+```bash
+git log --oneline --decorate --patch -n 1
+```
+
+```diff
+8c38345 (HEAD -> main) Add greet method
+diff --git a/main.go b/main.go
+index a36de8e..75bf4f4 100644
+--- a/main.go
++++ b/main.go
+@@ -2,6 +2,10 @@ package main
+ 
+ import "fmt"
+ 
++func greet(name string) {
++	fmt.Printf("Hello, %s\n", name)
++}
 +
-+Additional line which enhances my-feature.
+ func main() {
+-	fmt.Printf("hello world\n")
++	greet("Steve")
+ }
 ```
 
 Much better.
 
-Now, we just simply commit the change again.
-
-```bash
-git add file2
-git commit -m 'Add additional functionality to my-feature in file2'
-```
-
-```
-[my-feature 3114a56] Add additional functionality to my-feature in file2
- 1 file changed, 3 insertions(+), 1 deletion(-)
-```
-
-```bash
-git log -n 1 -p
-```
-
-```
-commit 3114a56e6cff008d07081e9004aa0b24d10df7ae
-Author: Jon <jharder@kipsu.com>
-Date:   Wed Aug 28 11:56:04 2024 -0500
-
-    Add additional functionality to my-feature in file2
-
-diff --git a/file2 b/file2
-index 73d3ef3..2bfb629 100644
---- a/file2
-+++ b/file2
-@@ -1 +1,3 @@
--This is my file.
-\ No newline at end of file
-+This is my file.
-+
-+Additional line which enhances my-feature.
-\ No newline at end of file
-```
-
-There we go. Our commit has been fixed, and because this wasn't pushed to our
-remote before changing, no one has to know we had a typo. There is no history of
-the typo in an previous commit and the fixup commit which resolves it. Our
-history has been kept clean, and our commits remain logical, self-contained,
-testable, and deployable. And because we caught our mistake before we pushed
-anything to our remote, there was no risk of changing history of code that
-others have already checked out.
+Our commit has been fixed, and because this wasn't pushed to our remote before
+changing, no one has to know we carelessly committed code that shouldn't have
+been there. There is no history of that line in a previous commit and the fixup
+commit which resolves it. Our history has been kept clean, and our commits
+remain logical, self-contained, testable, and deployable. And because we caught
+our mistake before we pushed anything to our remote, there was no risk of
+changing history of code that others have already checked out.
 
 That's all you need to know to get started with using `git reset`. You can stop
 here and go on your merry way resetting your commits.
 
-If you're hungry for more, stick around for some bonus, advanced content.
-
-## Bonus contest
-
-Still here? Cool. Let's talk about some of the other, more nuanced uses of
-`git reset`.
-
-We are going to cover two scenarios that cover the concept of selectively
-resetting changes from the latest commit. First we will discuss removing files
-from the commit, and second we will discuss removing specific hunks (selections
-of changes to multiple, adjacent lines in a file) from a commit.
-
-### Removing a file
-
-Say you were working on some changes that spanned a series of files. You finish
-up your work, do a quick `git commit --all` to add and commit all changed files
-then push your work to your remote. Only then do you realize you had some
-unrelated, in progress work that got slurped in with the `--all` flag.
-
-```bash
-git show HEAD
-```
-
-```
-commit 36dfb3977572330fb042dedc83f9654a99a6cfcf
-Author: Jon <jharder@kipsu.com>
-Date:   Wed Aug 28 15:22:23 2024 -0500
-
-    Add configuration files for production and stage.
-
-    This allows us to store separate application configuration for our
-    production and staging environment.
-
-diff --git a/config/production.ini b/config/production.ini
-new file mode 100644
-index 0000000..e69de29
-diff --git a/config/stage.ini b/config/stage.ini
-new file mode 100644
-index 0000000..e69de29
-diff --git a/unfinished b/unfinished
-new file mode 100644
-index 0000000..e69de29
-```
-
-You can see given the commit message and the files changed that
-`config/production.ini` and `config/staging.ini` likely belong in this commit.
-`unfinished` however...probably doesn't belong.
-
-We _could_ reset the whole commit, remove `unfinished` from the index, then
-re-commit our code, but `git reset` offers a more efficient way.
-
-```bash
-git reset --patch HEAD~1
-```
-
-```
-diff --git b/config/production.ini a/config/production.ini
-deleted file mode 100644
-index e69de29..0000000
-(1/1) Apply deletion to index [y,n,q,a,d,?]? n
-
-diff --git b/config/stage.ini a/config/stage.ini
-deleted file mode 100644
-index e69de29..0000000
-(1/1) Apply deletion to index [y,n,q,a,d,?]? n
-
-diff --git b/unfinished a/unfinished
-deleted file mode 100644
-index e69de29..0000000
-(1/1) Apply deletion to index [y,n,q,a,d,?]? y
-```
-
-Let's take a look and see what that did
-
-```bash
-git status
-```
-
-```
-On branch main
-Your branch is ahead of 'origin/main' by 3 commits.
-  (use "git push" to publish your local commits)
-
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-    deleted:    unfinished
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-    unfinished
-```
-
-Git reset has a secondary function, unrelated to undoing commits. In this usage,
-it changed a file back to its state in the previous (`HEAD~1`) and staged (added
-to the index) the file modification necessary to make that happen. In our case,
-since we created a new file, `unfinished`, it deleted the file from git's
-working tree, making it untracked. The file still exists on the file system, but
-git won't know anything about it.
-
-One important thing to note here is that in this case, **we didn't modify the
-commit contents**.
-
-```bash
-git show HEAD
-```
-
-```
-commit 340207fe180fbc54dc74fb9edcdee2cf6c3eaad3
-Author: Jon <jharder@kipsu.com>
-Date:   Wed Aug 28 15:22:23 2024 -0500
-
-    Add configuration files for production and stage.
-
-    This allows us to store separate application configuration for our
-    production and staging environment.
-
-diff --git a/config/production.ini b/config/production.ini
-new file mode 100644
-index 0000000..e69de29
-diff --git a/config/stage.ini b/config/stage.ini
-new file mode 100644
-index 0000000..e69de29
-diff --git a/unfinished b/unfinished
-new file mode 100644
-index 0000000..e69de29
-```
-
-As you can see, `unfinished` is still in the head commit. To absorb this change
-(deleting `unfinished`) into that commit, we can use a feature of `git commit`,
-called `amend`. This takes your changes in the index, and **replaces** the
-`HEAD` commit with a new one based off of the current state of the index. We
-also used the `-C` flag, short for `--reuse-message` to reuse the author and
-commit message of the commit we are going to replace.
-
-```bash
-git commit --amend -C HEAD
-```
-
-```
-[main 081fca1] Add configuration files for production and stage.
- Date: Wed Aug 28 15:22:23 2024 -0500
- 2 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 config/production.ini
- create mode 100644 config/stage.ini
-```
-
-Now, as we can see, the file is gone (according to git).
-
-```bash
-git show HEAD
-```
-
-```
-commit 081fca1353fe285882f6e02dce0fc02b9b7eaf1d
-Author: Jon <jharder@kipsu.com>
-Date:   Wed Aug 28 15:22:23 2024 -0500
-
-    Add configuration files for production and stage.
-
-    This allows us to store separate application configuration for our
-    production and staging environment.
-
-diff --git a/config/production.ini b/config/production.ini
-new file mode 100644
-index 0000000..e69de29
-diff --git a/config/stage.ini b/config/stage.ini
-new file mode 100644
-index 0000000..e69de29
-```
-
-But it still exists on disk
-
-```bash
-ls -l
-```
-
-```
-total 8
-drwxr-xr-x@ 4 jharder  staff  128 Aug 28 15:22 config
--rw-r--r--@ 1 jharder  staff    0 Aug 27 15:49 file1
--rw-r--r--@ 1 jharder  staff   60 Aug 28 15:01 file2
--rw-r--r--@ 1 jharder  staff    0 Aug 28 15:22 unfinished
-```
-
-We introduced a lot in this bonus section. Amending commits will be covered more
-fully in a future article in this series, so don't worry if it didn't all quite
-make sense.
+In future posts in this series we'll talk about some other, more powerful options
+to clean up history. If you followed along with the steps, you may have noticed
+we needed to re-write the commit message after we reset it because that commit
+was blown away. That's fairly annoying especially if you spent significant
+effort in crafting a [good commit](/posts/git_commit). In the next post, we'll
+talk about `amend`ing commits which removes this annoyance.
 
 ## Additional posts in this series
 
