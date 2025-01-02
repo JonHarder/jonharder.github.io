@@ -444,9 +444,11 @@ errant commented out code. Simply make the edit by deleting that line of code,
 then add the change to the index with `git add`. Lastly run `git commit --amend`
 and the previous commit message will be opened up again. You can choose to
 change the wording if you like, but once you save, the HEAD commit will be
-altered with your added change all in one go. No reset required. **NOTE:** This
-method _still_ changes history and the contents of your commit are altered,
-meaning the rules to follow about when it's safe to change history still apply.
+altered with your added change all in one go. No reset required.
+
+> [!WARNING]
+> This method _still_ changes history and the contents of your commit, meaning
+> the rules to follow about when it's safe to change history still apply.
 
 If you need to make edits to commits earlier in the tree than the current one
 (the HEAD commit) than this solution (without any modifications) will not help
