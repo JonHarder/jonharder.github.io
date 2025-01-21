@@ -1,7 +1,8 @@
 baseURL = 'https://jonharder.github.io/'
 languageCode = 'en-us'
 title = 'The Terminal Toolbelt'
-theme = ['dead-simple', 'hugo-admonitions']
+theme = ['hello-friend-ng', 'hugo-admonitions']
+# theme = ['dead-simple', 'hugo-admonitions']
 sectionPagesMenu = "main"
 
 [params]
