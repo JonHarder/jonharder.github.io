@@ -6,15 +6,36 @@ sectionPagesMenu = "main"
 
 [params]
 title = 'The Terminal Toolbelt'
+description = "Filling your terminal toolbelt, one command at a time."
 Toc = true
 
+[params.author]
+name = "Jon Harder"
+email = "jonharder6@gmail.com"
+
+[params.header.title]
+name = "The Terminal Toolbelt"
 
 [languages.en.params.logo]
 logoText = 'The Terminal Toolbelt'
 logoHomeLink = '/'
 
+[params.page.share]
+enable = false
+
+
 [menu]
-  [[menu.header]]
-    name = "posts"
-    weight = 0
+  [[menu.main]]
+    weight = 1
+    identifier = "posts"
+    name = "Posts"
     url = "/posts"
+  [[menu.main]]
+    weight = 2
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags"
+
+[markup]
+  [markup.highlight]
+    noClasses = false
